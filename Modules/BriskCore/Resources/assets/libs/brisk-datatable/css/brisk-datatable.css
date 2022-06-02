@@ -1,0 +1,271 @@
+.brisk-panel .panel {
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  border-color: #ddd;
+  color: #555;
+}
+
+.brisk-panel .panel .panel-heading {
+  color: #333;
+  background-color: #fafafa;
+  border-color: #ddd;
+  border-bottom: 2px solid #ececec;
+  padding: 5px 10px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls {
+  float: right;
+  height: 0;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls button {
+  outline: none;
+  padding: 0px 5px;
+  margin-top: -1px;
+  height: 24px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls button .fa {
+  margin-top: 4px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls button .pg-refresh {
+  font-size: 17px;
+  margin-top: 2px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls button[data-action="refresh"] {
+  padding-left: 0;
+  padding-right: 4px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination {
+  margin-left: 10px;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination.pagination-xs {
+  margin-top: -1px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li a,
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li span {
+  cursor: pointer;
+  position: relative;
+  float: left;
+  padding: 4px 8px;
+  line-height: 1.4;
+  text-decoration: none;
+  color: #7b7b7b;
+  background-color: transparent;
+  border: 1px solid #e4e4e4;
+  margin-right: 5px;
+  border-radius: 2px;
+  font-size: 10px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li a:hover {
+  border-color: #2e6da4;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li.active a {
+  color: #fff;
+  background: #337ab7;
+  border-color: #2e6da4;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li.active a:focus,
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li.active a:hover {
+  color: #fff;
+  background: #337ab7;
+  border-color: #2e6da4;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls .pagination li.active span {
+  color: #fff;
+  background: #337ab7;
+  border-color: #2e6da4;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls *+* {
+  margin-left: 4px;
+}
+
+.brisk-panel .panel .panel-heading .panel-heading-controls * {
+  display: block;
+  float: left;
+}
+
+.brisk-panel .panel .panel-heading .switchery-small {
+  border-radius: 17px;
+  height: 17px;
+  margin-top: 1.5px;
+}
+
+.brisk-panel .panel .panel-heading .switchery-small>small {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+.brisk-panel .panel .panel-body {
+  padding: 0;
+}
+
+.brisk-panel .panel .panel-body .progress {
+  position: absolute; 
+  width: 100%; 
+  z-index: 1; 
+  display: none;
+  height: 2px;
+  background: #346cb0;
+}
+
+.brisk-panel .panel.brisk-filters .panel-body {
+  padding: 15px;
+  background: #fff;
+}
+
+.brisk-panel .panel.brisk-filters .panel-body>div {
+  min-height: 60px;
+  margin-bottom: 10px;
+}
+
+.brisk-panel a {
+  cursor: pointer;
+}
+
+.brisk-datatable a[data-action] {
+  position: relative;
+}
+
+.brisk-datatable a[data-action] span {
+  border: solid 1px #584b8d;
+  background: #fafafa;
+  box-shadow: 1px 1px 3px;
+  border-radius: 4px;
+  padding: 0 5px 0 15px;
+  position: absolute;
+  top: 0px;
+  left: 22px;
+  width: max-content;
+  z-index: 10;
+  display: none;
+}
+
+.brisk-datatable a[data-action]:hover span {
+  display: block;
+}
+
+.brisk-datatable .col-sm-5,
+.brisk-datatable .col-sm-7 {
+  float: right;
+}
+
+.brisk-datatable td.highlight {
+  background-color: whitesmoke !important;
+}
+
+.brisk-datatable .btn-group.columns {
+  margin: 0 !important;
+}
+
+.brisk-datatable .btn-group.columns ul.dropdown-menu {
+  display: none !important;
+}
+
+.brisk-datatable .btn-group.columns:hover ul.dropdown-menu {
+  display: block !important;
+  right: auto !important;
+  left: 0 !important;
+  top: 21px !important;
+}
+
+.brisk-datatable .btn-group.columns ul.dropdown-menu li,
+.brisk-datatable .btn-group.columns ul.dropdown-menu a {
+  width: 100% !important;
+}
+
+.brisk-datatable table{
+  margin-bottom: 0;
+}
+
+.brisk-datatable .footer{
+  padding: 0 5px;
+}
+
+.brisk-datatable .footer .right-side{
+  float: right;
+}
+
+.brisk-datatable .footer .left-side{
+  float: left;
+}
+
+.brisk-datatable thead th{
+  background: #fff;
+}
+
+.brisk-datatable .table-striped>tbody>tr:nth-child(odd)>td, 
+.brisk-datatable .table-striped>tbody>tr:nth-child(odd)>th{
+  background: #f9f9f9;
+}
+
+.brisk-datatable .table td, 
+.brisk-datatable .table th{
+  background: #fff;
+}
+
+.brisk-datatable .table-hover>tbody>tr:hover>td, 
+.brisk-datatable .table-hover>tbody>tr:hover>th{
+  background: #f5f5f5;
+}
+
+.brisk-datatable .table td{
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.brisk-datatable .table th{
+  padding-top: 0.2rem;
+  padding-bottom: 0.4rem;
+}
+
+.brisk-datatable .panel-heading .btn {
+  border-color: #ddd;
+  border-bottom-color: #cecece;
+  background: #f4f4f4;
+  background-image: linear-gradient(to bottom,#f4f4f4 0,#eaeaea 100%);
+  background-repeat: repeat-x;
+  
+  padding-top: 2px;
+  font-size: 14px;
+}
+
+.brisk-datatable .panel-heading .btn svg {
+  padding-top: 3px;
+}
+
+.brisk-datatable .panel-heading .btn[data-action="refresh"] svg {
+  padding: 0 0 3px 0;
+}
+
+.brisk-datatable .panel-heading .btn span {
+  margin-right: 5px!important;
+  margin-top: -3px;
+}
+
+.brisk-filters input {
+  border-color: #aaa;
+}
+
+[brisk-datatable] .progress {
+  height: 2px;
+}
+
+[brisk-datatable] .progress .progress-bar {
+  width: 100%;
+}

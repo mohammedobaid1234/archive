@@ -1,0 +1,13 @@
+{
+    "name": "BriskCore",
+    "alias": "briskcore",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BriskCore\\Providers\\BriskCoreServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

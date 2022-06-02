@@ -1,0 +1,8 @@
+[brisk-datatable-pagination] ul a,
+[brisk-datatable-pagination-per-page] a {
+    cursor: pointer;
+}
+
+[brisk-datatable-filters]{
+    background: #f9fafd !important;
+}

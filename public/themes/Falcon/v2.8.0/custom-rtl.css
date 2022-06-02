@@ -1,0 +1,37 @@
+html{
+    overflow-x: hidden;
+}
+
+.select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear{
+    float: left;
+}
+
+@font-face {
+    font-family: 'stc';
+    src: url('fonts/stc/stc.otf');
+}
+
+@font-face {
+    font-family: 'Aljazeera';
+    src: url('fonts/ArbFONTS-Aljazeera.ttf');
+}
+
+.text-stc{
+    font-family: 'stc';
+}
+
+[dir="rtl"] .flatpickr-calendar{
+    direction: rtl;
+}
+
+[dir="rtl"] .flatpickr-day.selected.startRange, .flatpickr-day.startRange.startRange, .flatpickr-day.endRange.startRange{
+    border-radius: 0 50px 50px 0;
+}
+
+[dir="rtl"] .flatpickr-day.selected.endRange, .flatpickr-day.startRange.endRange, .flatpickr-day.endRange.endRange{
+    border-radius: 50px 0 0 50px;
+}
+
+.swal-modal .swal-text {
+    text-align: center;
+}

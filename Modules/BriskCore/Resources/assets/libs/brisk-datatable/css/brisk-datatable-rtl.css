@@ -1,0 +1,87 @@
+.brisk-panel .panel.rtl {
+    direction: rtl;
+}
+
+.brisk-panel .panel.rtl.brisk-filters .panel-body>div {
+    float: right;
+}
+
+.brisk-panel .panel.rtl .panel-heading-controls {
+    float: left;
+}
+
+.brisk-panel .panel.rtl .panel-heading-controls *+* {
+    margin-left: 0;
+    margin-right: 0px;
+}
+
+.brisk-panel .panel.rtl .panel-heading-controls * {
+    float: right;
+}
+
+.brisk-panel .panel.rtl .panel-heading-controls button {
+    margin-left: 5px;
+}
+
+.brisk-panel .panel.rtl table thead tr th {
+    text-align: right;
+}
+
+.brisk-panel .panel.rtl table tbody tr.footer {
+    margin-left: 17px;
+}
+
+.brisk-panel .panel.rtl table tbody tr.footer td span.info {
+    left: 5px;
+    right: auto;
+}
+
+table.dataTable thead .sorting_asc {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_asc.png") no-repeat center left;
+}
+
+table.dataTable thead .sorting_desc {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_desc.png") no-repeat center left;
+}
+
+table.dataTable thead .sorting {
+    background: url("http://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center left;
+}
+
+.brisk-datatable .pagination {
+    float: left;
+}
+
+.brisk-datatable .dataTables_info {
+    padding: 0px!important;
+}
+
+.brisk-datatable .col-sm-7 {
+    text-align: left;
+}
+
+.brisk-datatable .dataTables_scrollBody thead tr[role="row"] {
+    visibility: collapse !important;
+}
+
+.brisk-datatable table.dataTable thead .sorting:after,
+.brisk-datatable table.dataTable thead .sorting_asc:after,
+.brisk-datatable table.dataTable thead .sorting_desc:after {
+    display: none;
+}
+
+.brisk-datatable .panel-heading {
+    padding-left: 2px !important;
+    padding-top: 10px !important;
+    padding-bottom: 7px !important;
+}
+
+.brisk-datatable table.dataTable thead>tr>th.sorting_asc,
+.brisk-datatable table.dataTable thead>tr>th.sorting_desc,
+.brisk-datatable table.dataTable thead>tr>th.sorting,
+.brisk-datatable table.dataTable thead>tr>td.sorting_asc,
+.brisk-datatable table.dataTable thead>tr>td.sorting_desc,
+.brisk-datatable table.dataTable thead>tr>td.sorting {
+    padding-right: 10px;
+    padding-left: 30px;
+}

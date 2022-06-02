@@ -1,0 +1,7 @@
+.brisk-panel .panel.rtl .panel-title {
+    float: right;
+}
+
+.brisk-panel {
+    text-align: right;
+}

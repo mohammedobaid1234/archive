@@ -1,0 +1,12 @@
+.brisk-form .form-group label {
+    float: right;
+}
+
+.brisk-form .modal-header .close {
+    margin: 0;
+    padding: 0;
+}
+
+.brisk-form .modal-title {
+    font-size: 18px;
+}

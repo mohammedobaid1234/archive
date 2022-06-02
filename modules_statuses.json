@@ -1,0 +1,8 @@
+{
+    "BriskCore": true,
+    "Users": true,
+    "Employee": true,
+    "Employees": true,
+    "Customers": true,
+    "Core": true
+}

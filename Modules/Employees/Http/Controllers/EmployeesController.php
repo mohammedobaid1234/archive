@@ -1,0 +1,280 @@
+<?php
+
+namespace Modules\Employees\Http\Controllers;
+
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+
+class EmployeesController extends Controller{
+    use \Modules\BriskCore\Traits\ResourceTrait;
+    use \Modules\BriskCore\Traits\FormRequestTrait;
+
+    private $title = "ملفات الموظفين";
+    private $model = \Modules\Employees\Entities\Employee::class;
+
+    public function manage(){
+        
+        \Auth::user()->authorize('employees_module_employees_manage', 'view');
+
+        $data['activePage'] = ['employees' => true];
+        $data['breadcrumb'] = [
+            ['title' => $this->title],
+        ];
+
+        return view('employees::employees', $data);
+    }
+
+    public function datatable(Request $request){
+        \Auth::user()->authorize('employees_module_employees_manage');
+
+        $eloquent = $this->model::with(['user.roles']);
+
+        if((int) $request->filters_status){
+            if(trim($request->full_name) !== ""){
+                $eloquent->whereFullNameLike($request->full_name);
+            }
+            if(trim($request->employment_id  ) !== ""){
+                $eloquent->where('employment_id', "LIKE", '%'.$request->employment_id .'%');
+            }
+            if(trim($request->roles) !== ""){
+                $eloquent->whereHas('user', function($query) use ($request){
+                    foreach(explode(',', trim($request->roles)) as $role){
+                        $query->role($role);
+                    }
+                });
+            }
+        }
+
+        $filters = [
+            ['title' => 'الرقم الوظيفي', 'type' => 'input', 'name' => 'employment_id'],
+            ['title' => 'الاسم', 'type' => 'input', 'name' => 'full_name'],
+            ['title' => 'الدور', 'type' => 'select', 'name' => 'roles', 'multiple' => true, 'data' => ['options_source' => 'roles']]
+        ];
+
+        $columns = [
+            ['title' => 'الرقم الوظيفي', 'column' => 'employment_id'],
+            ['title' => 'الاسم', 'column' => 'full_name'],
+            ['title' => 'الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
+            ['title' => 'رقم الجوال', 'column' => 'mobile_no'],
+            ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
+        ];
+
+        return response()->json($this->datatableInitializer($request, $eloquent, $filters, $columns));
+    }
+
+    public function store(Request $request){
+        \Auth::user()->authorize('employees_module_employees_store');
+
+        $request->validate([
+            'employment_id' => 'required',
+            'roles' => 'required',
+            'first_name' => 'required',
+            'father_name' => 'required',
+            'grandfather_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'birthdate' => 'required',
+            'mobile_no' => 'required',
+            
+        ]);
+        
+        if(\Modules\Employees\Entities\Employee::where('employment_id', trim($request->employment_id))->count()){
+            return response()->json(['message' => "لا يمكن تكرار الرقم الوظيفي"], 403);
+        }
+
+
+        if(trim($request->mobile_no) !== ""){
+            if(strlen(trim($request->mobile_no)) !== 10){
+                return response()->json(['message' => "يرجى التحقق من صحة رقم الجوال."], 403);
+            }
+
+            if(\Modules\Employees\Entities\Employee::where('mobile_no', trim($request->mobile_no))->count()){
+                return response()->json(['message' => "لا يمكن تكرار رقم الجوال"], 403);
+            }
+        }
+
+        \DB::beginTransaction();
+        try{
+            $employee = new $this->model;
+            $employee->employment_id = trim($request->employment_id);
+            $employee->first_name = $request->first_name;
+            $employee->father_name = $request->father_name;
+            $employee->grandfather_name = $request->grandfather_name;
+            $employee->last_name = $request->last_name;
+            $employee->gender = $request->gender;
+            $employee->birthdate = $request->birthdate;
+            $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
+            $employee->created_by = \Auth::user()->id;
+            $employee->save();
+
+            $user = new \Modules\Users\Entities\User;
+            $user->userable_id = $employee->id;
+            $user->userable_type = "Modules\Employees\Entities\Employee";
+            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+
+
+            $user->email = $employee->mobile_no;
+            $user->save();
+
+            $user->syncRoles(explode(',', str_replace(" ", "", $request->roles)));
+
+            if($request->hasFile('image') && $request->file('image')[0]->isValid()){
+                $extension = strtolower($request->file('image')[0]->extension());
+                $media_new_name = strtolower(md5(time())) . "." . $extension;
+                $collection = "personal-image";
+
+                $employee->addMediaFromRequest('image[0]')
+                        ->usingFileName($media_new_name)
+                        ->usingName($request->file('image')[0]->getClientOriginalName())
+                        ->toMediaCollection($collection);
+            }
+
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        return response()->json(['message' => 'ok']);
+    }
+
+    public function show($id){
+        return $this->model::with(['user.roles'])->whereId($id)->first();
+    }
+
+    public function update(Request $request, $employee_id){
+        \Auth::user()->authorize('employees_module_employees_update');
+
+        $request->validate([
+            'employment_id' => 'required',
+            'roles' => 'required',
+            'first_name' => 'required',
+            'father_name' => 'required',
+            'grandfather_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'birthdate' => 'required',
+            'mobile_no' => 'required',
+        ]);
+
+        if(\Modules\Employees\Entities\Employee::where('id', '<>', $employee_id)->where('employment_id', trim($request->employment_id))->count()){
+            return response()->json(['message' => "لا يمكن تكرار الرقم الوظيفي"], 403);
+        }
+
+        if(trim($request->mobile_no) !== ""){
+            if(strlen(trim($request->mobile_no)) !== 10){
+                return response()->json(['message' => "يرجى التحقق من صحة رقم الجوال."], 403);
+            }
+
+            if(\Modules\Employees\Entities\Employee::where('id', '<>', $employee_id)->where('mobile_no', trim($request->mobile_no))->count()){
+                return response()->json(['message' => "لا يمكن تكرار رقم الجوال"], 403);
+            }
+        }
+
+        \DB::beginTransaction();
+        try{
+            $employee = $this->model::whereId($employee_id)->first();
+            $employee->employment_id = trim($request->employment_id);
+            $employee->first_name = $request->first_name;
+            $employee->father_name = $request->father_name;
+            $employee->grandfather_name = $request->grandfather_name;
+            $employee->last_name = $request->last_name;
+            $employee->gender = $request->gender;
+            $employee->birthdate = $request->birthdate;
+            $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
+            $employee->created_by = \Auth::user()->id;
+            $employee->save();
+
+            $user = \Modules\Users\Entities\User::whereId($employee->user->id)->first();
+            $user->email = $employee->mobile_no;
+            $user->save();
+
+            $user->syncRoles(explode(',', str_replace(" ", "", $request->roles)));
+
+            if($request->hasFile('image') && $request->file('image')[0]->isValid()){
+                $extension = strtolower($request->file('image')[0]->extension());
+                $media_new_name = strtolower(md5(time())) . "." . $extension;
+                $collection = "personal-image";
+
+                $employee->clearMediaCollection($collection);
+
+                $employee->addMediaFromRequest('image[0]')
+                        ->usingFileName($media_new_name)
+                        ->usingName($request->file('image')[0]->getClientOriginalName())
+                        ->toMediaCollection($collection);
+            }
+
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        return response()->json(['message' => 'ok']);
+    }
+
+    public function reset_password($id){
+        \Auth::user()->authorize('employees_module_employees_reset_password');
+
+        $employee = \Modules\Employees\Entities\Employee::whereId($id)->select(['id', 'mobile_no', 'employment_id'])->first();
+
+        if(!$employee->mobile_no){
+            return response()->json(['message' => "لا يملك الموظف رقم جوال لارسال كلمة مرور البوابة الجديدة."], 403);
+        }
+
+        if(!$employee->user){
+            return response()->json(['message' => "لا يملك الموظف حساب للوصول إلى البوابة."], 403);
+        }
+
+        $password = rand (1000000, 9999999);
+
+        $user = $employee->user;
+        $user->password = \Illuminate\Support\Facades\Hash::make($password);
+        $user->save();
+
+        /**
+         * SEND THE PASSWORD
+         */
+        $url = url('/');
+
+        $sms = new \Modules\SMS\Entities\SMS;
+        $sms->smsable_id = $user->id;
+        $sms->smsable_type = "Modules\Users\Entities\User";
+        $sms->mobile_no	= $employee->mobile_no;
+        $sms->message = "رابط البوابة: " . $url . "\nالرقم الوظيفي: $employee->employment_id\nكلمة المرور: $password";
+        $sms->save();
+        // $sms->send();
+
+        // (new \Modules\Users\Http\Controllers\SessionsController)->destroy($user->id);
+
+        return response()->json(['message' => 'ok']);
+    }
+
+
+    public function portalLoginAsCustomer(Request $request, $customer_id){
+        $customer = \Modules\Customers\Entities\Customer::whereId($customer_id)->first();
+
+        if(!$customer){
+            return "لم يتم العثور على ملف العميل.";
+        }
+
+        $user = \Modules\Users\Entities\User::where('userable_type', 'Modules\Customers\Entities\Customer')->where('userable_id', $customer_id)->first();
+
+        if(!$user){
+            return "لم يتم العثور على حساب العميل.";
+        }
+
+		return redirect(\Config::get('app.website_domain') . "/loginAsCustomer/$user->id?hash=" . bcrypt("2022@loginAsCustomer@2022"));
+    }
+
+    public function loginAsCustomer(Request $request, $id){
+        if(!\Hash::check("2022@loginAsCustomer@2022", $request->hash)){
+            return response(view('errors.401'), 451);
+        }
+
+        \Auth::loginUsingId($id);
+
+		return redirect()->intended('/');
+    }
+}
