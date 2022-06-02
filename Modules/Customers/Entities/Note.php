@@ -5,11 +5,19 @@ namespace Modules\Customers\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Note extends Model implements Auditable {
+class Note extends Model {
     use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
     use \Modules\BriskCore\Traits\ModelTrait;
+    use InteractsWithMedia;
+
+    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media  $media = null): void{
+        $this->addMediaConversion('thumb')
+              ->width(800)
+              ->height(800);
+    }
 
     protected $table = 'cm_notes';
 

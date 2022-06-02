@@ -107,5 +107,37 @@ let GLOBALS = {
                 ajax: true
             });
         },
+        categories_of_contacts: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="categories_of_contacts"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/categories_of_contacts",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
+        customers: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="customers"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/customers",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "full_name"
+                    }
+                }
+            });
+        },
     }
 };

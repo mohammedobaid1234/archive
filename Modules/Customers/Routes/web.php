@@ -27,4 +27,6 @@ Route::middleware(['auth'])->group(function() {
         });
     });
     Route::resource('customers', CustomersController::class);
+
+    Route::get('/categories_of_contacts', 'CategoriesOfContractsController@index');
 });

@@ -21,7 +21,7 @@ class NoteController extends Controller{
     }
 
     public function store(Request $request, $customer_id){
-
+        
         if(trim($request->content) == ''){
             return response(['message' => 'يرجى التحقق من ادخال الملاحظة.'], 403);
         }
@@ -34,6 +34,7 @@ class NoteController extends Controller{
 
         \DB::beginTransaction();
         try {
+           
 
             $note = new \Modules\Customers\Entities\Note;
             $note->content = trim($request->content);
@@ -41,7 +42,16 @@ class NoteController extends Controller{
             $note->parent_id = $request->parent_id ? $request->parent_id : Null;
             $note->created_by = \Auth::user()->id;
             $note->save();
+            if($request->hasFile('image') && $request->file('image')[0]->isValid()){
+                $extension = strtolower($request->file('image')[0]->extension());
+                $media_new_name = strtolower(md5(time())) . "." . $extension;
+                $collection = "contact-image";
 
+                $note->addMediaFromRequest('image[0]')
+                        ->usingFileName($media_new_name)
+                        ->usingName($request->file('image')[0]->getClientOriginalName())
+                        ->toMediaCollection($collection);
+            }
             \DB::commit();
             return response()->json(['message' => 'ok']);
         } catch (\Exception $e) {
