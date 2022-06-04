@@ -46,6 +46,7 @@
 
                         operations += '<button class="btn btn-falcon-primary btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="employee-update"><span class="fas fa-edit" data-fa-transform="shrink-3"></span></button>';
                         operations += '<button class="btn btn-falcon-default btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="reset-password" title="إعادة ضبط كلمة المرور"><span class="fas fa-key" data-fa-transform="shrink-3"></span></button>';
+                        operations += '<button class="btn btn-falcon-danger btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="destroy" title="حذف الموظف"><span class="fas fa-trash" data-fa-transform="shrink-3"></span></button>';
 
                         return operations;
                     }

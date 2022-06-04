@@ -50,47 +50,15 @@ class Customer extends Model {
         return $query->where('mobile_no', 'like', ('%' . trim($mobile_no) . '%'));
     }
 
-    public function _first_name(){
+    
+    public function _full_name(){
         return [
-            'title' => 'الإسم الأول',
+            'title' => 'إسم الشركة / المؤسسة / الفرد',
             'input' => 'input',
-            'name' => 'first_name',
+            'name' => 'full_name',
             'required' => true,
             'operations' => [
-                'show' => ['text' => 'first_name']
-            ]
-        ];
-    }
-    public function _father_name(){
-        return [
-            'title' => 'الإسم الثاني',
-            'input' => 'input',
-            'name' => 'father_name',
-            'required' => true,
-            'operations' => [
-                'show' => ['text' => 'father_name']
-            ]
-        ];
-    }
-    public function _grandfather_name(){
-        return [
-            'title' => 'إسم الجد',
-            'input' => 'input',
-            'name' => 'grandfather_name',
-            'required' => true,
-            'operations' => [
-                'show' => ['text' => 'grandfather_name']
-            ]
-        ];
-    }
-    public function _last_name(){
-        return [
-            'title' => 'إسم العائلة',
-            'input' => 'input',
-            'name' => 'last_name',
-            'required' => true,
-            'operations' => [
-                'show' => ['text' => 'last_name']
+                'show' => ['text' => 'full_name']
             ]
         ];
     }

@@ -49,6 +49,8 @@
                         var operations = '';
                         operations += '<a target="_blank" href="/customers/' + row.id + '/profile" class="btn btn-falcon-info btn-sm mr-2" type="button" data-id="' + row.id + '"><span class="fas fa-user" data-fa-transform="shrink-3"></span></a>';
                         operations += '<button class="btn btn-falcon-primary btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="customer-update"><span class="fas fa-edit" data-fa-transform="shrink-3"></span></button>';
+                        operations += '<button class="btn btn-falcon-danger btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="destroy" title="حذف العميل"><span class="fas fa-trash" data-fa-transform="shrink-3"></span></button>';
+                        
                         return operations;
                     }
                 }

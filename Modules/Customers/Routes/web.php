@@ -27,6 +27,10 @@ Route::middleware(['auth'])->group(function() {
         });
     });
     Route::resource('customers', CustomersController::class);
-
+    Route::prefix('contracts')->group(function() {
+        Route::get('manage', 'ContractsController@manage');
+        Route::get('datatable', 'ContractsController@datatable');
+    });
+    Route::resource('contracts', ContractsController::class);
     Route::get('/categories_of_contacts', 'CategoriesOfContractsController@index');
 });

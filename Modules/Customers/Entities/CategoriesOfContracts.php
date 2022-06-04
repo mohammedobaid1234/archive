@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoriesOfContracts extends Model {
     use \Modules\BriskCore\Traits\ModelTrait;
 
-    protected $table = 'cm_categories_of_contacts';
+    protected $table = 'cm_categories_of_contracts';
 
     protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];
 

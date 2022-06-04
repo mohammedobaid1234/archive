@@ -181,14 +181,15 @@
                     @endif
                 @endif
             </ul>
+             --}}
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
-                @if(\Auth::user()->can('sms_module_sms_manage'))
-                    @if(\Auth::user()->can('sms_module_sms_manage'))
+                @if(\Auth::user()->can('contracts_module_contracts_manage'))
+                    @if(\Auth::user()->can('contracts_module_contracts_manage'))
                         <li class="nav-item @if(isset($activePage['sms'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/sms/manage">
+                            <a class="nav-link" href="{{ url('/') }}/contracts/manage">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">أرشيف الرسائل القصيرة</span>
+                                    <span class="nav-link-text">أرشيف العقود </span>
                                 </div>
                             </a>
                         </li>
@@ -198,6 +199,8 @@
             <div class="navbar-vertical-divider">
                 <hr class="navbar-vertical-hr my-2" />
             </div>
+            {{-- 
+
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                 @if(\Auth::user()->can('core_module_notifications_manage'))
                     <li class="nav-item @if(isset($activePage['notifications'])) active @endif">

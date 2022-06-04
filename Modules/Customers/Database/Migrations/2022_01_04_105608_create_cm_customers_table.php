@@ -16,11 +16,7 @@ class CreateCmCustomersTable extends Migration
         Schema::create('cm_customers', function (Blueprint $table) {
             $table->id();
 
-            $table->string('first_name');
-            $table->string('father_name');
-            $table->string('grandfather_name');
-            $table->string('last_name');
-            $table->string('full_name')->storedAs('CONCAT(first_name, " ", father_name, " ", grandfather_name, " ", last_name)');
+            $table->string('full_name');
 
             $table->enum('type', ['شخصي', 'شركة', 'تاجر'])->default('شخصي');
 

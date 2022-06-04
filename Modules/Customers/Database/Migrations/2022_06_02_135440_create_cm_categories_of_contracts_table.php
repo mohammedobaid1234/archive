@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCmCategoriesOfContactsTable extends Migration
+class CreateCmCategoriesOfContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCmCategoriesOfContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cm_categories_of_contacts', function (Blueprint $table) {
+        Schema::create('cm_categories_of_contracts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateCmCategoriesOfContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cm_categories_of_contacts');
+        Schema::dropIfExists('cm_categories_of_contracts');
     }
 }
