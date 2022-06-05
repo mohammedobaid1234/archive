@@ -25,6 +25,9 @@ class Employee extends Model implements HasMedia{
     public function user(){
         return $this->morphOne(\Modules\Users\Entities\User::class, 'userable');
     }
+    public function profile(){
+        return $this->hasOne(\Modules\Employees\Entities\Profile::class);
+    }
     public function created_by_user(){
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
@@ -65,6 +68,18 @@ class Employee extends Model implements HasMedia{
             'required' => true,
             'operations' => [
                 'show' => ['text' => 'birthdate']
+            ],
+        ];
+    }
+    public function _started_work(){
+        return [
+            'title' => 'تاريخ بدء العمل',
+            'input' => 'input',
+            'date' => 'true',
+            'name' => 'started_work',
+            'required' => true,
+            'operations' => [
+                'show' => ['text' => 'profile.started_work']
             ],
         ];
     }

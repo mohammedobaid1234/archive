@@ -10,6 +10,7 @@ class CreateCmContractTable extends Migration
     {
         Schema::create('cm_contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('contract_number')->unique();
             $table->unsignedBigInteger('category_of_contract')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

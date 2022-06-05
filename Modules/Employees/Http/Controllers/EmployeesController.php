@@ -28,7 +28,7 @@ class EmployeesController extends Controller{
     public function datatable(Request $request){
         \Auth::user()->authorize('employees_module_employees_manage');
 
-        $eloquent = $this->model::with(['user.roles']);
+        $eloquent = $this->model::with(['user.roles', 'profile']);
 
         if((int) $request->filters_status){
             if(trim($request->full_name) !== ""){
@@ -49,7 +49,8 @@ class EmployeesController extends Controller{
         $filters = [
             ['title' => 'الرقم الوظيفي', 'type' => 'input', 'name' => 'employment_id'],
             ['title' => 'الاسم', 'type' => 'input', 'name' => 'full_name'],
-            ['title' => 'الدور / المسمى الوظيفي', 'type' => 'select', 'name' => 'roles', 'multiple' => true, 'data' => ['options_source' => 'roles']]
+            ['title' => 'الدور / المسمى الوظيفي', 'type' => 'select', 'name' => 'roles', 'multiple' => true, 'data' => ['options_source' => 'roles']],
+            ['title' => 'بدء العمل', 'type' => 'input', 'started_work' => 'started_work', 'date_range' => true]
         ];
 
         $columns = [
@@ -57,6 +58,7 @@ class EmployeesController extends Controller{
             ['title' => 'الاسم', 'column' => 'full_name'],
             ['title' => 'المسمى الوظيفي / الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
             ['title' => 'رقم الجوال', 'column' => 'mobile_no'],
+            ['title' => 'تاريخ بدء العمل', 'column' => 'profile.started_work'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 
@@ -76,7 +78,7 @@ class EmployeesController extends Controller{
             'gender' => 'required',
             'birthdate' => 'required',
             'mobile_no' => 'required',
-            
+            'started_work' => 'required'
         ]);
         
         if(\Modules\Employees\Entities\Employee::where('employment_id', trim($request->employment_id))->count()){
@@ -107,6 +109,11 @@ class EmployeesController extends Controller{
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
             $employee->created_by = \Auth::user()->id;
             $employee->save();
+
+            $profile = new \Modules\Employees\Entities\Profile;
+            $profile->started_work = $request->started_work;
+            $profile->employee_id  = $employee->id;
+            $profile->save();
 
             $user = new \Modules\Users\Entities\User;
             $user->userable_id = $employee->id;
@@ -140,7 +147,7 @@ class EmployeesController extends Controller{
     }
 
     public function show($id){
-        return $this->model::with(['user.roles'])->whereId($id)->first();
+        return $this->model::with(['user.roles','profile'])->whereId($id)->first();
     }
 
     public function update(Request $request, $employee_id){
@@ -156,6 +163,7 @@ class EmployeesController extends Controller{
             'gender' => 'required',
             'birthdate' => 'required',
             'mobile_no' => 'required',
+            'started_work' => 'required'
         ]);
 
         if(\Modules\Employees\Entities\Employee::where('id', '<>', $employee_id)->where('employment_id', trim($request->employment_id))->count()){
@@ -185,6 +193,10 @@ class EmployeesController extends Controller{
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
             $employee->created_by = \Auth::user()->id;
             $employee->save();
+            
+            $profile = \Modules\Employees\Entities\Profile::where('employee_id', $employee_id)->first();
+            $profile->started_work = $request->started_work;
+            $profile->save();
 
             $user = \Modules\Users\Entities\User::whereId($employee->user->id)->first();
             $user->email = $employee->mobile_no;

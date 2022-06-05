@@ -139,5 +139,37 @@ let GLOBALS = {
                 }
             });
         },
+        employees: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="employees"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/employees",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "full_name"
+                    }
+                }
+            });
+        },
+        currencies: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="currencies"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/currencies",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
     }
 };

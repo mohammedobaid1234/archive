@@ -92,6 +92,7 @@ class ContractsController extends Controller{
             'customer_id' => 'required',
             'category_of_contract' => 'required',
             'content' => 'required|string',
+
         ]);
         $customer = \Modules\Customers\Entities\Customer::where('id', $request->customer_id)->first();
         if(!$customer){
@@ -112,6 +113,7 @@ class ContractsController extends Controller{
             $contract->category_of_contract = $request->category_of_contract;
             $contract->customer_id = $request->customer_id;
             $contract->created_by = \Auth::user()->id;
+            $contract->contract_number = $request->contract_number;
             $contract->save();
 
             $note =new \Modules\Customers\Entities\Note;
@@ -139,6 +141,39 @@ class ContractsController extends Controller{
         }
 
         return response()->json(['message' => 'ok']);
+    }
+    public function create(){
+        return [
+            "title" => "اضافة عقد جديد",
+            "inputs" => [
+                ['title' => 'رقم العقد ', 'input' => 'input', 'name' => 'contract_number', 'required' => true],
+                [
+                    ['title' => 'اسم العميل', 'input' => 'select', 'name' => 'customer_id', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...']],
+                    ['title' => 'اسم الموظف المكلف', 'input' => 'select', 'name' => 'employee_id', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'employees', 'placeholder' => 'اسم  الموظف المكلف...']],
+                
+                ],
+                [
+                    ['title' => 'النوع ', 'input' => 'input', 'name' => 'motor_type', 'required' => true],
+                    ['title' => 'القدرة ', 'input' => 'input', 'name' => 'motor_capacity', 'required' => true],
+                    ['title' => 'الموديل ', 'input' => 'input', 'name' => 'motor_model', 'required' => true],
+                ],
+                [
+                    ['title' => 'سعر البيع', 'input' => 'input', 'name' => 'motor_price', 'required' => true, 'classes' => ['numeric']],
+                    ['title' => 'نوع العملة', 'input' => 'select', 'name' => 'currency_id', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'currencies', 'placeholder' => 'نوع العملة...']],
+                ],
+                ['title' => 'تفاصيل أخرى للمولد', 'input' => 'textarea', 'name' => 'other_details', 'required' => true, 'placeholder' => '  تفاصيل أخرى للمولد ...'],
+                [
+                    ['title' =>  'نوع العقد', 'input' => 'select', 'name' => 'category_of_contract', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'categories_of_contracts', 'placeholder' =>'نوع العقد...']],
+                    ['title' => 'تاريخ بداية العقد', 'input' => 'input', 'name' => 'contract_starting_date', 'classes' => ['numeric'], 'date' => true],
+                    ['title' =>  ' (للصيانة فقط)تاريخ نهاية العقد', 'input' => 'input', 'name' => 'contract_ending_date', 'classes' => ['numeric'], 'date' => true],
+                    
+                ],
+                ['title' => ' الرقم التسلسلي', 'input' => 'input', 'name' => 'serial_number'],
+                ['title' => 'تفاصيل أخرى العقد', 'input' => 'textarea', 'name' => 'content', 'required' => true, 'placeholder' =>'تفاصيل أخرى العقد ...','operations' => ['show' => ['text' => 'note.content']]],
+
+                ['title' => 'صورة العقد', 'input' => 'input','type' => 'file', 'name' => 'image']
+            ]
+        ];
     }
 
     public function show($id){

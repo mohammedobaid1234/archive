@@ -34,6 +34,9 @@ class Contract extends Model  implements HasMedia {
     public function customer(){
         return $this->belongsTo(\Modules\Customers\Entities\Customer::class, 'customer_id');
     }
+    public function motorForUser(){
+        return $this->hasOne(\Modules\Customers\Entities\MotorForCustomer::class);
+    }
     public function note(){
         return $this->hasOne(\Modules\Customers\Entities\Note::class, 'contract_id');
     }
@@ -64,6 +67,122 @@ class Contract extends Model  implements HasMedia {
             ]
         ];
     }
+
+    public function _employee_id(){
+        return [
+            'title' => 'اسم الموظف المكلف',
+            'input' => 'select',
+            'name' => 'employee_id',
+            'classes' => ['select2'],
+            'required' => true,
+            'data' => [
+                'options_source' => 'employees',
+                'placeholder' => 'اسم  الموظف المكلف...'
+            ],
+            'operations' => [
+                'show' => ['text' => 'motorForUser.employee.full_name', 'id' => 'employee_id'],
+                'update' => ['active' => false]
+            ]
+        ];
+    }
+    public function _motor_type(){
+        return [
+            'title' => 'نوع المولد', 
+            'input' => 'input', 
+            'name' => 'motor_type', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.motor_type']
+            ]
+        ];
+    }
+
+    public function _motor_model(){
+        return [
+            'title' => 'موديل المولد', 
+            'input' => 'input', 
+            'name' => 'motor_model', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.motor_model']
+            ]
+        ];
+    }
+    public function _motor_capacity(){
+        return [
+            'title' => 'قدرة المولد', 
+            'input' => 'input', 
+            'name' => 'motor_capacity', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.motor_capacity']
+            ]
+        ];
+    }
+    public function _motor_price(){
+        return [
+            'title' => 'سعر البيع', 
+            'input' => 'input', 
+            'name' => 'motor_price', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.motor_price']
+            ]
+        ];
+    }
+    public function _currency_id(){
+        return [
+            'title' => 'نوع العملة',
+            'input' => 'select',
+            'name' => 'currency_id',
+            'classes' => ['select2'],
+            'required' => true,
+            'data' => [
+                'options_source' => 'currencies',
+                'placeholder' => 'نوع العملة...'
+            ],
+            'operations' => [
+                'show' => ['text' => 'currency_id.name', 'id' => 'currency_id'],
+                'update' => ['text' => 'currency_id.name', 'id' => 'category_of_currencies']
+            ]
+        ];
+    }
+    public function _other_details(){
+        return [
+            'title' => 'تفاصيل أخرى للمولد', 
+            'input' => 'textarea', 
+            'name' => 'other_details', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.other_details']
+            ]
+        ];
+    }
+    public function _contract_starting_date(){
+        return [
+            'title' => 'تاريخ بداية العقد', 
+            'input' => 'input', 
+            'date' => 'true',
+            'name' => 'contract_starting_date', 
+            'required' => true, 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.contract_starting_date']
+            ]
+        ];
+    }
+    public function _contract_ending_date(){
+        return [
+            'title' => ' (للصيانة فقط)تاريخ نهاية العقد', 
+            'input' => 'input', 
+            'date' => 'true',
+            'name' => 'contract_ending_date', 
+            'operations' => [
+                'show' => ['text' => 'motorForUser.contract_ending_date']
+            ]
+        ];
+    }
+    
+   
     
     public function _category_of_contract(){
         return [
@@ -87,7 +206,7 @@ class Contract extends Model  implements HasMedia {
     
     public function _content(){
         return [
-            'title' => 'تفاصيل أخرى', 
+            'title' => 'تفاصيل أخرى للعقد', 
             'input' => 'textarea', 
             'name' => 'content', 
             'required' => true, 
