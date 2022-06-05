@@ -31,7 +31,7 @@ class ContractsController extends Controller{
     }
 
     public function manage(){
-        \Auth::user()->authorize('contracts_module_contracts_manage');
+        \Auth::user()->authorize('customers_module_contracts_manage');
 
         $data['activePage'] = ['contracts' => true];
         $data['breadcrumb'] = [
@@ -42,7 +42,7 @@ class ContractsController extends Controller{
     }
 
     public function datatable(Request $request){
-        \Auth::user()->authorize('contracts_module_contracts_manage');
+        \Auth::user()->authorize('customers_module_contracts_manage');
 
         $eloquent = $this->model::with(['customer', 'created_by_user', 'category_of_contract', 'note']);
 
@@ -67,7 +67,7 @@ class ContractsController extends Controller{
             ['title' => 'رقم الملف', 'type' => 'input', 'name' => 'id'],
             ['title' => 'اسم العميل', 'type' => 'select', 'name' => 'customer_id', 'data' => ['options_source' => 'customers', 'has_empty' => true]],
             ['title' => 'رقم جوال العميل', 'type' => 'input', 'name' => 'mobile_no'],
-            ['title' => 'نوع العقد', 'type' => 'select', 'name' => 'category_of_contract', 'data' => ['options_source' => 'categories_of_contacts', 'has_empty' => true]],
+            ['title' => 'نوع العقد', 'type' => 'select', 'name' => 'category_of_contract', 'data' => ['options_source' => 'categories_of_contracts', 'has_empty' => true]],
         ];
 
         $columns = [
@@ -85,7 +85,8 @@ class ContractsController extends Controller{
     }
 
     public function store(Request $request){
-        \Auth::user()->authorize('customers_module_customers_store');
+        
+        \Auth::user()->authorize('customers_module_contracts_store');
 
         $request->validate([
             'customer_id' => 'required',
@@ -145,7 +146,7 @@ class ContractsController extends Controller{
     }
 
     public function update(Request $request, $customer_id){
-        \Auth::user()->authorize('customers_module_customers_update');
+        \Auth::user()->authorize('customers_module_contracts_update');
         $request->validate([
             'mobile_no' => 'required'
         ]);

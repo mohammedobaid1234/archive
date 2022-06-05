@@ -7,8 +7,6 @@
         }
 
     </style>
-        {{-- <link href="{{asset('\Modules\Customers\Resources\assets\js\jquery.touchPDF.css')}}" rel="stylesheet"> --}}
-
 @endsection
 
 @section('content')
@@ -20,14 +18,6 @@
 @endsection
 
 @section('javascript')
-    {{-- <script src="{{asset('\Modules\Customers\Resources\assets\js\pdf.js')}}"></script>
-
-    <script src="{{asset('\Modules\Customers\Resources\assets\js\jquery.touchSwipe.js')}}"></script>
-    <script src="{{asset('\Modules\Customers\Resources\assets\js\jquery.touchPDF.js')}}"></script>
-    <script src="{{asset('\Modules\Customers\Resources\assets\js\jquery.panzoom.js')}}"></script>
-    <script src="{{asset('\Modules\Customers\Resources\assets\js\jquery.mousewheel.js')}}"></script>
-    <script src="{{ asset('/public/themes/Falcon/v2.8.0/libs/html2canvas.min.js') }}"></script>
-    <script src="{{asset('\Modules\Customers\Resources\assets\js\pdf.compatibility.js')}}"></script> --}}
     <script src="{{ asset('/public/themes/Falcon/v2.8.0/libs/canvg/3.13.0/canvg.js') }}"></script>
     <script src="{{ asset('/public/themes/Falcon/v2.8.0/libs/qrcode.min.js') }}"></script>
     <script src="{{ asset('/public/themes/Falcon/v2.8.0/libs/jsbarcode/3.11.5/JsBarcode.all.min.js') }}"></script>
@@ -65,10 +55,11 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <iframe src="https://docs.google.com/viewerng/viewer?url=https://docs.google.com/viewerng/viewer?url=http://archive.local/storage/app/public/1/1f37a7d0dc0ac10bb43a51939e58630c.pdf&embedded=true" frameborder="0" height="100%" width="100%">
+                                <div class="modal-body" height="600px">
+                                    <iframe src="https://docs.google.com/viewerng/viewer?url=${row.contract_image_url}&embedded=true" frameborder="0"  style="height:400px;"  width="100%">
                                     </iframe>
-                                     <iframe src="" height:500px;" frameborder="0"></iframe>
+                                     <iframe src="https://docs.google.com/viewerng/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" frameborder="0"  style="height:500px;"  width="100%">
+                                     </iframe>
                                  </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>

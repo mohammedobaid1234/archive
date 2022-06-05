@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,7 @@ Route::prefix('admin')
     // dd(\Auth::user());
 });
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 

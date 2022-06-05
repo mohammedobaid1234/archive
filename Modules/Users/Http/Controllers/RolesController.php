@@ -26,7 +26,7 @@ class RolesController extends Controller{
     }
 
     public function datatable(Request $request){
-        // $this->can('users_module_roles_manage');
+        $this->can('users_module_roles_manage');
 
         $eloquent = $this->model::with([]);
 
@@ -65,7 +65,7 @@ class RolesController extends Controller{
     }
 
     public function store(Request $request){
-        // $this->can('users_module_roles_store');
+        $this->can('users_module_roles_store');
 
         $request->validate([
             'name' => 'required|string',
@@ -94,7 +94,7 @@ class RolesController extends Controller{
     }
 
     public function update(Request $request, $id){
-        // $this->can('users_module_roles_update');
+        $this->can('users_module_roles_update');
 
         \DB::beginTransaction();
         try{

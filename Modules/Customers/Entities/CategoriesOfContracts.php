@@ -3,8 +3,10 @@
 namespace Modules\Customers\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoriesOfContracts extends Model {
+    use SoftDeletes;
     use \Modules\BriskCore\Traits\ModelTrait;
 
     protected $table = 'cm_categories_of_contracts';

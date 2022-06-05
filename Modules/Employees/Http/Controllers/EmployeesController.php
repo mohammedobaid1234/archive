@@ -49,13 +49,13 @@ class EmployeesController extends Controller{
         $filters = [
             ['title' => 'الرقم الوظيفي', 'type' => 'input', 'name' => 'employment_id'],
             ['title' => 'الاسم', 'type' => 'input', 'name' => 'full_name'],
-            ['title' => 'الدور', 'type' => 'select', 'name' => 'roles', 'multiple' => true, 'data' => ['options_source' => 'roles']]
+            ['title' => 'الدور / المسمى الوظيفي', 'type' => 'select', 'name' => 'roles', 'multiple' => true, 'data' => ['options_source' => 'roles']]
         ];
 
         $columns = [
             ['title' => 'الرقم الوظيفي', 'column' => 'employment_id'],
             ['title' => 'الاسم', 'column' => 'full_name'],
-            ['title' => 'الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
+            ['title' => 'المسمى الوظيفي / الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
             ['title' => 'رقم الجوال', 'column' => 'mobile_no'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
@@ -251,30 +251,4 @@ class EmployeesController extends Controller{
         return response()->json(['message' => 'ok']);
     }
 
-
-    public function portalLoginAsCustomer(Request $request, $customer_id){
-        $customer = \Modules\Customers\Entities\Customer::whereId($customer_id)->first();
-
-        if(!$customer){
-            return "لم يتم العثور على ملف العميل.";
-        }
-
-        $user = \Modules\Users\Entities\User::where('userable_type', 'Modules\Customers\Entities\Customer')->where('userable_id', $customer_id)->first();
-
-        if(!$user){
-            return "لم يتم العثور على حساب العميل.";
-        }
-
-		return redirect(\Config::get('app.website_domain') . "/loginAsCustomer/$user->id?hash=" . bcrypt("2022@loginAsCustomer@2022"));
-    }
-
-    public function loginAsCustomer(Request $request, $id){
-        if(!\Hash::check("2022@loginAsCustomer@2022", $request->hash)){
-            return response(view('errors.401'), 451);
-        }
-
-        \Auth::loginUsingId($id);
-
-		return redirect()->intended('/');
-    }
 }

@@ -107,13 +107,13 @@ let GLOBALS = {
                 ajax: true
             });
         },
-        categories_of_contacts: function (element) {
+        categories_of_contracts: function (element) {
             if (element === undefined) {
-                element = $('[data-options_source="categories_of_contacts"]');
+                element = $('[data-options_source="categories_of_contracts"]');
             }
 
             $(element).briskSelectOptions({
-                resource: $("meta[name='BASE_URL']").attr("content") + "/categories_of_contacts",
+                resource: $("meta[name='BASE_URL']").attr("content") + "/categories_of_contracts",
                 ajax: true,
                 formatters: {
                     option: {

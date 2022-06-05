@@ -185,7 +185,7 @@
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                 @if(\Auth::user()->can('contracts_module_contracts_manage'))
                     @if(\Auth::user()->can('contracts_module_contracts_manage'))
-                        <li class="nav-item @if(isset($activePage['sms'])) active @endif">
+                        <li class="nav-item @if(isset($activePage['contracts'])) active @endif">
                             <a class="nav-link" href="{{ url('/') }}/contracts/manage">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -227,34 +227,8 @@
             </ul>
             <div class="navbar-vertical-divider">
                 <hr class="navbar-vertical-hr my-2" />
-            </div>
-            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
-                @if(
-                    \Auth::user()->can('core_module_countries_manage') ||
-                    \Auth::user()->can('core_module_people_manage')
-                )
-                <li class="nav-item">
-                    <a class="nav-link dropdown-indicator" href="#core" data-toggle="collapse" role="button" @if(isset($activePage['core'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
-                        <div class="d-flex align-items-center">
-                            <span class="nav-link-icon"><span class="fas fa-cog"></span></span>
-                            <span class="nav-link-text">إدارة ثوابت النظام</span>
-                        </div>
-                    </a>
-                    <ul class="nav collapse @if(isset($activePage['core'])) show @endif" id="core" data-parent="#navbarVerticalCollapse">
-                        @if(\Auth::user()->can('core_module_countries_manage'))
-                        <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'countries') active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/countries/manage">إدارة بيانات الدول</a>
-                        </li>
-                        @endif
-
-                        @if(\Auth::user()->can('core_module_people_manage'))
-                        <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'people') active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/people/manage">إدارة السجل المدني</a>
-                        </li>
-                        @endif
-                    </ul>
-                </li>
-                {{-- @endif --}}
+            </div>--}}
+             
                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     @if(
                         \Auth::user()->can('customers_module_customers_manage') ||
@@ -270,7 +244,11 @@
                                 </a>
                             </li>
                         @endif
-                        @if(\Auth::user()->can('employees_module_employees_manage'))
+                        @if(
+                        \Auth::user()->can('employees_module_employees_manage') ||
+                        \Auth::user()->can('users_module_permissions_manage') ||
+                        \Auth::user()->can('users_module_roles_manage')
+                        )
                             <li class="nav-item @if(isset($activePage['employees'])) active @endif">
                                 <a class="nav-link" href="{{ url('/') }}/employees/manage">
                                     <div class="d-flex align-items-center">
@@ -282,31 +260,67 @@
                         @endif
                     @endif
                     </ul> 
-                    <hr>
+                    <div class="navbar-vertical-divider">
+                        <hr class="navbar-vertical-hr my-2" />
+                    </div>
                  <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                    @if(\Auth::user()->can('users_module_users_manage'))
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-indicator" href="#users" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                    <span class="nav-link-text">{{ __('إدارة المستخدمين') }}</span>
+                                </div>
+                            </a>
+                            <ul class="nav collapse @if(isset($activePage['users'])) show @endif" id="users" data-parent="#navbarVerticalCollapse">
+                                <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'roles') active @endif">
+                                    <a class="nav-link" href="{{ url('/') }}/users/roles/manage">{{ __('الأدوار') }}</a>
+                                </li>
+                                
+                                <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'permissions') active @endif">
+                                    <a class="nav-link" href="{{ url('/') }}/users/permissions/manage">{{ __('الصلاحيات') }}</a>
+                                </li>
+                                
+                                <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'users') active @endif">
+                                    <a class="nav-link" href="{{ url('/') }}/users/manage">{{ __('المستخدمين') }}</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        @endif
 
-                     <li class="nav-item">
-                         <a class="nav-link dropdown-indicator" href="#users" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
-                             <div class="d-flex align-items-center">
-                                 <span class="nav-link-icon"><span class="fas fa-users"></span></span>
-                                 <span class="nav-link-text">{{ __('إدارة المستخدمين') }}</span>
-                             </div>
-                         </a>
-                         <ul class="nav collapse @if(isset($activePage['users'])) show @endif" id="users" data-parent="#navbarVerticalCollapse">
-                             <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'roles') active @endif">
-                                 <a class="nav-link" href="{{ url('/') }}/users/roles/manage">{{ __('الأدوار') }}</a>
-                             </li>
- 
-                             <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'permissions') active @endif">
-                                 <a class="nav-link" href="{{ url('/') }}/users/permissions/manage">{{ __('الصلاحيات') }}</a>
-                             </li>
- 
-                             <li class="nav-item @if(isset($activePage['users']) && $activePage['users'] == 'users') active @endif">
-                                 <a class="nav-link" href="{{ url('/') }}/users/manage">{{ __('المستخدمين') }}</a>
-                             </li>
- 
-                         </ul>
-                     </li>
+                 </ul>
+                 <div class="navbar-vertical-divider">
+                    <hr class="navbar-vertical-hr my-2" />
+                </div>
+                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                    @if(
+                        \Auth::user()->can('core_module_countries_manage') ||
+                        \Auth::user()->can('customers_module_categories_of_contracts_manage')
+                    )
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-indicator" href="#core" data-toggle="collapse" role="button" @if(isset($activePage['core'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="fas fa-cog"></span></span>
+                                <span class="nav-link-text">إدارة ثوابت النظام</span>
+                            </div>
+                        </a>
+                        <ul class="nav collapse @if(isset($activePage['core'])) show @endif" id="core" data-parent="#navbarVerticalCollapse">
+                            @if(\Auth::user()->can('core_module_countries_manage'))
+                            <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'countries') active @endif">
+                                <a class="nav-link" href="{{ url('/') }}/countries/manage">إدارة بيانات الدول</a>
+                            </li>
+                            @endif
+    
+                            @if(\Auth::user()->can('customers_module_categories_of_contracts_manage'))
+                            <li class="nav-item @if(isset($activePage['categories_of_contracts']) && $activePage['categories_of_contracts'] == 'categories_of_contracts') active @endif">
+                                <a class="nav-link" href="{{ url('/') }}/categories_of_contracts/manage">إدارة أنواع العقود</a>
+                            </li>
+                            @endif
+                        </ul>
+                    </li>
+                  @endif 
+
                  </ul>
             </ul> 
         </div>

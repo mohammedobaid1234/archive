@@ -14,7 +14,7 @@ class PermissionsController extends Controller{
     private $model = \Spatie\Permission\Models\Permission::class;
 
     public function index(Request $request){
-        // $this->can('users_module_permissions_manage');
+        $this->can('users_module_permissions_manage');
 
         // return \Spatie\Permission\Models\Permission::all();
         // $role = \Spatie\Permission\Models\Role::where("name", "system_administration")->first();
@@ -36,7 +36,7 @@ class PermissionsController extends Controller{
     }
     
     public function manage(Request $request){
-        // $this->can('users_module_permissions_manage', 'view');
+        $this->can('users_module_permissions_manage', 'view');
 
         $data['activePage'] = ['users' => 'permissions'];
         $data['breadcrumb'] = [
@@ -64,7 +64,7 @@ class PermissionsController extends Controller{
     }
 
     public function update(Request $request, $id){
-        // $this->can('users_module_role_permissions_update');
+        $this->can('users_module_role_permissions_update');
 
         $request->validate([
             'name' => 'required',

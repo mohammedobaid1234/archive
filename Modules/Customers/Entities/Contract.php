@@ -26,7 +26,7 @@ class Contract extends Model  implements HasMedia {
         $image = $this->getMedia('contract_image')->first();
 
         if($image){
-            return url('/') . '/storage/app/public/' . $image->id . '/' . substr($image->file_name, 0, -4) . '.pdf';
+            return url('/') . '/storage/app/public/' . $image->id . '/' . $image->file_name;
         }
 
         return asset('/public/themes/Falcon/v2.8.0/assets/img/team/avatar.png');
@@ -73,7 +73,7 @@ class Contract extends Model  implements HasMedia {
             'classes' => ['select2'],
             'required' => true,
             'data' => [
-                'options_source' => 'categories_of_contacts',
+                'options_source' => 'categories_of_contracts',
                 'placeholder' => 'نوع العقد...'
             ],
             'operations' => [
