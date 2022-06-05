@@ -48,6 +48,7 @@ class User extends Authenticatable {
 
         return false;
     }
+    
     public function getNameAttribute(){
         return $this->userable->first_name . " " . $this->userable->last_name;
     }

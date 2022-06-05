@@ -319,8 +319,8 @@
                             @endif
                         </ul>
                     </li>
-                  @endif 
-
+                    
+                    @endif 
                  </ul>
             </ul> 
         </div>

@@ -4,6 +4,7 @@ namespace Modules\Users\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionsController extends Controller{
@@ -75,7 +76,6 @@ class PermissionsController extends Controller{
         if($request->type !== 'user' && $request->type !== 'role'){
             return response()->json(['message' => 'fail'], 403);
         }
-
         if($request->type == 'user'){
             $target = \Modules\Users\Entities\User::whereId($id)->first();
         }
@@ -83,7 +83,6 @@ class PermissionsController extends Controller{
         if($request->type == 'role'){
             $target = \Spatie\Permission\Models\Role::whereId($id)->first();
         }
-
         if($request->value == 'true'){
             $target->givePermissionTo($request->name);
         }else{
