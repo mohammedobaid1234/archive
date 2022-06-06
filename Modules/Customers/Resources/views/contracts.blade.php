@@ -68,6 +68,52 @@
                             </div>
                         </div>`;
                     },
+                    contentForProduct:function(row,column){
+                        return `<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#contract-addition-details-${row.id}">
+                            تفاصيل إضافية للمولد
+                        </button> 
+                        <div class="modal fade" id="contract-addition-details-${row.id}" tabindex="-1" role="dialog" aria-labelledby="contract-addition-details-${row.id}Title" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle"> تفاصيل إضافية للمولد</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" height="600px">
+                                    ${row.product_for_user.other_details}
+                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    }, 
+                    contentForContract : function(row,column){
+                        return `<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#contract-addition-details-${row.id}">
+                            تفاصيل أخرى للعقد 
+                        </button>
+                        <div class="modal fade" id="contract-addition-details-${row.id}" tabindex="-1" role="dialog" aria-labelledby="contract-addition-details-${row.id}Title" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">تفاصيل أخرى للعقد</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" height="600px">
+                                    ${row.note.content}
+                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    }, 
                     operations: function(row, column){
                         var operations = '';
                         operations += '<a target="_blank" href="/customers/' + row.customer.id + '/profile" class="btn btn-falcon-info btn-sm mr-2" type="button" data-id="' + row.id + '"><span class="fas fa-user" data-fa-transform="shrink-3"></span></a>';
@@ -94,6 +140,8 @@
             $('#contract').bind('briskForm.update.done', function(event, response){
                 $("#datatable").briskDataTable('refresh');
             });
+
+            $('#datatable').addClass('table-bordered');
         });
     </script>
 

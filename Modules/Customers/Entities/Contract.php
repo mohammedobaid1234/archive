@@ -34,8 +34,8 @@ class Contract extends Model  implements HasMedia {
     public function customer(){
         return $this->belongsTo(\Modules\Customers\Entities\Customer::class, 'customer_id');
     }
-    public function motorForUser(){
-        return $this->hasOne(\Modules\Customers\Entities\MotorForCustomer::class);
+    public function product_for_user(){
+        return $this->hasOne(\Modules\Customers\Entities\ProductForCustomer::class);
     }
     public function note(){
         return $this->hasOne(\Modules\Customers\Entities\Note::class, 'contract_id');
@@ -45,9 +45,51 @@ class Contract extends Model  implements HasMedia {
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
 
+    public function scopeWhereCreatedAt($query, $created_at){
+        return $query->where(function($query) use ($created_at){
+            if(str_contains(trim($created_at), ' - ')){
+                $created_at = explode(' - ', $created_at);
+                $created_at_from = $created_at[0];
+                $created_at_from = $created_at[1];
 
+                $query->whereDate('created_at', '>=', date('Y-m-d', strtotime(trim($created_at[0]))));
+                $query->whereDate('created_at', '<=', date('Y-m-d', strtotime(trim($created_at[1]))));
+            }else{
+                $query->whereDate('created_at', date('Y-m-d', strtotime(trim($created_at))));
+            }
+        });
+    }
     public function category_of_contract(){
         return $this->belongsTo(\Modules\Customers\Entities\CategoriesOfContracts::class, 'category_of_contract');
+    }
+    
+    public function scopeWhereStaredAt($query, $started_at){
+        return $query->whereHas('product_for_user',function($query) use ($started_at){
+            if(str_contains(trim($started_at), ' - ')){
+                $started_at = explode(' - ', $started_at);
+                $started_at_from = $started_at[0];
+                $started_at_from = $started_at[1];
+
+                $query->whereDate('contract_starting_date', '>=', date('Y-m-d', strtotime(trim($started_at[0]))));
+                $query->whereDate('contract_starting_date', '<=', date('Y-m-d', strtotime(trim($started_at[1]))));
+            }else{
+                $query->whereDate('contract_starting_date', date('Y-m-d', strtotime(trim($started_at))));
+            }
+        });
+    }
+    public function scopeWhereEndedAt($query, $ended_at){
+        return $query->whereHas('product_for_user',function($query) use ($ended_at){
+            if(str_contains(trim($ended_at), ' - ')){
+                $ended_at = explode(' - ', $ended_at);
+                $ended_at_from = $ended_at[0];
+                $ended_at_from = $ended_at[1];
+
+                $query->whereDate('contract_ending_date', '>=', date('Y-m-d', strtotime(trim($ended_at[0]))));
+                $query->whereDate('contract_ending_date', '<=', date('Y-m-d', strtotime(trim($ended_at[1]))));
+            }else{
+                $query->whereDate('contract_ending_date', date('Y-m-d', strtotime(trim($ended_at))));
+            }
+        });
     }
 
     public function _customer_id(){
@@ -80,53 +122,53 @@ class Contract extends Model  implements HasMedia {
                 'placeholder' => 'اسم  الموظف المكلف...'
             ],
             'operations' => [
-                'show' => ['text' => 'motorForUser.employee.full_name', 'id' => 'employee_id'],
+                'show' => ['text' => 'productForUser.employee.full_name', 'id' => 'employee_id'],
                 'update' => ['active' => false]
             ]
         ];
     }
-    public function _motor_type(){
+    public function _product_type(){
         return [
             'title' => 'نوع المولد', 
             'input' => 'input', 
-            'name' => 'motor_type', 
+            'name' => 'product_type', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.motor_type']
+                'show' => ['text' => 'productForUser.product_type']
             ]
         ];
     }
 
-    public function _motor_model(){
+    public function _product_model(){
         return [
             'title' => 'موديل المولد', 
             'input' => 'input', 
-            'name' => 'motor_model', 
+            'name' => 'product_model', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.motor_model']
+                'show' => ['text' => 'productForUser.product_model']
             ]
         ];
     }
-    public function _motor_capacity(){
+    public function _product_capacity(){
         return [
             'title' => 'قدرة المولد', 
             'input' => 'input', 
-            'name' => 'motor_capacity', 
+            'name' => 'product_capacity', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.motor_capacity']
+                'show' => ['text' => 'productForUser.product_capacity']
             ]
         ];
     }
-    public function _motor_price(){
+    public function _product_price(){
         return [
             'title' => 'سعر البيع', 
             'input' => 'input', 
-            'name' => 'motor_price', 
+            'name' => 'product_price', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.motor_price']
+                'show' => ['text' => 'productForUser.product_price']
             ]
         ];
     }
@@ -154,7 +196,7 @@ class Contract extends Model  implements HasMedia {
             'name' => 'other_details', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.other_details']
+                'show' => ['text' => 'productForUser.other_details']
             ]
         ];
     }
@@ -166,7 +208,7 @@ class Contract extends Model  implements HasMedia {
             'name' => 'contract_starting_date', 
             'required' => true, 
             'operations' => [
-                'show' => ['text' => 'motorForUser.contract_starting_date']
+                'show' => ['text' => 'productForUser.contract_starting_date']
             ]
         ];
     }
@@ -177,7 +219,7 @@ class Contract extends Model  implements HasMedia {
             'date' => 'true',
             'name' => 'contract_ending_date', 
             'operations' => [
-                'show' => ['text' => 'motorForUser.contract_ending_date']
+                'show' => ['text' => 'productForUser.contract_ending_date']
             ]
         ];
     }

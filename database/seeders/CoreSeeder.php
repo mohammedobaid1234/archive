@@ -53,9 +53,11 @@ class CoreSeeder extends Seeder{
         }
 
         $cm_categories_of_contracts = [
-            ['name' => 'بيع'],
-            ['name' => 'صيانة'],
+            ['name' => ' عقد إتفاق بيع مولد'],
+            ['name' => 'عقد صيانة مولد كهربائي'],
+            ['name' => ' عقد إتفاق شراء مولد'],
             ['name' => 'فواتير بيع'],
+            ['name' => 'فواتير شراء'],
         ];
         foreach($cm_categories_of_contracts as $row){
             $record = new \Modules\Customers\Entities\CategoriesOfContracts;

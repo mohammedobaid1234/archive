@@ -18,12 +18,9 @@ Route::middleware(['auth'])->group(function() {
 
         Route::prefix('{customer_id}')->group(function() {
             Route::post('reset-password', 'CustomersController@reset_password');
-
             Route::get('/profile', 'ProfileController@index');
-            Route::prefix('notes')->group(function() {
-                Route::get('/', 'NoteController@index');
-                Route::post('/', 'NoteController@store');
-            });
+            Route::get('/contracts/datatable', 'ContractsForCustomerController@datatable');
+            Route::get('/products/datatable', 'ProductsForCustomerController@datatable');
         });
     });
     Route::resource('customers', CustomersController::class);

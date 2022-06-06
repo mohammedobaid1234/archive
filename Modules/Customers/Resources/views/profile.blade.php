@@ -44,6 +44,9 @@
                     <div class="fancy-tab" id="customer-main-tabs" data-customer-id="{{ $customer->id }}">
                         <div class="nav-bar nav-bar-left p-1">
                             <div class="nav-bar-item px-3 px-sm-4 active" data-tab-hash="information">الصفحة الشخصية</div>
+                            <div class="nav-bar-item px-3 px-sm-4" data-tab-hash="contracts">العقود</div>
+                            <div class="nav-bar-item px-3 px-sm-4" data-tab-hash="products">المولدات</div>
+
                         </div>
                         <div class="tab-contents mt-3">
                             <div class="tab-content active" data-tab="#information" id="customer-settings">
@@ -119,7 +122,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+                            <div class="tab-content" data-tab="#contracts">
+                                <div id="datatable-contracts"></div>
+                            </div>
+                            <div class="tab-content" data-tab="#products">
+                                <div id="datatable-products"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -275,7 +283,4 @@
     </script>
 
     <script src="{{ asset('/Modules/Customers/Resources/assets/js/profile/customer.js?vid=202110104') }}"></script>
-    <script src="{{ asset('/Modules/Customers/Resources/assets/js/profile/create-product.js?vid=202110104') }}"></script>
-    <script src="{{ asset('/Modules/Customers/Resources/assets/js/profile/notes.js?vid=202110104') }}"></script>
-
 @endsection
