@@ -46,6 +46,7 @@
                             <div class="nav-bar-item px-3 px-sm-4 active" data-tab-hash="information">الصفحة الشخصية</div>
                             <div class="nav-bar-item px-3 px-sm-4" data-tab-hash="contracts">العقود</div>
                             <div class="nav-bar-item px-3 px-sm-4" data-tab-hash="products">المولدات</div>
+                            <div class="nav-bar-item px-3 px-sm-4" data-tab-hash="receipt-statements">إيصالات القبض</div>
 
                         </div>
                         <div class="tab-contents mt-3">
@@ -127,6 +128,9 @@
                             </div>
                             <div class="tab-content" data-tab="#products">
                                 <div id="datatable-products"></div>
+                            </div>
+                            <div class="tab-content" data-tab="#receipt-statements">
+                                <div id="datatable-receipt-statements"></div>
                             </div>
                         </div>
                     </div>

@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/profile', 'ProfileController@index');
             Route::get('/contracts/datatable', 'ContractsForCustomerController@datatable');
             Route::get('/products/datatable', 'ProductsForCustomerController@datatable');
+            Route::get('/receipt_statements/datatable', 'ReceiptStatementsForCustomerController@datatable');
         });
     });
     Route::resource('customers', CustomersController::class);
@@ -35,5 +36,11 @@ Route::middleware(['auth'])->group(function() {
         Route::get('datatable', 'CategoriesOfContractsController@datatable');
     });
     Route::resource('categories_of_contracts', CategoriesOfContractsController::class);
+
+    Route::prefix('receipt_statements')->group(function() {
+        Route::get('manage', 'ReceiptStatementsController@manage');
+        Route::get('datatable', 'ReceiptStatementsController@datatable');
+    });
+    Route::resource('receipt_statements', ReceiptStatementsController::class);
 
 });

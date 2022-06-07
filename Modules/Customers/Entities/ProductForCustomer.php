@@ -12,14 +12,14 @@ class ProductForCustomer extends Model{
 
     protected $table = 'cm_products_for_customers';
 
-    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a','contract_starting_date' => 'datetime:Y-m-d H:i:s a','contract_ending_date' => 'datetime:Y-m-d H:i:s a'];
+    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];
     
     protected $with=['employee:id,full_name','customer:id,full_name','currency:id,name'];
 
    
 
     public function employee(){
-        return $this->belongsTo(\Modules\Employees\Entities\Employee::class, 'customer_id');
+        return $this->belongsTo(\Modules\Employees\Entities\Employee::class, 'employee_id');
     }
 
     public function customer(){

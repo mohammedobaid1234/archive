@@ -195,6 +195,19 @@
                         </li>
                     @endif
                 @endif
+
+                @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
+                    @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
+                        <li class="nav-item @if(isset($activePage['receipt_statements'])) active @endif">
+                            <a class="nav-link" href="{{ url('/') }}/receipt_statements/manage">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                    <span class="nav-link-text">أرشيف إيصالات القيض </span>
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                @endif
             </ul>
             <div class="navbar-vertical-divider">
                 <hr class="navbar-vertical-hr my-2" />
@@ -296,7 +309,8 @@
                  <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     @if(
                         \Auth::user()->can('core_module_countries_manage') ||
-                        \Auth::user()->can('customers_module_categories_of_contracts_manage')
+                        \Auth::user()->can('customers_module_categories_of_contracts_manage') ||
+                        \Auth::user()->can('core_module_banks_manage')
                     )
                     <li class="nav-item">
                         <a class="nav-link dropdown-indicator" href="#core" data-toggle="collapse" role="button" @if(isset($activePage['core'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
@@ -309,6 +323,11 @@
                             @if(\Auth::user()->can('core_module_countries_manage'))
                             <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'countries') active @endif">
                                 <a class="nav-link" href="{{ url('/') }}/countries/manage">إدارة بيانات الدول</a>
+                            </li>
+                            @endif
+                            @if(\Auth::user()->can('core_module_banks_manage'))
+                            <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'banks') active @endif">
+                                <a class="nav-link" href="{{ url('/') }}/banks/manage">إدارة بيانات البنوك</a>
                             </li>
                             @endif
     

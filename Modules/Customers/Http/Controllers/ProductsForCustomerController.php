@@ -64,7 +64,6 @@ class ProductsForCustomerController extends Controller
             ['title' => 'صورة العقد ', 'column' => 'contract_image_url',  'formatter' => 'contract_image'],
             ['title' => 'بيانات إضافية للمولد', 'column' => 'product_for_user.other_details',  'formatter' => 'contentForProduct'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
-            ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 
         return response()->json($this->datatableInitializer($request, $eloquent, $filters, $columns));

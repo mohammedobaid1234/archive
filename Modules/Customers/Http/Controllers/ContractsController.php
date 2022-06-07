@@ -127,13 +127,13 @@ class ContractsController extends Controller{
             ['title' => 'رقم العقد', 'column' => 'product_for_user.contract_number'],
             ['title' => 'الاسم العميل', 'column' => 'customer.full_name'],
             ['title' => 'اسم الموظف المكلف', 'column' => 'product_for_user.employee.full_name'],
-            ['title' => 'نوع العقد', 'column' => 'category_of_contract.name'],
             ['title' => ' تفاصيل أخرى للعقد', 'column' => 'note.content',  'formatter' => 'contentForContract'],
             ['title' => 'الرقم التسلسلي', 'column' => 'product_for_user.serial_number'],
             ['title' => ' نوع المولد', 'column' => 'product_for_user.product_type'],
             ['title' => ' موديل المولد', 'column' => 'product_for_user.product_model'],
             ['title' => ' سعة المولد', 'column' => 'product_for_user.product_capacity'],
-            ['title' => ' سعر البيع', 'column' => 'product_for_user.product_price'],
+            ['title' => 'نوع العقد', 'column' => 'category_of_contract.name'],
+            ['title' => ' قيمة العقد ', 'column' => 'product_for_user.product_price'],
             ['title' => ' نوع العملة', 'column' => 'product_for_user.currency.name'],
             ['title' => ' تاريخ بدء العقد', 'column' => 'product_for_user.contract_starting_date'],
             ['title' => ' تاريخ نهاية العقد', 'column' => 'product_for_user.contract_ending_date'],
@@ -170,7 +170,6 @@ class ContractsController extends Controller{
 
         if($product){
             return response()->json(['message' => "رقم العقد موجود مسبقا."], 403);
-
         }
         $customer = \Modules\Customers\Entities\Customer::where('id', $request->customer_id)->first();
         if(!$customer){
@@ -261,7 +260,7 @@ class ContractsController extends Controller{
                  ['title' => 'رقم العقد ', 'input' => 'input', 'name' => 'contract_number', 'required' => true,'operations' => ['show' => ['text' => 'product_for_user.contract_number']]],
                 [
                     ['title' => 'اسم العميل', 'input' => 'select', 'name' => 'customer_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...'],'operations' => ['show' => ['text' => 'customer.full_name', 'id' => 'customer_id']]],
-                    ['title' => 'اسم الموظف المكلف', 'input' => 'select', 'name' => 'employee_id', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'employees', 'placeholder' => 'اسم  الموظف المكلف...'],'operations' => ['show' => ['text' => 'product_for_user.employee.full_name', 'id' => 'product_for_user.customer.id']]],
+                    ['title' => 'اسم الموظف المكلف', 'input' => 'select', 'name' => 'employee_id', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'employees', 'placeholder' => 'اسم  الموظف المكلف...'],'operations' => ['show' => ['text' => 'product_for_user.employee.full_name', 'id' => 'product_for_user.employee.id']]],
                 
                 ],
                 [
@@ -275,7 +274,7 @@ class ContractsController extends Controller{
                 ],
                 ['title' => 'تفاصيل أخرى للمولد', 'input' => 'textarea', 'name' => 'other_details', 'required' => true, 'placeholder' => '  تفاصيل أخرى للمولد ...','operations' => ['show' => ['text' => 'product_for_user.other_details']]],
                 [
-                    ['title' =>  'نوع العقد', 'input' => 'select', 'name' => 'category_of_contract', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'categories_of_contracts', 'placeholder' =>'نوع العقد...'],'operations' => ['show' => ['text' => 'category_of_contract.name', 'id' => 'category_of_contract'],'update' => ['text' => 'category_of_contract.name', 'id' => 'category_of_contract.id']]],
+                    ['title' =>  'نوع العقد', 'input' => 'select', 'name' => 'category_of_contract', 'required' => true, 'classes' => ['select2'], 'data' => ['options_source' => 'categories_of_contracts', 'placeholder' =>'نوع العقد...'],'operations' => ['show' => ['text' => 'category_of_contract.name', 'id' => 'category_of_contract.id'],'update' => ['text' => 'category_of_contract.name', 'id' => 'category_of_contract.id']]],
                     ['title' => 'تاريخ بداية العقد', 'input' => 'input', 'name' => 'contract_starting_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'product_for_user.contract_starting_date']]],
                     ['title' =>  ' (للصيانة فقط)تاريخ نهاية العقد', 'input' => 'input', 'name' => 'contract_ending_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'product_for_user.contract_ending_date']]],
                     
@@ -292,62 +291,97 @@ class ContractsController extends Controller{
         return $this->model::with(['customer', 'created_by_user', 'category_of_contract', 'note','product_for_user'])->whereId($id)->first();
     }
 
-    public function update(Request $request, $customer_id){
+    public function update(Request $request, $contract_id){
         \Auth::user()->authorize('customers_module_contracts_update');
         $request->validate([
-            'mobile_no' => 'required'
+            'contract_number' => 'required',
+            'customer_id' => 'required',
+            'employee_id' => 'required',
+            'product_type' => 'required',
+            'product_model' => 'required',
+            'product_capacity' => 'required',
+            'product_price' => 'required',
+            'currency_id' => 'required',
+            'other_details' => 'required|string',
+            'category_of_contract' => 'required',
+            'serial_number' => 'required',
+            'content' => 'required|string',
         ]);
-
-        if (trim($request->mobile_no) !== "") {
-            if (strlen(trim($request->mobile_no)) !== 10) {
-                return response()->json(['message' => "يرجى التحقق من صحة رقم الجوال."], 403);
-            }
-
-            if (\Modules\Customers\Entities\Customer::where('id', '<>', $customer_id)->where('mobile_no', trim($request->mobile_no))->count()) {
-                return response()->json(['message' => "لا يمكن تكرار رقم الجوال"], 403);
-            }
+        $product = \Modules\Customers\Entities\ProductForCustomer::where('contract_id', '<>', $contract_id)->where('contract_number', $request->contract_number)->first();
+        if($product){
+            return response()->json(['message' => "رقم العقد موجود مسبقا."], 403);
         }
-
-        if (trim($request->mobile_no) !== "") {
-            if (\Modules\Users\Entities\User::where('userable_id', '<>', $customer_id)->where('email', trim($request->mobile_no))->count()) {
-                return response()->json(['message' => "لا يمكن تكرار رقم الجوال"], 403);
-            }
+        $customer = \Modules\Customers\Entities\Customer::where('id', $request->customer_id)->first();
+        if(!$customer){
+            return response()->json(['message' => "يرجى التحقق من العميل."], 403);
         }
-
-        if(trim($request->type) == "شركة" && trim($request->company_name) == ""){
-            return response()->json(['message' => "يرجى التحقق من ادخال اسم الشركة."], 403);
+        $employee_id = \Modules\Employees\Entities\Employee::whereId($request->employee_id)->first();
+        if(!$employee_id){
+            return response()->json(['message' => "يرجى التحقق من الموظف المكلف."], 403);
         }
+        $categories_of_contacts = \Modules\Customers\Entities\CategoriesOfContracts::where('id', $request->category_of_contract)->first();
+        if(!$categories_of_contacts ){
+            return response()->json(['message' => "يرجى التحقق من نوع العقد."], 403);
+        }
+       if(!$request->contract_starting_date){
+           $request->merge([
+               'contract_starting_date' => now()
+           ]);
+       }
+       if($categories_of_contacts->id == 2){
+        if(!$request->contract_ending_date){
+        return response()->json(['message' => "يرجى إضافة تاريخ انتهاء العقد ."], 403);
+        } 
+        if($request->contract_starting_date > $request->contract_ending_date){
+            return response()->json(['message' => "التاريخ المدخل غير منطقي ."], 403);
+           }
+       }
+       if($categories_of_contacts->id == 1){
+        if($request->contract_ending_date){
+            return response()->json(['message' => "يرجى إزالة تاريخ انتهاء العقد ."], 403);
+            }  
+       }
 
         \DB::beginTransaction();
         try {
+            $contract = \Modules\Customers\Entities\Contract::whereId($contract_id)->first();
+            $contract->category_of_contract = $request->category_of_contract;
+            $contract->customer_id = $request->customer_id;
+            $contract->created_by = \Auth::user()->id;
+            $contract->save();
 
-            $customer = \Modules\Customers\Entities\Customer::whereId($customer_id)->first();
-            $customer->type = trim($request->type);
-            $customer->mobile_no = trim($request->mobile_no);
-            $customer->province_id = trim($request->province_id) ? trim($request->province_id) : NULL;
-            $customer->address = trim($request->address) ? trim($request->address) : NULL;
-
-            $customer->save();
+            $note = \Modules\Customers\Entities\Note::where('contract_id', $contract_id)->first();
+            $note->content = $request->content;
+            $note->customer_id = $request->customer_id;
+            $note->created_by = \Auth::user()->id;
+            $note->save();
             
-            $company = \Modules\Customers\Entities\Company::where('owner_id', $customer->id)->first();
+            $ProductForCustomer = \Modules\Customers\Entities\ProductForCustomer::where('contract_id', $contract_id)->first();;
+            $ProductForCustomer->contract_number = $request->contract_number;
+            $ProductForCustomer->serial_number = $request->serial_number;
+            $ProductForCustomer->employee_id = $request->employee_id;
+            $ProductForCustomer->customer_id = $request->customer_id;
+            $ProductForCustomer->customer_id = $request->customer_id;
+            $ProductForCustomer->product_type = $request->product_type;
+            $ProductForCustomer->product_model = $request->product_model;
+            $ProductForCustomer->product_capacity = $request->product_capacity;
+            $ProductForCustomer->product_price = $request->product_price;
+            $ProductForCustomer->other_details = $request->other_details;
+            $ProductForCustomer->currency_id = $request->currency_id;
+            $ProductForCustomer->contract_starting_date = $request->contract_starting_date;
+            $ProductForCustomer->contract_ending_date = $request->contract_ending_date;
+            $ProductForCustomer->save();
+            
+            if($request->hasFile('image') && $request->file('image')[0]->isValid()){
+                $extension = strtolower($request->file('image')[0]->extension());
+                $media_new_name = strtolower(md5(time())) . "." . $extension;
+                $collection = "contract_image";
 
-            if($company){
-                $company->name = trim($request->company_name);
-                $company->save();
+                $contract->addMediaFromRequest('image[0]')
+                        ->usingFileName($media_new_name)
+                        ->usingName($request->file('image')[0]->getClientOriginalName())
+                        ->toMediaCollection($collection);
             }
-
-            $user = \Modules\Users\Entities\User::where('userable_type', 'Modules\Customers\Entities\Customer')->where('userable_id', $customer_id)->first();
-
-            if (!$user) {
-                $user = new \Modules\Users\Entities\User;
-                $user->userable_id = $customer->id;
-                $user->userable_type = "Modules\Customers\Entities\Customer";
-                $user->password = \Illuminate\Support\Facades\Hash::make(rand(1000000, 9999999));
-                $user->created_by = \Auth::user()->id;
-            }
-
-            $user->email = $customer->mobile_no;
-            $user->save();
 
             \DB::commit();
         } catch (\Exception $e) {

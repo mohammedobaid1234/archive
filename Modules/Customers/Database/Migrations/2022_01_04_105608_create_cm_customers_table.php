@@ -29,6 +29,7 @@ class CreateCmCustomersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('province_id')->references('id')->on('core_country_provinces');
             $table->foreign('created_by')->references('id')->on('users');
         });
     }

@@ -30,5 +30,11 @@ Route::middleware(['auth'])->group(function() {
         });
     });
     Route::resource('countries', CountriesController::class);
+
+    Route::prefix('banks')->group(function() {
+        Route::get('manage', 'BanksController@manage');
+        Route::get('datatable', 'BanksController@datatable');
+    });
+    Route::resource('banks', BanksController::class);
 });
 

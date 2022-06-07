@@ -112,7 +112,6 @@ class ContractsForCustomerController extends Controller{
             ['title' => 'بيانات إضافية للمولد', 'column' => 'product_for_user.other_details',  'formatter' => 'contentForProduct'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'بواسطة', 'column' => 'created_by_user.name'],
-            ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 
         return response()->json($this->datatableInitializer($request, $eloquent, $filters, $columns));

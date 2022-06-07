@@ -92,6 +92,7 @@ let GLOBALS = {
                 ]
             });
         },
+        
         provinces: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="provinces"]');
@@ -169,6 +170,34 @@ let GLOBALS = {
                         title: "name"
                     }
                 }
+            });
+        },
+        banks: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="banks"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/banks",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
+        payment_methods: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="payment_methods"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'نقدا', name: "نقدا"},
+                    {id: 'شيك', name: "شيك"},
+                ]
             });
         },
     }
