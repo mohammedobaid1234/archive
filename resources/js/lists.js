@@ -156,6 +156,22 @@ let GLOBALS = {
                 }
             });
         },
+        categoriesOfProducts: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="categoriesOfProducts"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/categories",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
         currencies: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="currencies"]');

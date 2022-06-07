@@ -4,5 +4,6 @@
     "Employee": true,
     "Employees": true,
     "Customers": true,
-    "Core": true
+    "Core": true,
+    "Products": true
 }

@@ -60,7 +60,7 @@
                 <hr class="navbar-vertical-hr my-2" />
                 
             </div>
-            {{-- <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                 @if(
                     \Auth::user()->can('products_module_customers_manage') ||
                     \Auth::user()->can('products_module_attributes_manage') ||
@@ -68,7 +68,7 @@
                 )
                     @if(\Auth::user()->can('products_module_categories_manage'))
                         <li class="nav-item @if(isset($activePage['categories'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/products/categories/manage">
+                            <a class="nav-link" href="{{ url('/') }}/categories/manage">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-icon"><span class="fas fa-sitemap"></span></span>
                                     <span class="nav-link-text">إدارة التصنيفات</span>
@@ -77,16 +77,6 @@
                         </li>
                     @endif
 
-                    @if(\Auth::user()->can('products_module_attributes_manage'))
-                        <li class="nav-item @if(isset($activePage['attributes'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/products/attributes/manage">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">إدارة المواصفات</span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
 
                     @if(\Auth::user()->can('products_module_products_manage'))
                         <li class="nav-item @if(isset($activePage['products'])) active @endif">
@@ -98,7 +88,8 @@
                             </a>
                         </li>
                     @endif
-
+                    @endif
+                    {{--  
                     @if(\Auth::user()->can('products_module_carts_manage'))
                         <li class="nav-item @if(isset($activePage['carts'])) active @endif">
                             <a class="nav-link" href="{{ url('/') }}/products/carts/manage">
