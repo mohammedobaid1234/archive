@@ -58,11 +58,11 @@
             });
             
             $('button[data-action="sales_invoice-create"]').click(function () {
+                
                 $row =$('input[data-operations-show-text="price_of_unit"]').parent().closest('.col-4');
                 $('input[data-operations-show-text="price_of_unit"]').attr('data-action', 'tabPress');
                 $('input[data-operations-show-text="price_of_unit"]').parent().closest('.col-4').addClass('price');
                 $('select[data-options_source="products"]').change(function () { 
-                    console.log('object');
                     $this = $(this);
                     $value = $(this).val();
                     if($value != null){
@@ -70,9 +70,9 @@
                             $parent = $this.closest(".row").children(".price").children('div').children('input').val(response.price);
                         })
                     }
+               
                 });
                 $(".form-group").on('click', 'input[name="price_of_unit[]"]', function(e) {
-                    console.log('object');
                 });
                 $(".form-group").on('keydown', 'input[data-action="tabPress"]', function(e) { 
                     var keyCode = e.keyCode || e.which; 
@@ -95,12 +95,21 @@
                         <div class="col-4 price">
                             <div class="form-group no-margin-hr"> 
                                 <label class="control-label" briskform-input-name=""></label>
-                                <input type="text" name="price_of_unit[]" placeholder="" class="form-control child" autocomplete="off" data-operations-show-text="price_of_unit"> 
+                                <input type="text" data-action="tabPress" name="price_of_unit[]" placeholder="" class="form-control child" autocomplete="off" data-operations-show-text="price_of_unit"> 
                             </div>
                         </div>
                         </div>
                         `);
-                        
+                        $(".form-group").on('keydown', 'input[data-action="tabPress"]', function(e) { 
+                        var keyCode = e.keyCode || e.which; 
+                        console.log('object');
+                        if (keyCode == 9) { 
+                            
+                            e.preventDefault();
+                            appends();
+                        }
+                        });
+                                
 
                         $('.js-example-basic-single').select2();
                         $.get($("meta[name='BASE_URL']").attr("content") + '/products', function(response){
@@ -110,7 +119,7 @@
                             }
                         })
                         $('select[data-options_source="products"]').change(function () { 
-                        console.log('object');
+
                         $this = $(this);
                         $value = $(this).val();
                         if($value != null){
@@ -121,8 +130,8 @@
                     
                         });
                         
-                        console.log($('input[data-operations-show-text="price_of_unit"]'));
                     } 
+                   
                 });
                         
                 function appends(){
@@ -152,6 +161,15 @@
                         </div>
                         </div>
                         `);
+                        $(".form-group").on('keydown', 'input[data-action="tabPress"]', function(e) { 
+                        var keyCode = e.keyCode || e.which; 
+                        console.log('object');
+                        if (keyCode == 9) { 
+                            
+                            e.preventDefault();
+                            appends();
+                        }
+                        });
                         $('input[data-operations-show-text="price_of_unit"]').attr('data-action', 'tabPress');
 
                         $('.js-example-basic-single').select2();
@@ -162,7 +180,7 @@
                             }
                         })
                         $('select[data-options_source="products"]').change(function () { 
-                        console.log('object');
+
                         $this = $(this);
                         $value = $(this).val();
                         if($value != null){
