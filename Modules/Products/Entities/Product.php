@@ -4,40 +4,27 @@ namespace Modules\Products\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Product extends Model implements HasMedia {
+class Product extends Model {
     use SoftDeletes;
     use \Modules\BriskCore\Traits\ModelTrait;
-    use \Modules\BriskCore\Traits\ModelActiveTrait;
-    use InteractsWithMedia;
 
     protected $table = 'pm_products';
     protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];
-
-
-    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void{
-        $this->addMediaConversion('thumb')
-              ->width(600)
-              ->height(600)
-              ->nonQueued();
-    }
 
     public function category(){
         return $this->belongsTo(\Modules\Products\Entities\Category::class, 'category_id');
     }
 
-    public function province(){
-        return $this->belongsTo(\Modules\Core\Entities\CountryProvince::class, 'province_id');
-    }
     public function currency(){
         return $this->belongsTo(\Modules\Core\Entities\Currency::class, 'currency_id');
     }
+    public function created_by_user(){
+        return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
+    }
 
 
-    public function scopeWhereFullNameLike($query, $name){
+    public function scopeWhereNameLike($query, $name){
         $name = str_replace("أ", "ا", $name);
         $name = str_replace("إ", "ا", $name);
         $name = str_replace("ة", "ه", $name);

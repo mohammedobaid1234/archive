@@ -34,7 +34,7 @@
 
                         operations += '<button class="btn btn-falcon-default btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="category-show"><span class="fas fa-eye" data-fa-transform="shrink-3"></span></button>';
                         operations += '<button class="btn btn-falcon-primary btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="category-update"><span class="fas fa-edit" data-fa-transform="shrink-3"></span></button>';
-                        operations += '<a class="btn btn-falcon-default btn-sm" href="' + $("meta[name='BASE_URL']").attr("content") + '/categories/' + row.id + '/provinces/manage">المحافظات</button>';
+                        // operations += '<a class="btn btn-falcon-default btn-sm" href="' + $("meta[name='BASE_URL']").attr("content") + '/categories/' + row.id + '/provinces/manage">المحافظات</button>';
                          
                         return operations;
                     }

@@ -93,4 +93,31 @@ class CategoriesController extends Controller{
     public function show($id){
         return $this->model::whereId($id)->first();
     }
+    
+    public function update(Request $request,$category_id){
+        $this->can('products_module_categories_update');
+
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        if($this->model::where('id', '<>', $category_id)->where('name', trim($request->name))->count()){
+            return response()->json(['message' => 'لا يمكن تكرار اسم التصنيف.'], 403);
+        }
+
+        \DB::beginTransaction();
+        try{
+            $category = new $this->model;
+            $category->name = trim($request->name);
+            $category->created_by = \Auth::user()->id;
+            $category->save();
+
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        return response()->json(['message' => 'ok', 'category' => $category]);
+    }
 }
