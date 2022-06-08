@@ -43,4 +43,10 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::resource('receipt_statements', ReceiptStatementsController::class);
 
+    Route::prefix('sales_invoices')->group(function() {
+        Route::get('manage', 'SalesInvoicesController@manage');
+        Route::get('datatable', 'SalesInvoicesController@datatable');
+    });
+    Route::resource('sales_invoices', SalesInvoicesController::class);
+
 });

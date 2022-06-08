@@ -204,6 +204,22 @@ let GLOBALS = {
                 }
             });
         },
+        products: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="products"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/products",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
         payment_methods: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="payment_methods"]');

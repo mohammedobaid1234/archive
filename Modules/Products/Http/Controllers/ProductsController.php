@@ -28,8 +28,8 @@ class ProductsController extends Controller{
         }
 
         if((int) trim($request->all)){
-            return ["data" => $response->get()];
         }
+        return ["data" => $response->get()];
         
         return $response->paginate(20);
     }

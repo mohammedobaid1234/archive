@@ -199,6 +199,18 @@
                         </li>
                     @endif
                 @endif
+                @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
+                    @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
+                        <li class="nav-item @if(isset($activePage['sales_invoices'])) active @endif">
+                            <a class="nav-link" href="{{ url('/') }}/sales_invoices/manage">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                    <span class="nav-link-text">أرشيف المبيعات </span>
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                @endif
             </ul>
             <div class="navbar-vertical-divider">
                 <hr class="navbar-vertical-hr my-2" />
