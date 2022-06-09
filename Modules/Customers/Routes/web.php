@@ -48,5 +48,11 @@ Route::middleware(['auth'])->group(function() {
         Route::get('datatable', 'SalesInvoicesController@datatable');
     });
     Route::resource('sales_invoices', SalesInvoicesController::class);
+    
+    Route::prefix('sales_invoices_without_carts')->group(function() {
+        Route::get('manage', 'SalesInvoicesWithoutCartsController@manage');
+        Route::get('datatable', 'SalesInvoicesWithoutCartsController@datatable');
+    });
+    Route::resource('sales_invoices_without_carts', SalesInvoicesWithoutCartsController::class);
 
 });
