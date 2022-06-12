@@ -220,6 +220,7 @@ let GLOBALS = {
                 }
             });
         },
+        
         payment_methods: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="payment_methods"]');
@@ -229,6 +230,34 @@ let GLOBALS = {
                 options: [
                     {id: 'نقدا', name: "نقدا"},
                     {id: 'شيك', name: "شيك"},
+                ]
+            });
+        },
+        teams: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="teams"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/teams",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "name"
+                    }
+                }
+            });
+        },
+        type_in_team: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="type_in_team"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'مسؤول', name: "مسؤول"},
+                    {id: 'عضو', name: "عضو"},
                 ]
             });
         },

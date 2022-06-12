@@ -23,5 +23,11 @@ Route::prefix('employees')->group(function() {
     });
 });
 Route::resource('employees', EmployeesController::class);
+
+Route::prefix('teams')->group(function() {
+    Route::get('manage', 'TeamsController@manage');
+    Route::get('datatable', 'TeamsController@datatable');
+});
+Route::resource('teams', TeamsController::class);
 });
 

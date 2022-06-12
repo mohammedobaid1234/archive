@@ -173,57 +173,71 @@
                 @endif
             </ul>
              --}}
-            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
-                @if(\Auth::user()->can('contracts_module_contracts_manage'))
-                    @if(\Auth::user()->can('contracts_module_contracts_manage'))
-                        <li class="nav-item @if(isset($activePage['contracts'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/contracts/manage">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">أرشيف العقود </span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                @endif
-
-                @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
-                    @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
-                        <li class="nav-item @if(isset($activePage['receipt_statements'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/receipt_statements/manage">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">أرشيف إيصالات القيض </span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                @endif
-                @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
-                    @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
-                        <li class="nav-item @if(isset($activePage['sales_invoices'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/sales_invoices/manage">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">أرشيف المبيعات </span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                @endif
-                @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
-                    @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
-                        <li class="nav-item @if(isset($activePage['sales_invoices_without_cart'])) active @endif">
-                            <a class="nav-link" href="{{ url('/') }}/sales_invoices_without_carts/manage">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
-                                    <span class="nav-link-text">أرشيف فواتير البيع </span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                @endif
-            </ul>
+             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-indicator" href="#archive" data-toggle="collapse" role="button" @if(isset($activePage['contracts'])
+                        || isset($activePage['sales_invoices_without_cart']) 
+                        || isset($activePage['sales_invoices'])   
+                        || isset($activePage['receipt_statements']))
+                         aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="fas fa-archive"></span></span>
+                                <span class="nav-link-text">{{ __('الأرشيف ') }}</span>
+                            </div>
+                        </a>
+                        <ul class="nav collapse @if(isset($activePage['contracts'])) show @endif" id="archive" data-parent="#navbarVerticalCollapse">
+                                @if(\Auth::user()->can('contracts_module_contracts_manage'))
+                                @if(\Auth::user()->can('contracts_module_contracts_manage'))
+                                    <li class="nav-item @if(isset($activePage['contracts'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/contracts/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف العقود </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+            
+                            @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
+                                @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
+                                    <li class="nav-item @if(isset($activePage['receipt_statements'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/receipt_statements/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف إيصالات القيض </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                            @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
+                                @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
+                                    <li class="nav-item @if(isset($activePage['sales_invoices'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/sales_invoices/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف المبيعات </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                            @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
+                                @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
+                                    <li class="nav-item @if(isset($activePage['sales_invoices_without_cart'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/sales_invoices_without_carts/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف فواتير البيع </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+             </ul>
             <div class="navbar-vertical-divider">
                 <hr class="navbar-vertical-hr my-2" />
             </div>
@@ -257,6 +271,51 @@
                 <hr class="navbar-vertical-hr my-2" />
             </div>--}}
              
+                <ul class="navbar-nav flex-column" id="navbarVerticalNav1">
+                    @if(
+                        \Auth::user()->can('customers_module_customers_manage') ||
+                        \Auth::user()->can('employees_module_employees_manage')
+                    )
+                        @if(
+                        \Auth::user()->can('cars_module_cars_manage')
+                        )
+                            <ul class="navbar-nav flex-column" id="navbarVerticalNav1">
+                                @if(\Auth::user()->can('users_module_users_manage'))
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#cars" data-toggle="collapse" role="button" @if(isset($activePage['cars'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-car"></span></span>
+                                                <span class="nav-link-text">{{ __('إدارة السيارات') }}</span>
+                                            </div>
+                                        </a>
+                                        <ul class="nav collapse @if(isset($activePage['cars'])) show @endif" id="cars" data-parent="#navbarVerticalCollapse">
+                                            <li class="nav-item @if(isset($activePage['cars'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/cars/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-car"></span></span>
+                                                        <span class="nav-link-text">ملفات السيارات</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item @if(isset($activePage['teams'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/teams/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-shield-alt"></span></span>
+                                                        <span class="nav-link-text">ملفات اوراق السيارات</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    @endif
+                             </ul>
+                        @endif
+                    @endif
+                    </ul> 
+                    <div class="navbar-vertical-divider">
+                        <hr class="navbar-vertical-hr my-2" />
+                    </div>
                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     @if(
                         \Auth::user()->can('customers_module_customers_manage') ||
@@ -277,14 +336,39 @@
                         \Auth::user()->can('users_module_permissions_manage') ||
                         \Auth::user()->can('users_module_roles_manage')
                         )
-                            <li class="nav-item @if(isset($activePage['employees'])) active @endif">
-                                <a class="nav-link" href="{{ url('/') }}/employees/manage">
-                                    <div class="d-flex align-items-center">
-                                        <span class="nav-link-icon"><span class="fas fa-users"></span></span>
-                                        <span class="nav-link-text">ملفات الموظفين</span>
-                                    </div>
-                                </a>
-                            </li>
+                        
+                           
+                            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                                @if(\Auth::user()->can('users_module_users_manage'))
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#users" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                                <span class="nav-link-text">{{ __('إدارة الموظفين') }}</span>
+                                            </div>
+                                        </a>
+                                        <ul class="nav collapse @if(isset($activePage['employees'])) show @endif" id="users" data-parent="#navbarVerticalCollapse">
+                                            <li class="nav-item @if(isset($activePage['employees'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/employees/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                                        <span class="nav-link-text">ملفات الموظفين</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item @if(isset($activePage['teams'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/teams/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                                        <span class="nav-link-text">ملفات الفرق</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    @endif
+                             </ul>
                         @endif
                     @endif
                     </ul> 
@@ -321,7 +405,7 @@
                  <div class="navbar-vertical-divider">
                     <hr class="navbar-vertical-hr my-2" />
                 </div>
-                 <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     @if(
                         \Auth::user()->can('core_module_countries_manage') ||
                         \Auth::user()->can('customers_module_categories_of_contracts_manage') ||
