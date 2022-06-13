@@ -114,7 +114,25 @@
                     }
                 }
             });
+            
+            $('#datatable').on( "click",'button[data-action="carsPaper-create"]', function () { 
+                $this = $(this);
+                $('select[data-options_source="cars"]').change(function () { 
+                $id = $(this).val();
+              $.get($("meta[name='BASE_URL']").attr("content")  + '/cars/' + $id , function (response) {
+                  $('input[data-operations-show-text="plate_number"]').val(response.plate_number);
+                  $('input[data-operations-show-text="plate_number"]').attr('disabled','disabled')
+              });
 
+            });
+            });
+            $('#datatable').on( "click",'button[data-action="carsPaper-update"]', function () { 
+                console.log($('input[data-operations-show-text="car.plate_number"]'));
+                setInterval(() => {
+                    $('input[data-operations-show-text="car.plate_number"]').attr('disabled','disabled');
+                }, 1000);
+
+            });
             $('#carsPaper').briskForm({
                 resource: {
                     api: $("meta[name='BASE_URL']").attr("content"),

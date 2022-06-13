@@ -249,6 +249,22 @@ let GLOBALS = {
                 }
             });
         },
+        cars: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="cars"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/cars",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "type" 
+                    }
+                }
+            });
+        },
         type_in_team: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="type_in_team"]');
@@ -258,6 +274,19 @@ let GLOBALS = {
                 options: [
                     {id: 'مسؤول', name: "مسؤول"},
                     {id: 'عضو', name: "عضو"},
+                ]
+            });
+        },
+        type_in_papers: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="type_in_papers"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'تأمين', name: "تأمين"},
+                    {id: 'رخصة_سائق', name: "رخصة_سائق"},
+                    {id: 'رخصة_سيارة', name: "رخصة_سيارة"},
                 ]
             });
         },

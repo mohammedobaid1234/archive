@@ -297,8 +297,8 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['teams'])) active @endif">
-                                                <a class="nav-link" href="{{ url('/') }}/teams/manage">
+                                            <li class="nav-item @if(isset($activePage['cars_papers'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/carsPapers/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-shield-alt"></span></span>
                                                         <span class="nav-link-text">ملفات اوراق السيارات</span>

@@ -58,11 +58,7 @@
                           $('input[name="driving_license_stated_at"]').val(response.papers[index].stated_at)
                         $('input[name="driving_license_ended_at"]').val(response.papers[index].ended_at)
                       }
-                  }
-
-                
-
-               
+                }
               })
                 
              })
