@@ -6,5 +6,6 @@
     "Customers": true,
     "Core": true,
     "Products": true,
-    "Cars": true
+    "Cars": true,
+    "Workshop": true
 }

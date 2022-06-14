@@ -284,7 +284,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link dropdown-indicator" href="#cars" data-toggle="collapse" role="button" @if(isset($activePage['cars'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
                                             <div class="d-flex align-items-center">
-                                                <span class="nav-link-icon"><span class="fas fa-car"></span></span>
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
                                                 <span class="nav-link-text">{{ __('إدارة السيارات') }}</span>
                                             </div>
                                         </a>
@@ -319,6 +319,48 @@
                                     @endif
                              </ul>
                         @endif
+                    @endif
+                    </ul> 
+                    <div class="navbar-vertical-divider">
+                        <hr class="navbar-vertical-hr my-2" />
+                    </div>
+                <ul class="navbar-nav flex-column" id="navbarVerticalNav1">
+                    @if(
+                        \Auth::user()->can('workshops_module_motors_manage') ||
+                        \Auth::user()->can('workshops_module_machines_manage')
+                    )
+                        
+                            <ul class="navbar-nav flex-column" id="navbarVerticalNav1">
+                                @if(\Auth::user()->can('workshops_module_motors_manage'))
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#motors" data-toggle="collapse" role="button" @if(isset($activePage['motors'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">{{ __('إدارة الورشة') }}</span>
+                                            </div>
+                                        </a>
+                                        <ul class="nav collapse @if(isset($activePage['motors'])) show @endif" id="motors" data-parent="#navbarVerticalCollapse">
+                                            <li class="nav-item @if(isset($activePage['motors'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/motors/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                        <span class="nav-link-text">ملفات مولدات الورشة</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item @if(isset($activePage['machines'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/machines/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-industry"></span></span>
+                                                        <span class="nav-link-text">ملفات مكينات الورشة</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    @endif
+                             </ul>
                     @endif
                     </ul> 
                     <div class="navbar-vertical-divider">
