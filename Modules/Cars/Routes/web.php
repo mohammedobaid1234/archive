@@ -22,3 +22,9 @@ Route::prefix('carsPapers')->group(function() {
     Route::get('datatable', 'CarsPapersController@datatable');
 });
 Route::resource('carsPapers', CarsPapersController::class);
+
+Route::prefix('carsMaintenances')->group(function() {
+    Route::get('manage', 'CarsMaintenancesController@manage');
+    Route::get('datatable', 'CarsMaintenancesController@datatable');
+});
+Route::resource('carsMaintenances', CarsMaintenancesController::class);

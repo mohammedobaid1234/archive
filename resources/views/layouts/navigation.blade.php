@@ -305,6 +305,14 @@
                                                     </div>
                                                 </a>
                                             </li>
+                                            <li class="nav-item @if(isset($activePage['cars_maintenance'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/carsMaintenances/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-wrench"></span></span>
+                                                        <span class="nav-link-text">ملفات صيانة السيارات</span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                             
                                         </ul>
                                     </li>

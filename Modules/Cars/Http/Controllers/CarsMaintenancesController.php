@@ -6,25 +6,26 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class CarsPapersController extends Controller{
+class CarsMaintenancesController extends Controller{
     use \Modules\BriskCore\Traits\ResourceTrait;
     use \Modules\BriskCore\Traits\FormRequestTrait;
     
-    private $title = "ملفات أوراق السيارات";
-    private $model = \Modules\Cars\Entities\CarPaper::class;
+    private $title = "ملفات صيانة السيارات";
+    private $model = \Modules\Cars\Entities\CarMaintenance::class;
+    
     public function manage(){
         
-        \Auth::user()->authorize('cars_module_cars_papers_manage', 'view');
+        \Auth::user()->authorize('cars_module_cars_maintenance_manage', 'view');
     
-        $data['activePage'] = ['cars_papers' => true];
+        $data['activePage'] = ['cars_maintenance' => true];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];
     
-        return view('cars::cars_papers', $data);
+        return view('cars::cars_maintenance', $data);
     }
     public function datatable(Request $request){
-        \Auth::user()->authorize('cars_module_cars_papers_manage');
+        \Auth::user()->authorize('cars_module_cars_maintenance_manage');
     
         $eloquent = $this->model::with(['car']);
     
@@ -39,27 +40,14 @@ class CarsPapersController extends Controller{
                     $query->where('id', trim($request->team_id));
                 });
             }
-            if (trim($request->stated_at) !== '') {
-                $eloquent->WhereStaredAt($request->stated_at);
-            }
-            if (trim($request->type) !== '') {
-                $eloquent->Where('type',$request->type);
-            }
-            if (trim($request->ended_at) !== '') {
-                $eloquent->WhereEndedAt($request->ended_at);
-            }
             if (trim($request->created_at) !== "") {
                 $eloquent->whereCreatedAt($request->created_at);
             }
-            
         }
     
         $filters = [
             ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'car_id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
-            ['title' => 'نوع المستند',  'type' => 'select','name' => 'type', 'data' => ['options_source' => 'type_in_papers', 'has_empty' => true]],
             ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
-            ['title' =>  ' تاريخ بدء المستند', 'type' => 'input', 'name' => 'stated_at', 'date_range' => true],
-            ['title' =>  ' تاريخ نهاية المستند', 'type' => 'input', 'name' => 'ended_at', 'date_range' => true],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
     
@@ -67,12 +55,8 @@ class CarsPapersController extends Controller{
             ['title' => 'اسم السيارة ', 'column' => 'car.type'],
             ['title' => 'رقم اللوحة', 'column' => 'car.plate_number'],
             ['title' => 'رقم رخصة السيارة', 'column' => 'car.driving_license_number'],
-            ['title' => 'رقم رخصة السائق', 'column' => 'car.driver_license_number'],
-            ['title' => 'رقم تأمين السيارة', 'column' => 'car.insurance_number'],
-            ['title' =>'نوع المستند', 'column' => 'type'],
+            ['title' =>' محتوى الصيانة', 'column' => 'details','formatter' => 'details'],
             ['title' =>'صورة المستند', 'column' => 'image',  'formatter' => 'image'],
-            ['title' => 'تاريخ بداية', 'column' => 'stated_at'],
-            ['title' => 'تاريخ النهاية', 'column' => 'ended_at'],
             ['title' => 'اسم الفريق', 'column' => 'car.team.name'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
@@ -82,16 +66,14 @@ class CarsPapersController extends Controller{
     }
     public function create(){
         return [
-            "title" => "اضافة ورقة جديد",
+            "title" => "اضافة تفاصيل صيانة جديد",
             "inputs" => [
                 ['title' => 'نوع السيارة ', 'input' => 'select', 'name' => 'car_id', 'required' => true,'classes' => ['select2'],'data' => ['options_source' => 'cars', 'placeholder' => 'اسم السيارة ...'], 'operations' => ['show' => ['text' => 'car.type', 'id' => 'car.id']]],
                 ['title' => 'رقم اللوحة ', 'input' => 'input', 'name' => 'plate_number', 'required' => true, 'disabled'=>'disabled','operations' => ['show' => ['text' => 'car.plate_number']]],
-                ['title' => 'نوع المستند ', 'input' => 'select', 'name' => 'type',"rowIndex" => 1, 'required' => true,'classes' => ['select2'],'data' => ['options_source' => 'type_in_papers', 'placeholder' => 'نوع المستند ...'], 'operations' => ['show' => ['text' => 'type', 'id' => 'id']]],
+                ['title' => 'تفاصيل الصيانة ', 'input' => 'textarea', 'name' => 'details','required' => true, 'operations' => ['show' => ['text' => 'details']]],
                 [
-                    ['title' => 'تاريخ بداية المسنمد ', 'input' => 'input', 'name' => 'stated_at','classes' => ['numeric'], 'date' => true, 'required' => true, 'operations' => ['show' => ['text' => 'stated_at']]],
-                    ['title' => 'تاريخ نهاية المسنمد', 'input' => 'input', 'name' => 'ended_at', 'classes' => ['numeric'], 'date' => true,'required' => true,'operations' => ['show' => ['text' => 'ended_at']]],
+                    ['title' => 'صورة المستند', 'input' => 'input','type' => 'file', 'name' => 'image'],
                 ],
-                ['title' => 'صورة المستند', 'input' => 'input','type' => 'file', 'name' => 'image'],
                 
             ]
         ]; 
@@ -100,9 +82,7 @@ class CarsPapersController extends Controller{
         \Auth::user()->authorize('cars_module_cars_papers_store');
         $request->validate([
             'car_id' => 'required',
-            'type' => 'required',
-            'stated_at' => 'required',
-            'ended_at' => 'required',
+            'details' => 'required',
         ]);
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
@@ -113,21 +93,13 @@ class CarsPapersController extends Controller{
         }
         \DB::beginTransaction();
         try {
-            $paper =new \Modules\Cars\Entities\CarPaper;
+            $paper =new \Modules\Cars\Entities\CarMaintenance;
             $paper->car_id = $request->car_id;            
-            $paper->type = $request->type;            
-            $paper->stated_at = $request->stated_at;            
-            $paper->ended_at = $request->ended_at;            
+            $paper->details = $request->details;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
                 $media_new_name = strtolower(md5(time())) . "." . $extension;
-                if($request->type == "تأمين"){
-                    $collection = "paper";
-                }else if($request->type == "رخصة_سيارة"){
-                    $collection = "driving_license";
-                }else{
-                    $collection = "driver_license";
-                }
+                $collection = "maintenance_car";
 
                 $paper->addMediaFromRequest('image[0]')
                         ->usingFileName($media_new_name)
@@ -146,18 +118,15 @@ class CarsPapersController extends Controller{
     }
     
     public function show($id){
-       return  $this->model::with(['car'])->whereId($id)->first();
+        return  $this->model::with(['car'])->whereId($id)->first();
     }
 
-    public function update(Request $request ,$id){
-        \Auth::user()->authorize('cars_module_cars_papers_update');
+    public function update(Request $request, $id){
+        \Auth::user()->authorize('cars_module_cars_maintenance_update');
         $request->validate([
             'car_id' => 'required',
-            'type' => 'required',
-            'stated_at' => 'required',
-            'ended_at' => 'required',
+            'details' => 'required',
         ]);
-
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
         ->first();
@@ -167,21 +136,13 @@ class CarsPapersController extends Controller{
         }
         \DB::beginTransaction();
         try {
-            $paper = \Modules\Cars\Entities\CarPaper::whereId($id)->first();
+            $paper = \Modules\Cars\Entities\CarMaintenance::whereId($id)->first();
             $paper->car_id = $request->car_id;            
-            $paper->type = $request->type;            
-            $paper->stated_at = $request->stated_at;            
-            $paper->ended_at = $request->ended_at;            
+            $paper->details = $request->details;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
                 $media_new_name = strtolower(md5(time())) . "." . $extension;
-                if($request->type == "تأمين"){
-                    $collection = "insurance_image";
-                }else if($request->type == "رخصة_سيارة"){
-                    $collection = "driving_license";
-                }else{
-                    $collection = "driver_license";
-                }
+                $collection = "maintenance_car";
 
                 $paper->addMediaFromRequest('image[0]')
                         ->usingFileName($media_new_name)
@@ -198,4 +159,5 @@ class CarsPapersController extends Controller{
 
         return response()->json(['message' => 'ok']);
     }
+   
 }

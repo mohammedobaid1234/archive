@@ -30,16 +30,44 @@ class CarsController extends Controller{
         $eloquent = $this->model::with(['employee','team','papers']);
     
         if((int) $request->filters_status){
-           
+            if (trim($request->id) !== "") {
+                $eloquent->where('id', trim($request->id));
+            }
+            if (trim($request->plate_number) !== '') {
+                $eloquent->where('plate_number', 'LIKE', '%'. $request->plate_number . '%');
+            }
+            if (trim($request->driving_license_number) !== '') {
+                $eloquent->where('driving_license_number', 'LIKE', '%'. $request->driving_license_number . '%');
+            }
+            if (trim($request->driver_license_number) !== '') {
+                $eloquent->where('driver_license_number', 'LIKE', '%'. $request->driver_license_number . '%');
+            }
+            if (trim($request->insurance_number) !== '') {
+                $eloquent->where('insurance_number', 'LIKE', '%'. $request->insurance_number . '%');
+            }
+            if (trim($request->insurance_number) !== '') {
+                $eloquent->where('insurance_number', 'LIKE', '%'. $request->insurance_number . '%');
+            }
+            if (trim($request->team_id) !== '') {
+                $eloquent->whereHas('team', function($query) use ($request){
+                    $query->where('id',trim($request->team_id));
+                });
+            }
+            if (trim($request->created_at) !== "") {
+                $eloquent->whereCreatedAt($request->created_at);
+            }
+            
         }
     
         $filters = [
-            ['title' => 'اسم السيارة ', 'type' => 'input', 'name' => 'type'],
+            ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
             ['title' => 'رقم اللوحة', 'type' => 'input', 'name' => 'plate_number'],
             ['title' => 'رقم رخصة السيارة', 'type' => 'input', 'name' => 'driving_license_number'],
             ['title' => 'رقم رخصة السائق', 'type' => 'input', 'name' => 'driver_license_number'],
             ['title' => 'رقم تأمين السيارة', 'type' => 'input', 'name' => 'insurance_number'],
-            ['title' => 'اسم الفريق', 'type' => 'input', 'name' => 'team.name'],
+            ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
+            ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
+        
         ];
     
         $columns = [

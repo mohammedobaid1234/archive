@@ -32,7 +32,7 @@
                 },
                 formatters: {
                     customerProfile: function(row, column){
-                        return '<a href="'+ $("meta[name='BASE_URL']").attr("content")+'/customers/'+ row.customer.id +'/profile" target="_blank">' + row.Ccustomer.full_name + '</a>';
+                        return '<a href="'+ $("meta[name='BASE_URL']").attr("content")+'/customers/'+ row.customer.id +'/profile" target="_blank">' + row.customer.full_name + '</a>';
                     },
                     sales_invoice: function(row, column){
                         return `<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#imge-${row.id}">
