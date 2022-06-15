@@ -4,10 +4,11 @@ namespace Modules\Cars\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Car extends Model{
    use \Modules\BriskCore\Traits\ModelTrait;
-
+   use SoftDeletes;
    protected $table = 'cr_cars';
 
    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];

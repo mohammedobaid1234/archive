@@ -18,6 +18,8 @@ class CreateCrCarsMaintenancesTable extends Migration
             $table->unsignedBigInteger('car_id')->nullable();
             $table->foreign('car_id')->references('id')->on('cr_cars');
             $table->text('details')->nullable();
+            $table->softDeletes();
+            
             $table->timestamps();
         });
     }

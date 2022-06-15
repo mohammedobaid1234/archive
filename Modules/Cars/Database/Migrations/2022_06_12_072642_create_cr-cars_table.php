@@ -24,6 +24,7 @@ class CreateCrCarsTable extends Migration
             $table->foreign('driver_id')->references('id')->on('employees');
             $table->unsignedBigInteger('team_id')->nullable();
             $table->foreign('team_id')->references('id')->on('em_teams');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

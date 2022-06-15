@@ -36,7 +36,7 @@
                         var value = '';
 
                         $(row.user.roles).each(function(key, role){
-                            value += "<label class='badge badge-primary ml-2'>" + role.label + "</label>";
+                         return   value += "<label class='badge badge-primary ml-2'>" + role.label + "</label>";
                         });
 
                         return (value == '' ? "-" : value);

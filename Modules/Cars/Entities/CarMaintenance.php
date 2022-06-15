@@ -3,6 +3,7 @@
 namespace Modules\Cars\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -10,7 +11,8 @@ class CarMaintenance extends Model implements HasMedia{
     protected $table = 'cr_cars_maintenances';
      use \Modules\BriskCore\Traits\ModelTrait;
     use InteractsWithMedia;
-
+    use SoftDeletes;
+   
     protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];
 
     protected $appends = ['maintenances_image_url'];

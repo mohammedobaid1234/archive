@@ -16,6 +16,7 @@ class CreateCmCategoriesOfContractsTable extends Migration
         Schema::create('cm_categories_of_contracts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+
             $table->timestamps();
         });
     }

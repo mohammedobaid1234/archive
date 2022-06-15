@@ -20,6 +20,8 @@ class CreateCrCarsPapersTable extends Migration
             $table->enum('type', ['تأمين', 'رخصة_سيارة', 'رخصة_سائق']);
             $table->date('stated_at')->nullable();
             $table->date('ended_at')->nullable();
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

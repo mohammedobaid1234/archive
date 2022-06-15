@@ -18,6 +18,9 @@ class CreateEmEmployeeProfileTable extends Migration
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->date('started_work')->nullable();
+            $table->string('national_id')->nullable();
+            $table->string('fingerprint_number')->nullable();
+            $table->string('address')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

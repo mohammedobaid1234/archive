@@ -3,6 +3,7 @@
 namespace Modules\Cars\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -10,6 +11,7 @@ class CarPaper extends Model  implements HasMedia {
     protected $table = 'cr_cars_papers';
      use \Modules\BriskCore\Traits\ModelTrait;
     use InteractsWithMedia;
+    use SoftDeletes;
 
     protected $appends = ['insurance_image_url','driving_license_image_url','driver_license_image_url','stated_date_for_driver_license'];
 

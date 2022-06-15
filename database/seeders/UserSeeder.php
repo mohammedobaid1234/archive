@@ -38,7 +38,7 @@ class UserSeeder extends Seeder{
             $user->password = \Illuminate\Support\Facades\Hash::make("12345678");
             $user->save();
             $user->assignRole($row['roles']);
-
+            
             $employee = new \Modules\Employees\Entities\Employee;
             $employee->employment_id = $row['employment_id'];
             $employee->first_name = $row['first_name'];
@@ -52,6 +52,14 @@ class UserSeeder extends Seeder{
 
             $user->userable_id = $employee->id;
             $user->save();
+
+            $employee_profile = new \Modules\Employees\Entities\Profile;
+            $employee_profile->employee_id  = $employee->id;
+            $employee_profile->national_id  = '406995613';
+            $employee_profile->fingerprint_number  = '57';
+            $employee_profile->address  = 'غزة النصر';
+            $employee_profile->save();
+
         }
     }
 }
