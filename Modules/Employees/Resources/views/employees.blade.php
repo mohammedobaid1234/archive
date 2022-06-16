@@ -52,6 +52,10 @@
                     }
                 }
             });
+           setInterval(() => {
+            $('.modal-backdrop').remove();
+           }, 1000);
+           
             $("#datatable").on('click', '[data-action="reset-password"]', function(){
                 var $this = $(this);
 

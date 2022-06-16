@@ -30,7 +30,7 @@ class EmployeesController extends Controller{
     {
         \Auth::user()->authorize('employees_module_employees_manage');
 
-        $eloquent = $this->model::with(['user.roles', 'profile']);
+        $eloquent = $this->model::with(['user.roles', 'profile','department']);
 
         if ((int) $request->filters_status) {
             if (trim($request->full_name) !== "") {
@@ -57,7 +57,10 @@ class EmployeesController extends Controller{
 
         $columns = [
             ['title' => 'الرقم الوظيفي', 'column' => 'employment_id'],
+            ['title' => 'رقم الهوية', 'column' => 'profile.national_id'],
             ['title' => 'الاسم', 'column' => 'full_name'],
+            ['title' => 'العنوان ', 'column' => 'profile.address'],
+            ['title' => 'القسم ', 'column' => 'department.label'],
             ['title' => 'المسمى الوظيفي / الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
             ['title' => 'رقم الجوال', 'column' => 'mobile_no'],
             ['title' => 'تاريخ بدء العمل', 'column' => 'profile.started_work'],
@@ -80,86 +83,7 @@ class EmployeesController extends Controller{
                         'show' => ['text' => 'employment_id']
                     ]
                 ],
-                [
-                    'title' => ' القسم',
-                    'input' => 'select',
-                    'name' => 'department_id',
-                    'classes' => ['select2'],
-                    'data' => ['options_source' => 'departments', ],
-                    'required' => true,
-                    'operations' => [
-                        'show' => ['text' => 'department.label', 'id' => 'department.id']
-                    ]
-                ],
-                [
-                    [
-                        'title' => 'رقم الهوية',
-                        'input' => 'input',
-                        'name' => 'national_id',
-                        'required' => true,
-                        'operations' => [
-                            'show' => ['text' => 'profile.national_id']
-                        ]
-                    ],
-                    [
-                        'title' => 'رقم البصمة',
-                        'input' => 'input',
-                        'name' => 'fingerprint_number',
-                        'operations' => [
-                            'show' => ['text' => 'profile.fingerprint_number']
-                        ]
-                    ],
-                ],
-                [
-                        'title' => ' العنوان',
-                        'input' => 'input',
-                        'name' => 'address',
-                        'operations' => [
-                            'show' => ['text' => 'profile.address']
-                        ]
-                ],
-                [
-                    [
-                        'title' => 'تاريخ الميلاد',
-                        'input' => 'input',
-                        'date' => 'true',
-                        'name' => 'birthdate',
-                        'required' => true,
-                        'operations' => [
-                            'show' => ['text' => 'birthdate']
-                        ],
-                    ],
-                    [
-                        'title' => 'تاريخ بدء العمل',
-                        'input' => 'input',
-                        'date' => 'true',
-                        'name' => 'started_work',
-                        'required' => true,
-                        'operations' => [
-                            'show' => ['text' => 'profile.started_work']
-                        ],
-                    ]
-                ],
-                [
-                    [
-                        'title' => 'الإسم الأول',
-                        'input' => 'input',
-                        'name' => 'first_name',
-                        'required' => true,
-                        'operations' => [
-                            'show' => ['text' => 'first_name']
-                        ]
-                    ],
-                    [
-                        'title' => 'الإسم الثاني',
-                        'input' => 'input',
-                        'name' => 'father_name',
-                        'required' => true,
-                        'operations' => [
-                            'show' => ['text' => 'father_name']
-                        ]
-                    ]
-                ],
+               
                 [
                     [
                         'title' => 'إسم الجد',
@@ -331,7 +255,7 @@ class EmployeesController extends Controller{
 
     public function show($id)
     {
-        return $this->model::with(['user.roles', 'profile'])->whereId($id)->first();
+        return $this->model::with(['user.roles', 'profile','department'])->whereId($id)->first();
     }
 
     public function update(Request $request, $employee_id)
