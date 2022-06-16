@@ -43,3 +43,5 @@ Route::prefix('jawwalBills')->group(function() {
 });
 Route::resource('jawwalBills', JawwalBillsController::class);
 
+
+

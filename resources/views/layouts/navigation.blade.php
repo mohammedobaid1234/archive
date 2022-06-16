@@ -247,6 +247,18 @@
                                     </li>
                                 @endif
                             @endif
+                            @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
+                                @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
+                                    <li class="nav-item @if(isset($activePage['exchange_bonds'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/exchangeBonds/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">سندات  الصرف </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
                         </ul>
                     </li>
              </ul>

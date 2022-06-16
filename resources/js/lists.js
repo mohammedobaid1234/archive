@@ -293,6 +293,18 @@ let GLOBALS = {
                 ]
             });
         },
+        type_of_exchange_bonds: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="type_of_exchange_bonds"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'المدير', name: "المدير"},
+                    {id: 'الصندوق', name: "الصندوق"},
+                ]
+            });
+        },
         type_of_checks: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="type_of_checks"]');

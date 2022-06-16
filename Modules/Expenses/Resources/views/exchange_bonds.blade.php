@@ -5,7 +5,7 @@
 @endsection
 
 @section('modals')
-    <div id="check"></div>
+    <div id="exchangeBond"></div>
 @endsection
 
 @section('javascript')
@@ -14,13 +14,13 @@
             $("#datatable").briskDataTable({
                 resource: {
                     api: $("meta[name='BASE_URL']").attr("content"),
-                    entity: 'checks'
+                    entity: 'exchangeBonds'
                 },
                 datatable: {
                     buttons: [
                         {
                             title: "جديد",
-                            data_action: "check-create",
+                            data_action: "exchangeBond-create",
                             classes: {
                                 button: "btn btn-falcon-default btn-sm",
                                 icon: "fas fa-plus"
@@ -29,24 +29,21 @@
                     ]
                 },
                 formatters: {
-                    customerProfile: function(row, column){
-                        return '<a href="'+ $("meta[name='BASE_URL']").attr("content")+'/customers/'+ row.customer.id +'/profile" target="_blank">' + row.customer.full_name + '</a>';
-                    },
-                    additionalDetails : function(row,column){
+                    reason : function(row,column){
                         return `<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#contract-addition-details-${row.id}">
-                            تفاصيل أخرى للشيك 
+                            تفاصيل سبب  الشراء 
                         </button>
                         <div class="modal fade" id="contract-addition-details-${row.id}" tabindex="-1" role="dialog" aria-labelledby="contract-addition-details-${row.id}Title" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">تفاصيل أخرى للشيك</h5>
+                                    <h5 class="modal-title" id="exampleModalLongTitle">تفاصيل سبب  الشراء</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body" height="600px">
-                                    ${row.additional_details}
+                                    ${row.reasons}
                                  </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
@@ -55,28 +52,22 @@
                             </div>
                         </div>`;
                     },
-                    typeOfCheck: function (row, column) {
-                        var value = '';
-
-                        return value += "<label class='badge badge-primary ml-4'>" + row.type + "</label>";
-                       
-
-                    },
+                
                     image: function(row, column){
                         return `<button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#imge-${row.id}">
-                                    صورة الشيك
+                                    صورة سند الصرف
                                 </button>
                                 <div class="modal fade" id="imge-${row.id}" tabindex="-1" role="dialog" aria-labelledby="imge-${row.id}Title" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">صورة الشيك</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">صورة سند الصرف</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" height="600px">
-                                            <iframe src="https://docs.google.com/viewerng/viewer?url=${row.check_image_url}&embedded=true" frameborder="0"  style="height:400px;"  width="100%">
+                                            <iframe src="https://docs.google.com/viewerng/viewer?url=${row.exchange_bond_image_url}&embedded=true" frameborder="0"  style="height:400px;"  width="100%">
                                             </iframe>
                                             <iframe src="https://docs.google.com/viewerng/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" frameborder="0"  style="height:500px;"  width="100%">
                                             </iframe>
@@ -91,25 +82,25 @@
                     operations: function(row, column){
                         var operations = '';
 
-                        operations += '<button class="btn btn-falcon-default btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="check-show"><span class="fas fa-eye" data-fa-transform="shrink-3"></span></button>';
-                        operations += '<button class="btn btn-falcon-primary btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="check-update"><span class="fas fa-edit" data-fa-transform="shrink-3"></span></button>';
+                        operations += '<button class="btn btn-falcon-default btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="exchangeBond-show"><span class="fas fa-eye" data-fa-transform="shrink-3"></span></button>';
+                        operations += '<button class="btn btn-falcon-primary btn-sm mr-2" type="button" data-id="' + row.id + '" data-action="exchangeBond-update"><span class="fas fa-edit" data-fa-transform="shrink-3"></span></button>';
                         return operations;
                     }
                 }
             });
 
-            $('#check').briskForm({
+            $('#exchangeBond').briskForm({
                 resource: {
                     api: $("meta[name='BASE_URL']").attr("content"),
-                    entity: 'checks'
+                    entity: 'exchangeBonds'
                 }
             });
 
-            $('#check').bind('briskForm.store.done', function(event, response){
+            $('#exchangeBond').bind('briskForm.store.done', function(event, response){
                 $("#datatable").briskDataTable('refresh');
             });
 
-            $('#check').bind('briskForm.update.done', function(event, response){
+            $('#exchangeBond').bind('briskForm.update.done', function(event, response){
                 $("#datatable").briskDataTable('refresh');
             });
         });

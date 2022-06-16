@@ -81,12 +81,16 @@ class ChecksController extends Controller{
             if (trim($request->created_at) !== "") {
                 $eloquent->whereCreatedAt($request->created_at);
             }
+            if (trim($request->type_of_checks) !== "") {
+                $eloquent->where('type', $request->type_of_checks);
+            }
           
         }
 
         $filters = [
             ['title' => ' رقم الشيك', 'type' => 'input', 'name' => 'check_number'],
             ['title' => ' اسم البنك لصرف الشيك', 'type' => 'select', 'name' => 'bank_id', 'data' => ['options_source' => 'banks', 'has_empty' => true]],
+            ['title' => ' نوع الشيك', 'type' => 'select', 'name' => 'type_of_checks', 'data' => ['options_source' => 'type_of_checks', 'has_empty' => true]],
             ['title' =>  ' تاريخ إستحقاق الشيك', 'type' => 'input', 'name' => 'due_date', 'date_range' => true],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
@@ -97,6 +101,7 @@ class ChecksController extends Controller{
             ['title' => 'الاسم المستفيد / المعطي', 'column' => 'customer.full_name','formatter' => 'customerProfile' ],
             ['title' => 'قيمة الشيك ', 'column' => 'amount'],
             ['title' => 'نوع العملة', 'column' => 'currency.name'],
+            ['title' => 'نوع الشيك', 'column' => 'type','formatter' => 'typeOfCheck'],
             ['title' => ' تاريخ صرف الشيك', 'column' => 'due_date'],
             ['title' => "تفاصيل أخرى", 'column' => 'additional_details','formatter' => 'additionalDetails'],
             ['title' => "صورة الشيك", 'column' => 'image','formatter' => 'image'],
