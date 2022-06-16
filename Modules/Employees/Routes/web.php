@@ -31,3 +31,9 @@ Route::prefix('teams')->group(function() {
 Route::resource('teams', TeamsController::class);
 });
 
+Route::prefix('departments')->group(function() {
+    Route::get('manage', 'DepartmentsController@manage');
+    Route::get('datatable', 'DepartmentsController@datatable');
+});
+Route::resource('departments', DepartmentsController::class);
+

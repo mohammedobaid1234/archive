@@ -31,6 +31,9 @@ class Employee extends Model implements HasMedia{
     public function created_by_user(){
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
+    public function department(){
+        return $this->belongsTo(\Modules\Employees\Entities\Department::class);
+    }
     public function scopeWhereFullNameLike($query, $name){
         $name = str_replace("أ", "ا", $name);
         $name = str_replace("إ", "ا", $name);

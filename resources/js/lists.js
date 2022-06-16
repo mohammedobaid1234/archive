@@ -265,6 +265,22 @@ let GLOBALS = {
                 }
             });
         },
+        departments: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="departments"]');
+            }
+
+            $(element).briskSelectOptions({
+                resource: $("meta[name='BASE_URL']").attr("content") + "/departments",
+                ajax: true,
+                formatters: {
+                    option: {
+                        value: "id",
+                        title: "label" 
+                    }
+                }
+            });
+        },
         type_in_team: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="type_in_team"]');

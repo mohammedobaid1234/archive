@@ -82,6 +82,17 @@ class EmployeesController extends Controller
                     ]
                 ],
                 [
+                    'title' => ' القسم',
+                    'input' => 'select',
+                    'name' => 'department_id',
+                    'classes' => ['select2'],
+                    'data' => ['options_source' => 'departments', ],
+                    'required' => true,
+                    'operations' => [
+                        'show' => ['text' => 'department.label', 'id' => 'department.id']
+                    ]
+                ],
+                [
                     [
                         'title' => 'رقم الهوية',
                         'input' => 'input',
@@ -249,7 +260,8 @@ class EmployeesController extends Controller
             'gender' => 'required',
             'birthdate' => 'required',
             'mobile_no' => 'required',
-            'started_work' => 'required'
+            'started_work' => 'required',
+            'department_id' => 'required',
         ]);
 
         if (\Modules\Employees\Entities\Employee::where('employment_id', trim($request->employment_id))->count()) {
@@ -277,6 +289,7 @@ class EmployeesController extends Controller
             $employee->last_name = $request->last_name;
             $employee->gender = $request->gender;
             $employee->birthdate = $request->birthdate;
+            $employee->department_id = $request->department_id;
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
             $employee->created_by = \Auth::user()->id;
             $employee->save();
@@ -336,7 +349,8 @@ class EmployeesController extends Controller
             'gender' => 'required',
             'birthdate' => 'required',
             'mobile_no' => 'required',
-            'started_work' => 'required'
+            'started_work' => 'required',
+            'department_id' => 'required',
         ]);
 
         if (\Modules\Employees\Entities\Employee::where('id', '<>', $employee_id)->where('employment_id', trim($request->employment_id))->count()) {
@@ -363,6 +377,7 @@ class EmployeesController extends Controller
             $employee->last_name = $request->last_name;
             $employee->gender = $request->gender;
             $employee->birthdate = $request->birthdate;
+            $employee->department_id = $request->department_id;
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
             $employee->created_by = \Auth::user()->id;
             $employee->save();

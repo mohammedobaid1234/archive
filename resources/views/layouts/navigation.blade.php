@@ -469,6 +469,11 @@
                             </div>
                         </a>
                         <ul class="nav collapse @if(isset($activePage['core'])) show @endif" id="core" data-parent="#navbarVerticalCollapse">
+                            @if(\Auth::user()->can('employees_module_departments_manage'))
+                            <li class="nav-item @if(isset($activePage['departments']) && $activePage['departments'] == 'departments') active @endif">
+                                <a class="nav-link" href="{{ url('/') }}/departments/manage">إدارة الأقسام</a>
+                            </li>
+                            @endif
                             @if(\Auth::user()->can('core_module_countries_manage'))
                             <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'countries') active @endif">
                                 <a class="nav-link" href="{{ url('/') }}/countries/manage">إدارة بيانات الدول</a>

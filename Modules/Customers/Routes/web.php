@@ -55,4 +55,6 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::resource('sales_invoices_without_carts', SalesInvoicesWithoutCartsController::class);
 
+    
+
 });
