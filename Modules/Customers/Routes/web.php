@@ -55,6 +55,12 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::resource('sales_invoices_without_carts', SalesInvoicesWithoutCartsController::class);
 
+    Route::prefix('checks')->group(function() {
+        Route::get('manage', 'ChecksController@manage');
+        Route::get('datatable', 'ChecksController@datatable');
+    });
+    Route::resource('checks', ChecksController::class);
+
     
 
 });

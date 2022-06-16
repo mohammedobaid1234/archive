@@ -293,6 +293,18 @@ let GLOBALS = {
                 ]
             });
         },
+        type_of_checks: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="type_of_checks"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'صادر', name: "صادر"},
+                    {id: 'وارد', name: "وارد"},
+                ]
+            });
+        },
         type_in_papers: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="type_in_papers"]');

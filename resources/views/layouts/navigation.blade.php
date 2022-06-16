@@ -235,6 +235,18 @@
                                     </li>
                                 @endif
                             @endif
+                            @if(\Auth::user()->can('customers_module_checks_manage'))
+                                @if(\Auth::user()->can('customers_module_checks_manage'))
+                                    <li class="nav-item @if(isset($activePage['checks'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/checks/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف  الشيكات </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
                         </ul>
                     </li>
              </ul>
