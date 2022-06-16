@@ -414,6 +414,14 @@
                                                     </div>
                                                 </a>
                                             </li>
+                                            <li class="nav-item @if(isset($activePage['jawwal_bill'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/jawwalBills/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                                        <span class="nav-link-text">فواتير جوال</span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                             
                                         </ul>
                                     </li>

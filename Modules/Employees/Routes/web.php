@@ -37,3 +37,9 @@ Route::prefix('departments')->group(function() {
 });
 Route::resource('departments', DepartmentsController::class);
 
+Route::prefix('jawwalBills')->group(function() {
+    Route::get('manage', 'JawwalBillsController@manage');
+    Route::get('datatable', 'JawwalBillsController@datatable');
+});
+Route::resource('jawwalBills', JawwalBillsController::class);
+

@@ -13,7 +13,7 @@ class CreateEmJawwalBillsDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('em_jawwal_bills_departments', function (Blueprint $table) {
+        Schema::create('em_jawwal_bills', function (Blueprint $table) {
             $table->id();
             $table->string('mobile_no')->nullable();
             $table->string('value')->nullable();
