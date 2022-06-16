@@ -15,6 +15,20 @@ class JawwalBill extends Model{
     public function employee(){
         return $this->belongsTo(\Modules\Employees\Entities\Employee::class);
     }
+    public function scopeWhereActivateDate($query, $activate_date){
+        return $query->where(function($query) use ($activate_date){
+            if(str_contains(trim($activate_date), ' - ')){
+                $activate_date = explode(' - ', $activate_date);
+                $activate_date_from = $activate_date[0];
+                $activate_date_from = $activate_date[1];
+
+                $query->whereDate('activate_date', '>=', date('Y-m-d', strtotime(trim($activate_date[0]))));
+                $query->whereDate('activate_date', '<=', date('Y-m-d', strtotime(trim($activate_date[1]))));
+            }else{
+                $query->whereDate('activate_date', date('Y-m-d', strtotime(trim($activate_date))));
+            }
+        });
+    }
 
     public function _employee_id(){
         return [
@@ -53,6 +67,18 @@ class JawwalBill extends Model{
             'operations' => [
                 'show' => ['text' => 'value']
             ]
+        ];
+    }
+    public function _activate_date(){
+        return [
+            'title' => 'تاريخ تفعيل الفاتورة',
+            'input' => 'input',
+            'date' => 'true',
+            'name' => 'activate_date',
+            'required' => true,
+            'operations' => [
+                'show' => ['text' => 'activate_date']
+            ],
         ];
     }
 }

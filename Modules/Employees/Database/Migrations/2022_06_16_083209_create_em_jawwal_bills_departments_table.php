@@ -19,6 +19,7 @@ class CreateEmJawwalBillsDepartmentsTable extends Migration
             $table->string('value')->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees');
+            $table->date('activate_date')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateEmJawwalBillsDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('em_jawwal_bills_departments');
+        Schema::dropIfExists('em_jawwal_bills');
     }
 }

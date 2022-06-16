@@ -44,6 +44,8 @@ class JawwalBillsController extends Controller
         $filters = [
             ['title' => 'اسم الموظف', 'type' => 'select', 'name' => 'employee_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
             ['title' => 'رقم الفاتورة ', 'type' => 'input', 'name' => 'mobile_no'],
+            ['title' =>  '  تاريخ تفعيل الفاتورة', 'type' => 'input', 'name' => 'activate_date', 'date_range' => true],
+
 
         ];
 
@@ -51,6 +53,8 @@ class JawwalBillsController extends Controller
             ['title' => 'رقم الفاتورة', 'column' => 'mobile_no'],
             ['title' => 'قيمة الفاتورة', 'column' => 'value'],
             ['title' => 'اسم الموظف حامل الفاتورة', 'column' => 'employee.full_name'],
+            ['title' =>  '  تاريخ تفعيل الفاتورة', 'column' => 'activate_date'],
+            ['title' =>  '  تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 
@@ -64,7 +68,8 @@ class JawwalBillsController extends Controller
             'mobile_no' => 'required',
             'value' => 'required',
             'employee_id' => 'required',
-
+            'activate_date' => 'required',
+            
         ]);
         if (trim($request->mobile_no) !== "") {
             if (strlen(trim($request->mobile_no)) !== 10) {
@@ -77,11 +82,12 @@ class JawwalBillsController extends Controller
         }
         \DB::beginTransaction();
         try{
-            $country = new $this->model;
-            $country->mobile_no = trim($request->mobile_no);
-            $country->value = trim($request->value);
-            $country->employee_id = trim($request->employee_id);
-            $country->save();
+            $JawwalBill = new $this->model;
+            $JawwalBill->mobile_no = trim($request->mobile_no);
+            $JawwalBill->value = trim($request->value);
+            $JawwalBill->employee_id = trim($request->employee_id);
+            $JawwalBill->activate_date = trim($request->activate_date);
+            $JawwalBill->save();
 
             \DB::commit();
         }catch(\Exception $e){
@@ -115,11 +121,11 @@ class JawwalBillsController extends Controller
         }
         \DB::beginTransaction();
         try{
-            $country =  $this->model::whereId($id)->first();
-            $country->mobile_no = trim($request->mobile_no);
-            $country->value = trim($request->value);
-            $country->employee_id = trim($request->employee_id);
-            $country->save();
+            $JawwalBill =  $this->model::whereId($id)->first();
+            $JawwalBill->mobile_no = trim($request->mobile_no);
+            $JawwalBill->value = trim($request->value);
+            $JawwalBill->employee_id = trim($request->employee_id);
+            $JawwalBill->save();
 
             \DB::commit();
         }catch(\Exception $e){

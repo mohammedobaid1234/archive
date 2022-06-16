@@ -391,13 +391,13 @@
                             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                                 @if(\Auth::user()->can('users_module_users_manage'))
                                     <li class="nav-item">
-                                        <a class="nav-link dropdown-indicator" href="#users" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                        <a class="nav-link dropdown-indicator" href="#employee" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-users"></span></span>
                                                 <span class="nav-link-text">{{ __('إدارة الموظفين') }}</span>
                                             </div>
                                         </a>
-                                        <ul class="nav collapse @if(isset($activePage['employees'])) show @endif" id="users" data-parent="#navbarVerticalCollapse">
+                                        <ul class="nav collapse @if(isset($activePage['employees'])) show @endif" id="employee" data-parent="#navbarVerticalCollapse">
                                             <li class="nav-item @if(isset($activePage['employees'])) active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/employees/manage">
                                                     <div class="d-flex align-items-center">
