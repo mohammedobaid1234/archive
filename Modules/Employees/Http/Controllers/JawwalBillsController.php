@@ -6,8 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class JawwalBillsController extends Controller
-{
+class JawwalBillsController extends Controller{
     use \Modules\BriskCore\Traits\ResourceTrait;
     use \Modules\BriskCore\Traits\FormRequestTrait;
 

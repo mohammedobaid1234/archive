@@ -257,6 +257,14 @@
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="nav-item @if(isset($activePage['expenses'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/expenses/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">المصروفات </span>
+                                            </div>
+                                        </a>
+                                    </li>
                                 @endif
                             @endif
                         </ul>
@@ -334,6 +342,14 @@
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-wrench"></span></span>
                                                         <span class="nav-link-text">ملفات صيانة السيارات</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item @if(isset($activePage['cars_consumption'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/carConsumptions/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-wrench"></span></span>
+                                                        <span class="nav-link-text">ملفات إستهلاك السيارات</span>
                                                     </div>
                                                 </a>
                                             </li>
@@ -443,6 +459,14 @@
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-users"></span></span>
                                                         <span class="nav-link-text">فواتير جوال</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item @if(isset($activePage['employees_advances'])) active @endif">
+                                                <a class="nav-link" href="{{ url('/') }}/EmployeesAdvances/manage">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="nav-link-icon"><span class="fas fa-users"></span></span>
+                                                        <span class="nav-link-text">سلف الموظفين</span>
                                                     </div>
                                                 </a>
                                             </li>

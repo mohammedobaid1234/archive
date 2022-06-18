@@ -28,3 +28,9 @@ Route::prefix('carsMaintenances')->group(function() {
     Route::get('datatable', 'CarsMaintenancesController@datatable');
 });
 Route::resource('carsMaintenances', CarsMaintenancesController::class);
+
+Route::prefix('carConsumptions')->group(function() {
+    Route::get('manage', 'CarsConsumptionController@manage');
+    Route::get('datatable', 'CarsConsumptionController@datatable');
+});
+Route::resource('carConsumptions', CarsConsumptionController::class);

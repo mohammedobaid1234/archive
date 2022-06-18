@@ -25,6 +25,7 @@ class ExchangeBondController extends Controller{
         return view('expenses::exchange_bonds', $data);
     }
     public function datatable(Request $request){
+        
         \Auth::user()->authorize('expenses_module_exchange_bonds_manage');
 
         $eloquent = $this->model::with(['employee', 'created_by_user',]);

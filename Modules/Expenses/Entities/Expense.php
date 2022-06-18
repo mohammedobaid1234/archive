@@ -8,23 +8,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ExchangeBond extends Model  implements HasMedia{
+class Expense extends Model implements HasMedia{
     use SoftDeletes;
     use \Modules\BriskCore\Traits\ModelTrait;
     use InteractsWithMedia;
 
-    protected $table = 'ex_exchange_bonds';
+    protected $table = 'ex_expenses';
 
     protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s a'];
-    protected $appends = ['exchange_bond_image_url'];
+    protected $appends = ['expense_image_url'];
     
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media  $media = null): void{
         $this->addMediaConversion('thumb')
               ->width(400)
               ->height(400);
     }
-    public function getExchangeBondImageUrlAttribute(){
-        $image = $this->getMedia('exchange_bond_image')->first();
+    public function getExpenseImageUrlAttribute(){
+        $image = $this->getMedia('expense_image')->first();
 
         if($image){
             return url('/') . '/storage/app/public/' . $image->id . '/' . $image->file_name;
@@ -41,6 +41,12 @@ class ExchangeBond extends Model  implements HasMedia{
     public function customer(){
         return $this->belongsTo(\Modules\Customers\Entities\Customer::class);
     }
+    public function currency_for_total(){
+        return $this->belongsTo(\Modules\Core\Entities\Currency::class, 'currency_id_of_total');
+    }
+    public function currency_for_rest(){
+        return $this->belongsTo(\Modules\Core\Entities\Currency::class, 'currency_id_of_rest');
+    }
     public function scopeWhereCreatedAt($query, $created_at){
         return $query->where(function($query) use ($created_at){
             if(str_contains(trim($created_at), ' - ')){
@@ -55,5 +61,5 @@ class ExchangeBond extends Model  implements HasMedia{
             }
         });
     }
+  
 }
-

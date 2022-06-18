@@ -15,3 +15,9 @@ Route::prefix('exchangeBonds')->group(function() {
     Route::get('datatable', 'ExchangeBondController@datatable');
 });
 Route::resource('exchangeBonds', ExchangeBondController::class);
+
+Route::prefix('expenses')->group(function() {
+    Route::get('manage', 'ExpensesController@manage');
+    Route::get('datatable', 'ExpensesController@datatable');
+});
+Route::resource('expenses', ExpensesController::class);

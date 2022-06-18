@@ -98,7 +98,7 @@ class ChecksController extends Controller{
         $columns = [
             ['title' => 'رقم الشيك', 'column' => 'check_number'],
             ['title' => 'اسم البنك لصرف الشيك', 'column' => 'bank.name'],
-            ['title' => 'الاسم المستفيد / المعطي', 'column' => 'customer.full_name','formatter' => 'customerProfile' ],
+            ['title' => 'الاسم المستفيد / الساحب', 'column' => 'customer.full_name','formatter' => 'customerProfile' ],
             ['title' => 'قيمة الشيك ', 'column' => 'amount'],
             ['title' => 'نوع العملة', 'column' => 'currency.name'],
             ['title' => 'نوع الشيك', 'column' => 'type','formatter' => 'typeOfCheck'],
@@ -186,7 +186,7 @@ class ChecksController extends Controller{
             "title" => "اضافة إيصال جديد",
             "inputs" => [
                 ['title' => 'رقم الشيك ', 'input' => 'input', 'name' => 'check_number', 'operations' => ['show' => ['text' => 'check_number']]],
-                ['title' => 'اسم المستفيد /صاحب الشيك', 'input' => 'select', 'name' => 'customer_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...'],'operations' => ['show' => ['text' => 'customer.full_name', 'id' => 'customer_id']]],
+                ['title' => 'اسم المستفيد /الساحب ', 'input' => 'select', 'name' => 'customer_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...'],'operations' => ['show' => ['text' => 'customer.full_name', 'id' => 'customer_id']]],
                 ['title' => 'نوع الشيك', 'input' => 'select', 'name' => 'type', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'type_of_checks', 'placeholder' => 'نوع الشيك...'],'operations' => ['show' => ['text' => 'type', 'id' => 'type']]],
                 
                 ['title' => ' اسم البنك', 'input' => 'select', 'name' => 'bank_id',  'classes' => ['select2'], 'data' => ['options_source' => 'banks', 'placeholder' => 'اسم البنك لصرف الشيك...'],'operations' => ['show' => ['text' => 'bank.name', 'id' => 'bank.id'],'update' => ['text' => 'bank.name', 'id' => 'bank.id']]],
