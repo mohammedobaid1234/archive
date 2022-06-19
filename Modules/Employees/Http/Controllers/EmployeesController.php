@@ -63,7 +63,10 @@ class EmployeesController extends Controller{
             ['title' => 'القسم ', 'column' => 'department.label'],
             ['title' => 'المسمى الوظيفي / الأدوار', 'column' => 'user.roles.name', 'merge' => true, 'formatter' => 'roles'],
             ['title' => 'رقم الجوال', 'column' => 'mobile_no'],
+            ['title' => 'الراتب ', 'column' => 'salary'],
+            ['title' => 'رقم البصمة ', 'column' => 'profile.fingerprint_number'],
             ['title' => 'تاريخ بدء العمل', 'column' => 'profile.started_work'],
+            ['title' => 'تاريخ الميلاد ', 'column' => 'birthdate'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 
@@ -86,6 +89,26 @@ class EmployeesController extends Controller{
                
                 [
                     [
+                        'title' => 'الاسم الاول',
+                        'input' => 'input',
+                        'name' => 'first_name',
+                        'required' => true,
+                        'operations' => [
+                            'show' => ['text' => 'first_name']
+                        ]
+                    ],
+                    [
+                        'title' => 'الاسم الثاني',
+                        'input' => 'input',
+                        'name' => 'father_name',
+                        'required' => true,
+                        'operations' => [
+                            'show' => ['text' => 'father_name']
+                        ]
+                    ]
+                ],
+                [
+                    [
                         'title' => 'إسم الجد',
                         'input' => 'input',
                         'name' => 'grandfather_name',
@@ -104,6 +127,7 @@ class EmployeesController extends Controller{
                         ]
                     ]
                 ],
+               [
                 [
                     'title' => 'رقم الجوال',
                     'input' => 'input',
@@ -112,6 +136,52 @@ class EmployeesController extends Controller{
                     'operations' => [
                         'show' => ['text' => 'mobile_no']
                     ]
+                ],
+                [
+                    'title' => 'رقم البصمة',
+                    'input' => 'input',
+                    'name' => 'fingerprint_number',
+                    'maxlength' => 10,
+                    'operations' => [
+                        'show' => ['text' => 'profile.fingerprint_number']
+                    ]
+                ],
+               ],
+               [
+                    'title' => ' العنوان',
+                    'input' => 'input',
+                    'name' => 'address',
+                    'maxlength' => 10,
+                    'operations' => [
+                        'show' => ['text' => 'profile.address']
+                    ]
+               ],
+                [
+                    'title' => 'رقم الهوية',
+                    'input' => 'input',
+                    'name' => 'national_id',
+                    'maxlength' => 10,
+                    'operations' => [
+                        'show' => ['text' => 'profile.national_id']
+                    ]
+                ],
+                [
+                    [
+                        'title' => 'تاريخ الميلاد ',
+                        'input' => 'input',
+                        'name' => 'birthdate',
+                        'classes' => ['numeric'], 
+                        'date' => true,
+                        'operations' => ['show' => ['text' => 'birthdate']]
+                    ],
+                    [
+                        'title' => 'تاريخ بداية العمل ',
+                        'input' => 'input',
+                        'name' => 'started_work',
+                        'classes' => ['numeric'], 
+                        'date' => true,
+                        'operations' => ['show' => ['text' => 'profile.started_work']]
+                    ],
                 ],
                 [
                     [
@@ -126,6 +196,30 @@ class EmployeesController extends Controller{
                         ],
                         'operations' => [
                             'show' => ['text' => 'gender']
+                        ]
+                    ],
+                    [
+
+                        'title' => 'القسم',
+                        'input' => 'select',
+                        'name' => 'department_id',
+                        'required' => true,
+                        'classes' => ['select2'],
+                        'data' => [
+                            'options_source' => 'departments'
+                        ],
+                        'operations' => [
+                            'show' => ['text' => 'department.label', 'id' => 'department_id']
+
+                        ]
+                    ],
+                    [
+                        'title' => 'الراتب ',
+                        'input' => 'input',
+                        'name' => 'salary',
+                        'maxlength' => 10,
+                        'operations' => [
+                            'show' => ['text' => 'salary']
                         ]
                     ],
                     [
@@ -182,6 +276,7 @@ class EmployeesController extends Controller{
             'last_name' => 'required',
             'gender' => 'required',
             'birthdate' => 'required',
+            'salary' => 'required',
             'mobile_no' => 'required',
             'started_work' => 'required',
             'department_id' => 'required',
@@ -211,6 +306,7 @@ class EmployeesController extends Controller{
             $employee->grandfather_name = $request->grandfather_name;
             $employee->last_name = $request->last_name;
             $employee->gender = $request->gender;
+            $employee->salary = $request->salary;
             $employee->birthdate = $request->birthdate;
             $employee->department_id = $request->department_id;
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);
@@ -271,6 +367,7 @@ class EmployeesController extends Controller{
             'last_name' => 'required',
             'gender' => 'required',
             'birthdate' => 'required',
+            'salary' => 'required',
             'mobile_no' => 'required',
             'started_work' => 'required',
             'department_id' => 'required',
@@ -299,6 +396,7 @@ class EmployeesController extends Controller{
             $employee->grandfather_name = $request->grandfather_name;
             $employee->last_name = $request->last_name;
             $employee->gender = $request->gender;
+            $employee->salary = $request->salary;
             $employee->birthdate = $request->birthdate;
             $employee->department_id = $request->department_id;
             $employee->mobile_no = (trim($request->mobile_no) !== "" ? trim($request->mobile_no) : NULL);

@@ -257,11 +257,28 @@
                                             </div>
                                         </a>
                                     </li>
+                                    
+                                @endif
+                            @endif
+                            @if(\Auth::user()->can('expenses_module_expenses_manage'))
+                                @if(\Auth::user()->can('expenses_module_expenses_manage'))
                                     <li class="nav-item @if(isset($activePage['expenses'])) active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/expenses/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
                                                 <span class="nav-link-text">المصروفات </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
+                            @if(\Auth::user()->can('expenses_module_other_papers_manage'))
+                                @if(\Auth::user()->can('expenses_module_other_papers_manage'))
+                                    <li class="nav-item @if(isset($activePage['other_papers'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/otherPapers/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-file-contract"></span></span>
+                                                <span class="nav-link-text">أوراق أخرى </span>
                                             </div>
                                         </a>
                                     </li>

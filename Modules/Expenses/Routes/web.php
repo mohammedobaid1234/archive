@@ -21,3 +21,9 @@ Route::prefix('expenses')->group(function() {
     Route::get('datatable', 'ExpensesController@datatable');
 });
 Route::resource('expenses', ExpensesController::class);
+
+Route::prefix('otherPapers')->group(function() {
+    Route::get('manage', 'OtherPapersController@manage');
+    Route::get('datatable', 'OtherPapersController@datatable');
+});
+Route::resource('otherPapers', OtherPapersController::class);
