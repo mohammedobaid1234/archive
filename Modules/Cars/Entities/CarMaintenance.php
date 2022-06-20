@@ -20,6 +20,9 @@ class CarMaintenance extends Model implements HasMedia{
     public function car(){
         return $this->belongsTo(\Modules\Cars\Entities\Car::class);
     }
+    public function employee(){
+        return $this->belongsTo(\Modules\Employees\Entities\Employee::class);
+    }
    
     public function getMaintenancesImageUrlAttribute(){
         $image = $this->getMedia('maintenance_car')->last();

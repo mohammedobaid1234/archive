@@ -34,12 +34,15 @@ class EmployeesAdvancesController extends Controller{
                     $query->where('id',trim($request->employee_id));
                 });
             }
+            if (trim($request->created_at) !== "") {
+                $eloquent->whereCreatedAt($request->created_at);
+            }
             
         }
 
         $filters = [
             ['title' => 'اسم الموظف', 'type' => 'select', 'name' => 'employee_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
-            ['title' =>  '  تاريخ  الإنشتاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
+            ['title' =>  '  تاريخ  الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
 
         ];
 

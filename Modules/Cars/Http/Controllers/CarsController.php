@@ -78,6 +78,7 @@ class CarsController extends Controller{
             ['title' => 'السائق', 'column' => 'employee.full_name'],
             ['title' => 'رقم تأمين السيارة', 'column' => 'insurance_number'],
             ['title' => 'اسم الفريق', 'column' => 'team.name'],
+            ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
     

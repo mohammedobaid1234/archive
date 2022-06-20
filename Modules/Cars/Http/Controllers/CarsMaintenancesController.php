@@ -27,7 +27,7 @@ class CarsMaintenancesController extends Controller{
     public function datatable(Request $request){
         \Auth::user()->authorize('cars_module_cars_maintenance_manage');
     
-        $eloquent = $this->model::with(['car']);
+        $eloquent = $this->model::with(['car','employee']);
     
         if((int) $request->filters_status){
             if (trim($request->car_id) !== "") {
@@ -35,11 +35,16 @@ class CarsMaintenancesController extends Controller{
                     $query->where('id', trim($request->car_id));
                 });
             }
-            if (trim($request->team_id) !== "") {
-                $eloquent->whereHas('car.team', function($query) use ($request){
-                    $query->where('id', trim($request->team_id));
+            if (trim($request->employee_id) !== "") {
+                $eloquent->whereHas('employee', function($query) use ($request){
+                    $query->where('id', trim($request->employee_id));
                 });
             }
+            // if (trim($request->team_id) !== "") {
+            //     $eloquent->whereHas('car.team', function($query) use ($request){
+            //         $query->where('id', trim($request->team_id));
+            //     });
+            // }
             if (trim($request->created_at) !== "") {
                 $eloquent->whereCreatedAt($request->created_at);
             }
@@ -47,7 +52,8 @@ class CarsMaintenancesController extends Controller{
     
         $filters = [
             ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'car_id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
-            ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
+            // ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
+            ['title' => 'اسم الموظف المسؤول', 'type' => 'input', 'type' => 'select', 'name' => 'employee_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
     
@@ -57,7 +63,8 @@ class CarsMaintenancesController extends Controller{
             ['title' => 'رقم رخصة السيارة', 'column' => 'car.driving_license_number'],
             ['title' =>' محتوى الصيانة', 'column' => 'details','formatter' => 'details'],
             ['title' =>'صورة المستند', 'column' => 'image',  'formatter' => 'image'],
-            ['title' => 'اسم الفريق', 'column' => 'car.team.name'],
+            // ['title' => 'اسم الفريق', 'column' => 'car.team.name'],
+            ['title' => 'اسم الموظف المسؤول ', 'column' => 'employee.full_name'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
@@ -69,11 +76,13 @@ class CarsMaintenancesController extends Controller{
             "title" => "اضافة تفاصيل صيانة جديد",
             "inputs" => [
                 ['title' => 'نوع السيارة ', 'input' => 'select', 'name' => 'car_id', 'required' => true,'classes' => ['select2'],'data' => ['options_source' => 'cars', 'placeholder' => 'اسم السيارة ...'], 'operations' => ['show' => ['text' => 'car.type', 'id' => 'car.id']]],
+                ['title' => 'اسم  الموظف ', 'input' => 'select', 'name' => 'employee_id', 'required' => true,'classes' => ['select2'],'data' => ['options_source' => 'employees', 'placeholder' => 'اسم الموظف المسؤول ...'], 'operations' => ['show' => ['text' => 'employee.full_name', 'id' => 'employee.id']]],
                 ['title' => 'رقم اللوحة ', 'input' => 'input', 'name' => 'plate_number', 'required' => true, 'disabled'=>'disabled','operations' => ['show' => ['text' => 'car.plate_number']]],
                 ['title' => 'تفاصيل الصيانة ', 'input' => 'textarea', 'name' => 'details','required' => true, 'operations' => ['show' => ['text' => 'details']]],
-                [
-                    ['title' => 'صورة المستند', 'input' => 'input','type' => 'file', 'name' => 'image'],
-                ],
+                ['title' => 'صورة المستند', 'input' => 'input','type' => 'file', 'name' => 'image'],
+
+                ['title' => 'رقم اللوحة ', 'input' => 'input', 'name' => 'plate_number', 'required' => true, 'disabled'=>'disabled','operations' => ['show' => ['text' => 'car.plate_number']]],
+
                 
             ]
         ]; 
@@ -83,6 +92,8 @@ class CarsMaintenancesController extends Controller{
         $request->validate([
             'car_id' => 'required',
             'details' => 'required',
+            'employee_id' => 'required',
+
         ]);
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
@@ -95,6 +106,7 @@ class CarsMaintenancesController extends Controller{
         try {
             $paper =new \Modules\Cars\Entities\CarMaintenance;
             $paper->car_id = $request->car_id;            
+            $paper->employee_id = $request->employee_id;            
             $paper->details = $request->details;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
@@ -118,7 +130,7 @@ class CarsMaintenancesController extends Controller{
     }
     
     public function show($id){
-        return  $this->model::with(['car'])->whereId($id)->first();
+        return  $this->model::with(['car','employee'])->whereId($id)->first();
     }
 
     public function update(Request $request, $id){
@@ -126,6 +138,7 @@ class CarsMaintenancesController extends Controller{
         $request->validate([
             'car_id' => 'required',
             'details' => 'required',
+            'employee_id' => 'required',
         ]);
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
@@ -137,7 +150,9 @@ class CarsMaintenancesController extends Controller{
         \DB::beginTransaction();
         try {
             $paper = \Modules\Cars\Entities\CarMaintenance::whereId($id)->first();
-            $paper->car_id = $request->car_id;            
+            $paper->car_id = $request->car_id;  
+            $paper->employee_id = $request->employee_id;            
+
             $paper->details = $request->details;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());

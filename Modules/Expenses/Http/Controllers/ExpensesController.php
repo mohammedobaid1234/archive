@@ -59,7 +59,7 @@ class ExpensesController extends Controller{
             ['title' => ' المصدر ', 'type' => 'select', 'name' => 'customer_id', 'data' => ['options_source' => 'customers', 'has_empty' => true]],
             ['title' => 'اسم الموظف المسؤول ', 'type' => 'select', 'name' => 'employee_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
-            ['title' => ' تفاصيل إضافية ', 'type' => 'input', 'name' => 'notes'],
+            ['title' => ' تفاصيل إضافية ', 'type' => 'input', 'name' => 'note'],
             
         ];
 

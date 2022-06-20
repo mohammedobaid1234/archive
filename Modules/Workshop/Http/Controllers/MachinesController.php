@@ -63,6 +63,7 @@ class MachinesController extends Controller{
             ['title' => 'موديل المكينة', 'column' => 'model_of_machine'],
             ['title' => 'رقم المكينة', 'column' => 'machine_number'],
             ['title' => 'بواسطة', 'column' => 'created_by_user.name'],
+            ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 

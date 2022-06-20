@@ -56,18 +56,11 @@ class ChecksController extends Controller{
             if (trim($request->check_number) !== "") {
                 $eloquent->where('check_number', 'LIKE', "%".trim($request->check_number).'%');
             }
-            if (trim($request->due_date) !== '') {
-                $eloquent->WhereTransactionDate($request->due_date);
-            }
-         
             if (trim($request->check_number) !== "") {
                 $eloquent->where('check_number', 'LIKE', "%".trim($request->check_number).'%');
             }
             if (trim($request->due_date) !== '') {
-                $eloquent->WhereCheckDueDate($request->due_date);
-            }
-            if (trim($request->next_due_date) !== '') {
-                $eloquent->WhereNextDueDate($request->next_due_date);
+                $eloquent->WhereDueDate($request->due_date);
             }
            
             if (trim($request->additional_details) !== "") {

@@ -83,6 +83,7 @@ class MotorsController extends Controller{
             ['title' => 'موديل المحرك', 'column' => 'model_of_engine'],
             ['title' => 'رقم المحرك', 'column' => 'engine_number'],
             ['title' => 'بواسطة', 'column' => 'created_by_user.name'],
+            ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
 

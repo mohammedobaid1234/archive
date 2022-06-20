@@ -64,6 +64,21 @@ class carConsumption extends Model  implements HasMedia{
             ]
         ];
     }
+    public function _driver_id(){
+        return [
+            'title' => 'اسم السيارة  ',
+            'input' => 'select',
+            'name' => 'driver_id',
+            'classes' => ['select2'],
+            'required' => true,
+            'data' => [
+                'options_source' => 'employees',
+            ],
+            'operations' => [
+                'show' => ['text' => 'driver.full_name', 'id' => 'driver.id'],
+            ]
+        ];
+    }
     public function _quantity(){
         return [
             'title' => '(اللتر)الكمية',

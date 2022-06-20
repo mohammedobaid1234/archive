@@ -35,9 +35,9 @@ class CarsConsumptionController extends Controller{
                     $query->where('id', trim($request->car_id));
                 });
             }
-            if (trim($request->team_id) !== "") {
-                $eloquent->whereHas('car.team', function($query) use ($request){
-                    $query->where('id', trim($request->team_id));
+            if (trim($request->driver_id) !== "") {
+                $eloquent->whereHas('driver', function($query) use ($request){
+                    $query->where('id', trim($request->driver_id));
                 });
             }
             if (trim($request->created_at) !== "") {
@@ -47,7 +47,7 @@ class CarsConsumptionController extends Controller{
     
         $filters = [
             ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'car_id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
-            ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
+            ['title' => 'اسم الموظف', 'type' => 'input', 'type' => 'select', 'name' => 'driver_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
     
@@ -90,7 +90,7 @@ class CarsConsumptionController extends Controller{
             $car = \Modules\Cars\Entities\Car::whereId($request->car_id)->first();
             $carConsumption =new \Modules\Cars\Entities\carConsumption();
             $carConsumption->car_id = $request->car_id;            
-            $carConsumption->driver_id = $car->driver_id;            
+            $carConsumption->driver_id = $request->driver_id;            
             $carConsumption->quantity = $request->quantity;            
             $carConsumption->amount = $request->amount;            
             $carConsumption->note = $request->note;            
@@ -135,7 +135,7 @@ class CarsConsumptionController extends Controller{
             $car = \Modules\Cars\Entities\Car::whereId($request->car_id)->first();
             $carConsumption = \Modules\Cars\Entities\carConsumption::whereId($id)->first();
             $carConsumption->car_id = $request->car_id;            
-            $carConsumption->driver_id = $car->driver_id;            
+            $carConsumption->driver_id = $request->driver_id;            
             $carConsumption->quantity = $request->quantity;            
             $carConsumption->amount = $request->amount;            
             $carConsumption->note = $request->note;            
