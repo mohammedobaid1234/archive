@@ -247,6 +247,18 @@
                                     </li>
                                 @endif
                             @endif
+                            @if(\Auth::user()->can('customers_module_drafts_manage'))
+                                @if(\Auth::user()->can('customers_module_drafts_manage'))
+                                    <li class="nav-item @if(isset($activePage['drafts'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/drafts/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">أرشيف  الكمبيالات </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
                             @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
                                 @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
                                     <li class="nav-item @if(isset($activePage['exchange_bonds'])) active @endif">
@@ -254,6 +266,19 @@
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
                                                 <span class="nav-link-text">سندات  الصرف </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                @endif
+                            @endif
+                            @if(\Auth::user()->can('core_module_electricities_manage'))
+                                @if(\Auth::user()->can('core_module_electricities_manage'))
+                                    <li class="nav-item @if(isset($activePage['electricities'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/electricities/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
+                                                <span class="nav-link-text">سحب الكهرباء </span>
                                             </div>
                                         </a>
                                     </li>

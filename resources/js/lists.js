@@ -233,6 +233,18 @@ let GLOBALS = {
                 ]
             });
         },
+        electronic_type: function (element) {
+            if (element === undefined) {
+                element = $('[data-options_source="electronic_type"]');
+            }
+
+            $(element).briskSelectOptions({
+                options: [
+                    {id: 'خط24', name: "خط24"},
+                    {id: 'خط8', name: "خط8"},
+                ]
+            });
+        },
         teams: function (element) {
             if (element === undefined) {
                 element = $('[data-options_source="teams"]');

@@ -61,6 +61,12 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::resource('checks', ChecksController::class);
 
+    Route::prefix('drafts')->group(function() {
+        Route::get('manage', 'DraftsController@manage');
+        Route::get('datatable', 'DraftsController@datatable');
+    });
+    Route::resource('drafts', DraftsController::class);
+
     
 
 });

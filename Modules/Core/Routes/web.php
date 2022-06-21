@@ -36,5 +36,11 @@ Route::middleware(['auth'])->group(function() {
         Route::get('datatable', 'BanksController@datatable');
     });
     Route::resource('banks', BanksController::class);
+
+    Route::prefix('electricities')->group(function() {
+        Route::get('manage', 'ElectricitiesController@manage');
+        Route::get('datatable', 'ElectricitiesController@datatable');
+    });
+    Route::resource('electricities', ElectricitiesController::class);
 });
 
