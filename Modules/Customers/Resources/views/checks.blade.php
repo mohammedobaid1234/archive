@@ -78,8 +78,6 @@
                                         <div class="modal-body" height="600px">
                                             <iframe src="https://docs.google.com/viewerng/viewer?url=${row.check_image_url}&embedded=true" frameborder="0"  style="height:400px;"  width="100%">
                                             </iframe>
-                                            <iframe src="https://docs.google.com/viewerng/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" frameborder="0"  style="height:500px;"  width="100%">
-                                            </iframe>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
