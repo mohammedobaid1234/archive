@@ -60,6 +60,9 @@ class ElectricitiesController extends Controller{
             ['title' => 'اسم الموظف المسؤول ', 'column' => 'employee.full_name'],
             ['title' => 'قيمة  القراءة السابقة ', 'column' => 'previous_reading'],
             ['title' => 'قيمة القراءة الحالية ', 'column' => 'current_reading'],
+            ['title' => 'قيمة الحسب بالكيلو ', 'column' => 'value_between'],
+            ['title' => 'قيمة السحب بالشيكل ', 'column' => 'price' ],
+            ['title' => 'نوع الخط ', 'column' => 'type'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'بواسطة', 'column' => 'created_by_user.name'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
@@ -73,23 +76,21 @@ class ElectricitiesController extends Controller{
 
         $request->validate([
             'employee_id' => 'required',
-            'previous_reading' => 'required',
+            // 'previous_reading' => 'required',
             'current_reading' => 'required',
             'type' => 'required',
         ]);
 
         \DB::beginTransaction();
         try {
+            $electrony = \Modules\Core\Entities\Electricity::where('type', $request->type)->latest()->first();
             $electricities = new \Modules\Core\Entities\Electricity;
             $electricities->employee_id = $request->employee_id;
-            $electrony = \Modules\Core\Entities\Electricity::where('type', $request->type)->last();
-            if($electrony){
-                $electricities->current_reading = $electrony->previous_reading;
-            }else{
-                $electricities->previous_reading = $request->previous_reading;
-            }
             $electricities->current_reading = $request->current_reading;
             $electricities->type = $request->type;
+            $electrony != null ? $electricities->previous_reading = $electrony->current_reading :$electricities->previous_reading = $request->previous_reading ;
+            $electricities->value_between = $electricities->current_reading - $electricities->previous_reading;  
+            $request->type == 'خط24' ? $electricities->price = $electricities->value_between :  $electricities->price =($electricities->value_between *.6);
             $electricities->created_by = \Auth::user()->id;
             $electricities->save();
 
@@ -106,11 +107,11 @@ class ElectricitiesController extends Controller{
             "title" => "اضافة إيصال جديد",
             "inputs" => [
                 ['title' => 'اسم الموظف المسؤول  ', 'input' => 'select', 'name' => 'employee_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'employees', 'placeholder' => 'اسم الموظفين...'],'operations' => ['show' => ['text' => 'employee.full_name', 'id' => 'employee_id']]],
+                ['title' => 'النوع ', 'input' => 'select', 'name' => 'type', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'electronic_type'],"rowIndex" => 1,'operations' => ['show' => ['text' => 'type']]],
                 [
                     ['title' => 'قيمة القراءة السابقة  ', 'input' => 'input', 'name' => 'previous_reading','classes' => ['select2'],'operations' => ['show' => ['text' => 'previous_reading']]],
                     ['title' => 'قيمة القراءة الحالية ', 'input' => 'input', 'name' => 'current_reading',  'required' => true, 'classes' => ['numeric'],'required' => true,'operations' => ['show' => ['text' => 'current_reading']]],
                 ],
-                ['title' => 'النوع ', 'input' => 'select', 'name' => 'type', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'electronic_type'],"rowIndex" => 1,'operations' => ['show' => ['text' => 'type']]],
             ]
         ];
     }
@@ -122,18 +123,22 @@ class ElectricitiesController extends Controller{
 
         $request->validate([
             'employee_id' => 'required',
-            'previous_reading' => 'required',
+            // 'previous_reading' => 'required',
             'current_reading' => 'required',
             'type' => 'required',
         ]);
 
         \DB::beginTransaction();
         try {
+            $electrony = \Modules\Core\Entities\Electricity::where('id', '<>', $id)->where('type', $request->type)->latest()->first();
+
             $electricities =  \Modules\Core\Entities\Electricity::whereId($id)->first();
             $electricities->employee_id = $request->employee_id;
-            $electricities->previous_reading = $request->previous_reading;
             $electricities->current_reading = $request->current_reading;
             $electricities->type = $request->type;
+            $electrony != null ? $electricities->previous_reading = $electrony->current_reading :$electricities->previous_reading = $request->previous_reading ;
+            $electricities->value_between = $electricities->current_reading - $electricities->previous_reading;  
+            $request->type == 'خط24' ? $electricities->price = $electricities->value_between :  $electricities->price =($electricities->value_between *.6);
             $electricities->created_by = \Auth::user()->id;
             $electricities->save();
 
@@ -144,5 +149,9 @@ class ElectricitiesController extends Controller{
         }
 
         return response()->json(['message' => 'ok']);
+    }
+    public function latest($type){
+        return \Modules\Core\Entities\Electricity::where('type', $type)->latest()->first();
+
     }
 }

@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('electricities')->group(function() {
         Route::get('manage', 'ElectricitiesController@manage');
         Route::get('datatable', 'ElectricitiesController@datatable');
+        Route::get('latest/{type}', 'ElectricitiesController@latest');
     });
     Route::resource('electricities', ElectricitiesController::class);
 });

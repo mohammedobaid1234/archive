@@ -29,6 +29,16 @@
                     ]
                 },
                 formatters: {
+                    value: function (row,column) { 
+                        return row.current_reading - row.previous_reading;
+                    },
+                    price:function (row,column) { 
+                        if(row.type == 'خط24'){
+                            return (row.current_reading - row.previous_reading);
+                        }else if(row.type == 'خط8'){
+                            return (row.current_reading - row.previous_reading) * 0.6;
+                        }
+                    },
                     operations: function(row, column){
                         var operations = '';
 
@@ -38,7 +48,7 @@
                     }
                 }
             });
-
+            
             $('#electricitie').briskForm({
                 resource: {
                     api: $("meta[name='BASE_URL']").attr("content"),
@@ -53,6 +63,20 @@
             $('#electricitie').bind('briskForm.update.done', function(event, response){
                 $("#datatable").briskDataTable('refresh');
             });
+            
+            setTimeout(() => {
+                $('button[data-action="electricitie-create"]').click(function () { 
+                    setTimeout(()=>$('input[data-operations-show-text="previous_reading"]').attr('disabled', 'disabled'),500);
+                    $('select[data-options_source="electronic_type"]').on('change', function () { 
+                        $val = $(this).val();
+                        if($val != null){
+                            $.get($("meta[name='BASE_URL']").attr("content")  + '/electricities/latest/' + $val , function (response) {
+                            $('input[data-operations-show-text="previous_reading"]').val(response.current_reading);
+                            });
+                        }
+                    });
+             })
+            }, 1000);
         });
     </script>
 @endsection

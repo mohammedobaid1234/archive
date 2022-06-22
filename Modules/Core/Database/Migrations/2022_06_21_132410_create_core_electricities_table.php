@@ -17,9 +17,11 @@ class CreateCoreElectricitiesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->smallInteger('previous_reading')->default(0);
-            $table->smallInteger('current_reading')->default(0);
+            $table->bigInteger('previous_reading')->default(0);
+            $table->bigInteger('current_reading')->default(0);
             $table->enum('type', ['خط24','خط8']);
+            $table->bigInteger('value_between')->default(0);
+            $table->bigInteger('price')->default(0);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->softDeletes();

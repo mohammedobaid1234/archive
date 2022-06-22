@@ -56,7 +56,7 @@
                         <a class="navbar-brand mr-1 mr-sm-3" href="{{ url('/') }}">
                             <div class="d-flex align-items-center">
                                 <!-- <img class="mr-2" src="{{ asset('/public/themes/Falcon/v2.8.0/assets/img/illustrations/falcon.png') }}" alt="" width="40" /> -->
-                                <span class="text-sans-serif">Qasetli</span>
+                                <span class="text-sans-serif">AMTC</span>
                             </div>
                         </a>
                         <ul class="navbar-nav align-items-center d-none d-lg-block"></ul>
@@ -178,7 +178,7 @@
                     <footer>
                         <div class="row no-gutters justify-content-between fs--1 mt-4 mb-3">
                             <div class="col-12 col-sm-auto text-center">
-                                <p class="mb-0 text-600">{{ config('app.name', 'Qasetli Portal') }} <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> {{ date('Y') }} &copy;</p>
+                                <p class="mb-0 text-600">{{ config('app.name', 'tli Portal') }} <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> {{ date('Y') }} &copy;</p>
                             </div>
                             <div class="col-12 col-sm-auto text-center">
                                 <p class="mb-0 text-600">v0.0.1</p>

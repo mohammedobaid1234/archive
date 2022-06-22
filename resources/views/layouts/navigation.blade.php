@@ -6,7 +6,7 @@
         <a class="navbar-brand" href="{{ url('/') }}/dashboard">
             <div class="d-flex align-items-center py-3">
                 <img class="mr-2" src="{{ asset('/public/themes/Falcon/v2.8.0/assets/img/favicons/logo.png') }}" alt="" width="40" />
-                <span class="text-stc- fs-1" dir="ltr">{{ config('app.name', 'Qasetli Portal') }}</span>
+                <span class="text-stc- fs-1" dir="ltr">{{ config('app.name', 'AMTC Portal') }}</span>
             </div>
         </a>
     </div>

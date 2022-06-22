@@ -44,7 +44,7 @@
         </div>
         <div class="text-center">
             <figure class="figure" style="max-width: 30rem; width: 23rem;">
-                <img width="130" class="img-fluid rounded" src="{{ asset('/public/themes/Falcon/v2.8.0/assets/img/favicons/logo.png') }}" alt="{{ config('app.name', 'Qasetli Portal') }}">
+                <img width="130" class="img-fluid rounded" src="{{ asset('/public/themes/Falcon/v2.8.0/assets/img/favicons/logo.png') }}" alt="{{ config('app.name', 'AMTC Portal') }}">
             </figure>
         </div>
         <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
