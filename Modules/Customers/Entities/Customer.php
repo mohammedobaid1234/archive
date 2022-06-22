@@ -23,7 +23,6 @@ class Customer extends Model {
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
 
-
     public function notes(){
         return $this->hasMany(\Modules\Customers\Entities\Note::class, 'customer_id');
     }

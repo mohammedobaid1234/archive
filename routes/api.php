@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Route::get('/image/{id}', function(){
+//     $path ='http://archive.local/storage/app/public/1/bdb75808dc5987879a69a769cedcbbe6.pdf';
+//     $filename = 'bdb75808dc5987879a69a769cedcbbe6.pdf';
+//     return response()->file($path, [
+//         'Content-Disposition' => 'inline; filename="'. 'bdb75808dc5987879a69a769cedcbbe6.pdf' .'"'
+//       ]);
+//     return Response::file($path);
+// });

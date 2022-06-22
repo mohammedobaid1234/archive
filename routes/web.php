@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*
 |--------------------------------------------------------------------------
