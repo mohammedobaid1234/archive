@@ -35,6 +35,9 @@ class Draft extends Model implements HasMedia{
     public function customer(){
         return $this->belongsTo(\Modules\Customers\Entities\Customer::class, 'customer_id');
     }
+    public function customer_payment_date(){
+        return $this->morphOne(\Modules\Customers\Entities\CustomerPaymentsDate::class, 'payment');
+    }
     public function employee(){
         return $this->belongsTo(\Modules\Employees\Entities\Employee::class);
     }

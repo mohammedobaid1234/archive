@@ -70,6 +70,12 @@ class Check extends Model  implements HasMedia {
     public function currency(){
         return $this->belongsTo(\Modules\Core\Entities\Currency::class, 'currency_id');
     }
+    public function employee(){
+        return $this->belongsTo(\Modules\Employees\Entities\Employee::class, 'employee_id');
+    }
+    public function customer_payment_date(){
+        return $this->morphOne(\Modules\Customers\Entities\CustomerPaymentsDate::class, 'payment');
+    }
     public function bank(){
         return $this->belongsTo(\Modules\Core\Entities\Bank::class, 'bank_id');
     }

@@ -21,7 +21,14 @@ class CustomerPaymentsDate extends Model{
     public function employee(){
         return $this->belongsTo(\Modules\Customers\Entities\Employee::class);
     }
+    public function currency(){
+        return $this->belongsTo(\Modules\Core\Entities\Currency::class, 'currency_id');
+    }
     public function contract(){
         return $this->belongsTo(\Modules\Customers\Entities\Contract::class);
     }
+    public function payment(){
+        return $this->morphTo();
+    }
+
 }

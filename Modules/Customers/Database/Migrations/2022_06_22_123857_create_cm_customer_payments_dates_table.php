@@ -15,13 +15,18 @@ class CreateCmCustomerPaymentsDatesTable extends Migration
     {
         Schema::create('cm_customer_payments_dates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contract_id')->nullable();
+            $table->string('contract_number')->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
+            $table->string('label')->nullable();
+            $table->unsignedBigInteger('payment_id')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->bigInteger('amount')->default(0);
+            $table->string('currency_id')->nullable();
             $table->date('due_date')->nullable();
             $table->enum('state', ['تم_السداد','لم_يتم_السداد'])->default('لم_يتم_السداد');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('contract_id')->references('id')->on('cm_contacts');
+            $table->foreign('currency_id')->references('id')->on('core_currencies');
             $table->foreign('employee_id')->references('id')->on('employees');
            $table->softDeletes();
             $table->timestamps();

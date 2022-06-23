@@ -141,6 +141,26 @@ class DraftsController extends Controller{
             $draft->created_by = \Auth::user()->id;
             $draft->save();
             
+
+            if($request->contract_id){
+                $contract = \Modules\Customers\Entities\ProductForCustomer::where('contract_number',$request->contract_id)->first();
+                if($contract){
+                $customer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                $customer_payment->contract_number  = $request->contract_id ;
+                $customer_payment->employee_id  = $request->employee_id ;
+                $customer_payment->label  = 'كمبيالة'. $draft->id ;
+                $customer_payment->payment_id  = $draft->id ;
+                $customer_payment->payment_type  = 'Modules\Customers\Entities\Draft' ;
+                $customer_payment->amount  = $draft->amount ;
+                $customer_payment->currency_id  = $draft->currency_id ;
+                $customer_payment->due_date = $draft->due_date;
+                $customer_payment->created_by = \Auth::user()->id;
+                $customer_payment->save();
+             }
+            }else{
+                return response()->json(['message' => "رقم العقد غير موجود."], 403);
+            }
+            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
                 $media_new_name = strtolower(md5(time())) . "." . $extension;
@@ -168,6 +188,8 @@ class DraftsController extends Controller{
                 ['title' => 'اسم الموظف المسؤول  ', 'input' => 'select', 'name' => 'employee_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'employees', 'placeholder' => 'اسم الموظفين...'],'operations' => ['show' => ['text' => 'employee.full_name', 'id' => 'employee_id']]],
                 ['title' => 'رقم هوية العميل ', 'input' => 'input', 'name' => 'national_id', 'required' => true,'operations' => ['show' => ['text' => 'national_id']]],
                 ['title' => 'اسم المستفيد  ', 'input' => 'select', 'name' => 'customer_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...'],'operations' => ['show' => ['text' => 'customer.full_name', 'id' => 'customer_id']]],
+                ['title' => '(في حال كان دفعة لعقد) رقم العقد', 'input' => 'input', 'name' => 'contract_id', 'operations' => ['show' => ['text' => 'customer_payment_date.contract_number']]],
+                
                 [
                     ['title' => 'قيمة الكمبيالة ', 'input' => 'input', 'name' => 'amount',  'classes' => ['numeric'],'required' => true,'operations' => ['show' => ['text' => 'amount']]],
                     ['title' => 'نوع العملة  ', 'input' => 'select', 'name' => 'currency_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'currencies', ],'operations' => ['show' => ['text' => 'currency.name', 'id' => 'currency.id']]],
@@ -235,6 +257,41 @@ class DraftsController extends Controller{
             $draft->additional_details = $request->additional_details;
             $draft->created_by = \Auth::user()->id;
             $draft->save();
+            if($request->contract_id){
+                $contract = \Modules\Customers\Entities\ProductForCustomer::where('contract_number',$request->contract_id)->first();
+                if($contract){
+                    $customer_payment =  \Modules\Customers\Entities\CustomerPaymentsDate::where('payment_id', $draft->id)
+                                         ->where('payment_type', 'Modules\Customers\Entities\Draft')->first();
+                    if($customer_payment){
+                        $customer_payment->contract_number  = $request->contract_id ;
+                        $customer_payment->employee_id  = $request->employee_id ;
+                        $customer_payment->label  = 'شيك'. $draft->id ;
+                        $customer_payment->payment_id  = $draft->id ;
+                        $customer_payment->payment_type  = 'Modules\Customers\Entities\Draft' ;
+                        $customer_payment->amount  = $draft->amount ;
+                        $customer_payment->currency_id  = $draft->currency_id ;
+                        $customer_payment->due_date = $draft->due_date;
+                        $customer_payment->created_by = \Auth::user()->id;
+                        $customer_payment->save();
+                    }else{
+                        $customer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                        $customer_payment->contract_number  = $request->contract_id ;
+                        $customer_payment->employee_id  = $request->employee_id ;
+                        $customer_payment->label  = 'شيك'. $draft->id ;
+                        $customer_payment->payment_id  = $draft->id ;
+                        $customer_payment->payment_type  = 'Modules\Customers\Entities\Draft' ;
+                        $customer_payment->amount  = $draft->amount ;
+                        $customer_payment->currency_id  = $draft->currency_id ;
+                        $customer_payment->due_date = $draft->due_date;
+                        $customer_payment->created_by = \Auth::user()->id;
+                        $customer_payment->save();
+                    }
+                    
+                }else{
+                      return response()->json(['message' => "رقم العقد غير موجود."], 403);
+                }
+            } 
+            
             
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
