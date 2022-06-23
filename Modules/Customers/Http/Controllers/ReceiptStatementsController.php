@@ -174,11 +174,13 @@ class ReceiptStatementsController extends Controller{
         if(!$request->bank_id){
         return response()->json(['message' => "يرجى التحقق من اسم البنك ."], 403);
         } 
-        if($request->check_due_date < now()){
-            return response()->json(['message' => "التاريخ المدخل غير منطقي ."], 403);
-        }
+       
         if(!$request->check_due_date){
             return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
+        }
+        if(!$request->check_image){
+            return response()->json(['message' => "يرجى إضافة صورة الشيك ."], 403);
+
         }
        }
 
@@ -186,16 +188,11 @@ class ReceiptStatementsController extends Controller{
         if(!$request->check_number){
         return response()->json(['message' => "يرجى إضتافة رقم الشيك ."], 403);
         } 
-        if($request->check_due_date < now()){
-            return response()->json(['message' => "التاريخ المدخل غير منطقي ."], 403);
-        }
+       
         if(!$request->check_due_date){
             return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
         }
        }
-       if($request->check_due_date && $request->check_due_date < now()){
-        return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
-    }
        
 
         \DB::beginTransaction();
@@ -214,12 +211,106 @@ class ReceiptStatementsController extends Controller{
             $receiptStatement->payment_method = $request->payment_method;
             $receiptStatement->check_number = $request->check_number;
             $receiptStatement->bank_id = $request->bank_id;
+            $receiptStatement->currency_id  = $request->currency_id ;
             $receiptStatement->check_due_date = $request->check_due_date;
             $receiptStatement->next_due_date = $request->next_due_date;
             $receiptStatement->opposite = $request->opposite;
             $receiptStatement->other_terms = $request->other_terms;
             $receiptStatement->created_by = \Auth::user()->id;
             $receiptStatement->save();
+
+            if($request->check_number){
+                $check = \Modules\Customers\Entities\Check::where('check_number', $request->check_number)->first();
+                if(!$check){
+                    
+                    $newCheck = new \Modules\Customers\Entities\Check;
+                    $newCheck->check_number = $receiptStatement->check_number;
+                    $newCheck->customer_id  = $receiptStatement->customer_id ;
+                    $newCheck->amount  = $receiptStatement->received_amount ;
+                    $newCheck->type   = 'وارد'  ;
+                    $newCheck->due_date   = $receiptStatement->check_due_date ;
+                    $newCheck->bank_id    = $receiptStatement->bank_id  ;
+                    $newCheck->currency_id     = $receiptStatement->currency_id   ;
+                    $newCheck->additional_details    = $receiptStatement->opposite  ;
+                    $newCheck->employee_id     = $receiptStatement->employee_id   ;
+                    $newCheck->created_by = \Auth::user()->id;
+                    $newCheck->save();
+                    if($request->hasFile('check_image') && $request->file('check_image')[0]->isValid()){
+                        $extension = strtolower($request->file('check_image')[0]->extension());
+                        $media_new_name = strtolower(md5(time())) . "." . $extension;
+                        $collection = "check_image";
+        
+                        $newCheck->addMediaFromRequest('check_image[0]')
+                                ->usingFileName($media_new_name)
+                                ->usingName($request->file('check_image')[0]->getClientOriginalName())
+                                ->toMediaCollection($collection);
+                    }
+
+                    $customer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                    $customer_payment->contract_number  =  $receiptStatement->transaction_number ;
+                    $customer_payment->employee_id  = $newCheck->employee_id ;
+                    $customer_payment->label  = 'إيصال قبض بواسطة شيك'. $newCheck->check_number ;
+                    $customer_payment->payment_id  = $newCheck->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\Check' ;
+                    $customer_payment->amount  = $newCheck->amount ;
+                    $customer_payment->currency_id  = $newCheck->currency_id ;
+                    $customer_payment->due_date = $newCheck->due_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+
+                }else{
+                    $check->check_number = $receiptStatement->check_number;
+                    $check->customer_id  = $receiptStatement->customer_id ;
+                    $check->amount  = $receiptStatement->received_amount ;
+                    $check->type   = 'وارد'  ;
+                    $check->due_date   = $receiptStatement->check_due_date ;
+                    $check->bank_id    = $receiptStatement->bank_id  ;
+                    $check->currency_id     = $receiptStatement->currency_id   ;
+                    $check->additional_details    = $receiptStatement->opposite  ;
+                    $check->employee_id     = $receiptStatement->employee_id   ;
+                    $check->created_by = \Auth::user()->id;
+                    $check->save();
+                    if($request->hasFile('check_image') && $request->file('check_image')[0]->isValid()){
+                        $extension = strtolower($request->file('check_image')[0]->extension());
+                        $media_new_name = strtolower(md5(time())) . "." . $extension;
+                        $collection = "check_image";
+        
+                        $check->addMediaFromRequest('check_image[0]')
+                                ->usingFileName($media_new_name)
+                                ->usingName($request->file('check_image')[0]->getClientOriginalName())
+                                ->toMediaCollection($collection);
+                    }
+
+                    $customer_payment =  \Modules\Customers\Entities\CustomerPaymentsDate::where('payment_id', $check->id)
+                    ->where('payment_type', 'Modules\Customers\Entities\Check')->first();
+                    $customer_payment->contract_number  = $receiptStatement->check_number ;
+                    $customer_payment->employee_id  = $check->employee_id ;
+                    $customer_payment->label  = 'إيصال قبض بواسطة شيك'. $check->check_number ;
+                    $customer_payment->payment_id  = $check->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\Check' ;
+                    $customer_payment->amount  = $check->amount ;
+                    $customer_payment->currency_id  = $check->currency_id ;
+                    $customer_payment->due_date = $check->due_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+                    
+                }
+            }else{
+                $customer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                    $customer_payment->contract_number  =  $receiptStatement->transaction_number ;
+                    $customer_payment->employee_id  = $receiptStatement->employee_id ;
+                    $customer_payment->label  = 'إيصاال قبض'. $receiptStatement->transaction_number ;
+                    $customer_payment->payment_id  = $receiptStatement->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\ReceiptStatement' ;
+                    $customer_payment->amount  = $receiptStatement->received_amount ;
+                    $customer_payment->currency_id  = $receiptStatement->currency_id ;
+                    $customer_payment->due_date = $receiptStatement->transaction_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+            }
             
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
@@ -270,6 +361,7 @@ class ReceiptStatementsController extends Controller{
                     ['title' => ' اسم البنك', 'input' => 'select', 'name' => 'bank_id',  'classes' => ['select2'], 'data' => ['options_source' => 'banks', 'placeholder' => 'اسم البنك لصرف الشيك...'],'operations' => ['show' => ['text' => 'bank.name', 'id' => 'bank.id'],'update' => ['text' => 'bank.name', 'id' => 'bank.id']]],
                     ['title' => 'تاريخ صرف الشيك ', 'input' => 'input', 'name' => 'check_due_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'check_due_date']]],
                 ],
+                ['title' => 'صورة الشيك', 'input' => 'input','type' => 'file', 'name' => 'check_image','operations' => ['show' => ['text' => 'check_image'],'update' => ['text' => 'check_image'],]],
                 ['title' => 'تاريخ الاستحقاق للرصيد ', 'input' => 'input', 'name' => 'next_due_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'next_due_date']]],
                 ['title' => 'وذلك مقابل ...', 'input' => 'textarea', 'name' => 'opposite', 'required' => true, 'placeholder' =>'وذلك مقابل ...','operations' => ['show' => ['text' => 'opposite']]],
                 ['title' => 'شروط متغيرة ...', 'input' => 'textarea', 'name' => 'other_terms',  'placeholder' =>'شروط متغيرة ...','operations' => ['show' => ['text' => 'other_terms']]],
@@ -316,9 +408,7 @@ class ReceiptStatementsController extends Controller{
         if(!$request->bank_id){
         return response()->json(['message' => "يرجى التحقق من اسم البنك ."], 403);
         } 
-        if($request->check_due_date < now()){
-            return response()->json(['message' => "التاريخ المدخل غير منطقي ."], 403);
-        }
+
         if(!$request->check_due_date){
             return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
         }
@@ -328,18 +418,12 @@ class ReceiptStatementsController extends Controller{
         if(!$request->check_number){
         return response()->json(['message' => "يرجى إضتافة رقم الشيك ."], 403);
         } 
-        if($request->check_due_date < now()){
-            return response()->json(['message' => "التاريخ المدخل غير منطقي ."], 403);
-        }
+    
         if(!$request->check_due_date){
             return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
         }
        }
-       if($request->check_due_date && $request->check_due_date < now()){
-        return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
-    }
        
-
         \DB::beginTransaction();
         try {
             $receiptStatement = \Modules\Customers\Entities\ReceiptStatement::whereId($receipt_statement)->first();
@@ -362,6 +446,113 @@ class ReceiptStatementsController extends Controller{
             $receiptStatement->other_terms = $request->other_terms;
             $receiptStatement->created_by = \Auth::user()->id;
             $receiptStatement->save();
+            if($request->check_number){
+                $check = \Modules\Customers\Entities\Check::where('check_number', $request->check_number)->first();
+                if(!$check){
+                    $newCheck = new \Modules\Customers\Entities\Check;
+                    $newCheck->check_number = $receiptStatement->check_number;
+                    $newCheck->customer_id  = $receiptStatement->customer_id ;
+                    $newCheck->amount  = $receiptStatement->received_amount ;
+                    $newCheck->type   = 'وارد'  ;
+                    $newCheck->due_date   = $receiptStatement->check_due_date ;
+                    $newCheck->bank_id    = $receiptStatement->bank_id  ;
+                    $newCheck->additional_details    = $receiptStatement->opposite  ;
+                    $newCheck->employee_id     = $receiptStatement->employee_id   ;
+                    $newCheck->created_by = \Auth::user()->id;
+                    $newCheck->save();
+                    if($request->hasFile('check_image') && $request->file('check_image')[0]->isValid()){
+                        $extension = strtolower($request->file('check_image')[0]->extension());
+                        $media_new_name = strtolower(md5(time())) . "." . $extension;
+                        $collection = "check_image";
+        
+                        $newCheck->addMediaFromRequest('check_image[0]')
+                                ->usingFileName($media_new_name)
+                                ->usingName($request->file('check_image')[0]->getClientOriginalName())
+                                ->toMediaCollection($collection);
+                    }
+
+                    $customer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                    $customer_payment->contract_number  =  $receiptStatement->transaction_number ;
+                    $customer_payment->employee_id  = $newCheck->employee_id ;
+                    $customer_payment->label  = 'إيصال قبض بواسطة شيك'. $newCheck->check_number ;
+                    $customer_payment->payment_id  = $newCheck->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\Check' ;
+                    $customer_payment->amount  = $newCheck->amount ;
+                    $customer_payment->currency_id  = $newCheck->currency_id ;
+                    $customer_payment->due_date = $newCheck->due_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+
+                }else{
+                    $check->check_number = $receiptStatement->check_number;
+                    $check->currency_id   = $receiptStatement->currency_id  ;
+                    $check->customer_id  = $receiptStatement->customer_id ;
+                    $check->amount  = $receiptStatement->received_amount ;
+                    $check->type   = 'وارد'  ;
+                    $check->due_date   = $receiptStatement->check_due_date ;
+                    $check->bank_id    = $receiptStatement->bank_id  ;
+                    $check->additional_details    = $receiptStatement->opposite  ;
+                    $check->employee_id     = $receiptStatement->employee_id   ;
+                    $check->created_by = \Auth::user()->id;
+                    $check->save();
+                    if($request->hasFile('check_image') && $request->file('check_image')[0]->isValid()){
+                        $extension = strtolower($request->file('check_image')[0]->extension());
+                        $media_new_name = strtolower(md5(time())) . "." . $extension;
+                        $collection = "check_image";
+        
+                        $check->addMediaFromRequest('check_image[0]')
+                                ->usingFileName($media_new_name)
+                                ->usingName($request->file('check_image')[0]->getClientOriginalName())
+                                ->toMediaCollection($collection);
+                    }
+
+                    $customer_payment =  \Modules\Customers\Entities\CustomerPaymentsDate::where('payment_id', $check->id)
+                    ->where('payment_type', 'Modules\Customers\Entities\Check')->first();
+                    $customer_payment->contract_number  = $receiptStatement->check_number ;
+                    $customer_payment->employee_id  = $check->employee_id ;
+                    $customer_payment->label  = 'إيصال قبض بواسطة شيك'. $check->check_number ;
+                    $customer_payment->payment_id  = $check->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\Check' ;
+                    $customer_payment->amount  = $check->amount ;
+                    $customer_payment->currency_id  = $check->currency_id ;
+                    $customer_payment->due_date = $check->due_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+                    
+                }
+            }else{
+                $customer_payment =  \Modules\Customers\Entities\CustomerPaymentsDate::where('payment_id', $receiptStatement->id)
+                ->where('payment_type', 'Modules\Customers\Entities\Check')->first();
+                if($customer_payment){
+                    $customer_payment->contract_number  =  $receiptStatement->transaction_number ;
+                    $customer_payment->employee_id  = $receiptStatement->employee_id ;
+                    $customer_payment->label  = 'إيصاال قبض'. $receiptStatement->transaction_number ;
+                    $customer_payment->payment_id  = $receiptStatement->id ;
+                    $customer_payment->state  = 'تم_السداد' ;
+                    $customer_payment->payment_type  = 'Modules\Customers\Entities\ReceiptStatement' ;
+                    $customer_payment->amount  = $receiptStatement->received_amount ;
+                    $customer_payment->currency_id  = $receiptStatement->currency_id ;
+                    $customer_payment->due_date = $receiptStatement->transaction_date;
+                    $customer_payment->created_by = \Auth::user()->id;
+                    $customer_payment->save();
+                }else{
+
+                    $newCustomer_payment = new \Modules\Customers\Entities\CustomerPaymentsDate;
+                    $newCustomer_payment->contract_number  =  $receiptStatement->transaction_number ;
+                    $newCustomer_payment->employee_id  = $receiptStatement->employee_id ;
+                    $newCustomer_payment->label  = 'إيصاال قبض'. $receiptStatement->transaction_number ;
+                    $newCustomer_payment->payment_id  = $receiptStatement->id ;
+                    $newCustomer_payment->state  = 'تم_السداد' ;
+                    $newCustomer_payment->payment_type  = 'Modules\Customers\Entities\ReceiptStatement' ;
+                    $newCustomer_payment->amount  = $receiptStatement->received_amount ;
+                    $newCustomer_payment->currency_id  = $receiptStatement->currency_id ;
+                    $newCustomer_payment->due_date = $receiptStatement->transaction_date;
+                    $newCustomer_payment->created_by = \Auth::user()->id;
+                    $newCustomer_payment->save();
+                }
+            }
             
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());
