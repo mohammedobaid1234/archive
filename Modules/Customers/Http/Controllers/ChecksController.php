@@ -267,7 +267,7 @@ class ChecksController extends Controller{
             $check->additional_details = $request->additional_details;
             $check->created_by = \Auth::user()->id;
             $check->save();
-            if($request->contract_id){
+            if($request->contract_id && $request->type == 'وارد'){
                 $contract = \Modules\Customers\Entities\ProductForCustomer::where('contract_number',$request->contract_id)->first();
                 if($contract){
                     $customer_payment =  \Modules\Customers\Entities\CustomerPaymentsDate::where('payment_id', $check->id)
