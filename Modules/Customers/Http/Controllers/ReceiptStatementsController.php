@@ -180,7 +180,6 @@ class ReceiptStatementsController extends Controller{
         }
         if(!$request->check_image){
             return response()->json(['message' => "يرجى إضافة صورة الشيك ."], 403);
-
         }
        }
 
@@ -188,7 +187,9 @@ class ReceiptStatementsController extends Controller{
         if(!$request->check_number){
         return response()->json(['message' => "يرجى إضتافة رقم الشيك ."], 403);
         } 
-       
+        if(!$request->check_image){
+            return response()->json(['message' => "يرجى إضافة صورة الشيك ."], 403);
+        }
         if(!$request->check_due_date){
             return response()->json(['message' => "يرجى إضافة تاريخ إستحقاق الشيك ."], 403);
         }

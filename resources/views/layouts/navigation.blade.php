@@ -297,6 +297,18 @@
                                     </li>
                                 @endif
                             @endif
+                            @if(\Auth::user()->can('customers_module_customer_payments_dates_manage'))
+                                @if(\Auth::user()->can('customers_module_customer_payments_dates_manage'))
+                                    <li class="nav-item @if(isset($activePage['customer_payments_dates'])) active @endif">
+                                        <a class="nav-link" href="{{ url('/') }}/customerPaymentsDates/manage">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-icon"><span class="fas fa-file-contract"></span></span>
+                                                <span class="nav-link-text">دفعات الزبائن</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endif
                             @if(\Auth::user()->can('expenses_module_other_papers_manage'))
                                 @if(\Auth::user()->can('expenses_module_other_papers_manage'))
                                     <li class="nav-item @if(isset($activePage['other_papers'])) active @endif">

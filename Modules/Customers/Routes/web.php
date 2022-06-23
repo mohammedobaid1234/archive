@@ -67,6 +67,13 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::resource('drafts', DraftsController::class);
 
+    Route::prefix('customerPaymentsDates')->group(function() {
+        Route::get('manage', 'CustomerPaymentsDatesController@manage');
+        Route::post('{id}/stateChange', 'CustomerPaymentsDatesController@stateChange');
+        Route::get('datatable', 'CustomerPaymentsDatesController@datatable');
+    });
+    Route::resource('customerPaymentsDates', CustomerPaymentsDatesController::class);
+
     
 
 });
