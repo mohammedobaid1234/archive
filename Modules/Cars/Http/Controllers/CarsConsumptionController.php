@@ -43,11 +43,15 @@ class CarsConsumptionController extends Controller{
             if (trim($request->created_at) !== "") {
                 $eloquent->whereCreatedAt($request->created_at);
             }
+            if (trim($request->packing_date) !== "") {
+                $eloquent->WherePackingDate($request->packing_date);
+            }
         }
     
         $filters = [
             ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'car_id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
             ['title' => 'اسم الموظف', 'type' => 'input', 'type' => 'select', 'name' => 'driver_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
+            ['title' =>  '  تاريخ التعبئة', 'type' => 'input', 'name' => 'packing_date', 'date_range' => true],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
     
@@ -57,6 +61,7 @@ class CarsConsumptionController extends Controller{
             ['title' => 'رقم رخصة السيارة', 'column' => 'car.driving_license_number'],
             ['title' => 'الكمية (اللتر)', 'column' => 'quantity'],
             ['title' => 'القيمة (الشيكل)', 'column' => 'amount'],
+            ['title' => 'تاريخ التعبئة', 'column' => 'packing_date'],
             ['title' =>' تفاصيل اخرى', 'column' => 'details','formatter' => 'notes'],
             ['title' =>'صورة المستند', 'column' => 'image',  'formatter' => 'image'],
             ['title' => 'اسم الموظف', 'column' => 'driver.full_name'],
@@ -77,6 +82,7 @@ class CarsConsumptionController extends Controller{
             'quantity' => 'required',
             'amount' => 'required',
             'note' => 'required',
+            'packing_date' => 'required',
         ]);
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
@@ -93,6 +99,7 @@ class CarsConsumptionController extends Controller{
             $carConsumption->driver_id = $request->driver_id;            
             $carConsumption->quantity = $request->quantity;            
             $carConsumption->amount = $request->amount;            
+            $carConsumption->packing_date = $request->packing_date;            
             $carConsumption->note = $request->note;            
             $carConsumption->created_by = \Auth::user()->id;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
@@ -122,6 +129,7 @@ class CarsConsumptionController extends Controller{
             'quantity' => 'required',
             'amount' => 'required',
             'note' => 'required',
+            'packing_date' => 'required',
         ]);
         $plate_number = \Modules\Cars\Entities\Car::
         where('id', $request->car_id)
@@ -139,6 +147,7 @@ class CarsConsumptionController extends Controller{
             $carConsumption->quantity = $request->quantity;            
             $carConsumption->amount = $request->amount;            
             $carConsumption->note = $request->note;            
+            $carConsumption->packing_date = $request->packing_date;            
             $carConsumption->created_by = \Auth::user()->id;            
             if($request->hasFile('image') && $request->file('image')[0]->isValid()){
                 $extension = strtolower($request->file('image')[0]->extension());

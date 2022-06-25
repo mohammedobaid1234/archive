@@ -45,7 +45,21 @@ class CarMaintenance extends Model implements HasMedia{
             }else{
                 $query->whereDate('created_at', date('Y-m-d', strtotime(trim($created_at))));
             }
-    });
+      });
+    }
+    public function scopeWhereMaintenanceDate($query, $maintenance_date){
+        return $query->where(function($query) use ($maintenance_date){
+            if(str_contains(trim($maintenance_date), ' - ')){
+                $maintenance_date = explode(' - ', $maintenance_date);
+                $maintenance_date_from = $maintenance_date[0];
+                $maintenance_date_from = $maintenance_date[1];
+    
+                $query->whereDate('maintenance_date', '>=', date('Y-m-d', strtotime(trim($maintenance_date[0]))));
+                $query->whereDate('maintenance_date', '<=', date('Y-m-d', strtotime(trim($maintenance_date[1]))));
+            }else{
+                $query->whereDate('maintenance_date', date('Y-m-d', strtotime(trim($maintenance_date))));
+            }
+      });
     }
 
 }

@@ -42,6 +42,20 @@ class carConsumption extends Model  implements HasMedia{
             }
         });
     }
+    public function scopeWherePackingDate($query, $packing_date){
+        return $query->where(function($query) use ($packing_date){
+            if(str_contains(trim($packing_date), ' - ')){
+                $packing_date = explode(' - ', $packing_date);
+                $packing_date_from = $packing_date[0];
+                $packing_date_from = $packing_date[1];
+
+                $query->whereDate('packing_date', '>=', date('Y-m-d', strtotime(trim($packing_date[0]))));
+                $query->whereDate('packing_date', '<=', date('Y-m-d', strtotime(trim($packing_date[1]))));
+            }else{
+                $query->whereDate('packing_date', date('Y-m-d', strtotime(trim($packing_date))));
+            }
+        });
+    }
     public function created_by_user(){
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
@@ -98,6 +112,18 @@ class carConsumption extends Model  implements HasMedia{
             'required' => true,
             'operations' => [
                 'show' => ['text' => 'amount']
+            ]
+        ];
+    }
+    public function _packing_date(){
+        return [
+            'title' => 'تاريخ التعبئة',
+            'input' => 'input',
+            'date' => 'true',
+            'name' => 'packing_date',
+            'required' => true,
+            'operations' => [
+                'show' => ['text' => 'packing_date']
             ]
         ];
     }

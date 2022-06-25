@@ -48,12 +48,16 @@ class CarsMaintenancesController extends Controller{
             if (trim($request->created_at) !== "") {
                 $eloquent->whereCreatedAt($request->created_at);
             }
+            if (trim($request->maintenance_date) !== "") {
+                $eloquent->whereMaintenanceDate($request->maintenance_date);
+            }
         }
     
         $filters = [
             ['title' => 'اسم السيارة ',  'type' => 'select', 'name' => 'car_id', 'data' => ['options_source' => 'cars', 'has_empty' => true]],
             // ['title' => 'اسم الفريق', 'type' => 'input', 'type' => 'select', 'name' => 'team_id', 'data' => ['options_source' => 'teams', 'has_empty' => true]],
             ['title' => 'اسم الموظف القائم بالصيانة', 'type' => 'input', 'type' => 'select', 'name' => 'employee_id', 'data' => ['options_source' => 'employees', 'has_empty' => true]],
+            ['title' =>  '  تاريخ الصيانة', 'type' => 'input', 'name' => 'maintenance_date', 'date_range' => true],
             ['title' =>  '  تاريخ الإنشاء', 'type' => 'input', 'name' => 'created_at', 'date_range' => true],
         ];
     
@@ -64,7 +68,7 @@ class CarsMaintenancesController extends Controller{
             ['title' =>' محتوى الصيانة', 'column' => 'details','formatter' => 'details'],
             ['title' =>'صورة المستند', 'column' => 'image',  'formatter' => 'image'],
             ['title' => 'تاريخ الصيانة', 'column' => 'maintenance_date'],
-            ['title' => 'اسم الموظف المسؤول ', 'column' => 'employee.full_name'],
+            ['title' => 'اسم الموظف القائم بالصيانة ', 'column' => 'employee.full_name'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'الإجراءات', 'column' => 'operations', 'formatter' => 'operations']
         ];
