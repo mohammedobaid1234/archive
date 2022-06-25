@@ -80,6 +80,7 @@ class DraftsController extends Controller{
             ['title' => 'عنوان العميل ', 'column' => 'address' ],
             ['title' => 'قيمة الكمبيالة ', 'column' => 'amount'],
             ['title' => 'نوع العملة', 'column' => 'currency.name'],
+            ['title' => 'مكان الكمبيالة', 'column' => 'draft_site'],
             ['title' => 'اسم  الكفيل', 'column' => 'sponsor_name'],
             ['title' => 'اسم الشاهد الأول', 'column' => 'watch_first'],
             ['title' => 'اسم الشاهد الثاني', 'column' => 'watch_second'],
@@ -195,6 +196,8 @@ class DraftsController extends Controller{
                     ['title' => 'نوع العملة  ', 'input' => 'select', 'name' => 'currency_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'currencies', ],'operations' => ['show' => ['text' => 'currency.name', 'id' => 'currency.id']]],
 
                 ],
+                ['title' => 'مكان الكمبيالة', 'input' => 'input', 'name' => 'draft_site', 'operations' => ['show' => ['text' => 'draft_site']]],
+                
                 ['title' => 'عنوان العميل ', 'input' => 'input', 'name' => 'address', 'required' => true,'operations' => ['show' => ['text' => 'address']]],
                 [
                     ['title' => 'اسم الكفيل ', 'input' => 'input', 'name' => 'sponsor_name', 'required' => true,'operations' => ['show' => ['text' => 'sponsor_name']]],
@@ -251,6 +254,7 @@ class DraftsController extends Controller{
             $draft->national_id = $request->national_id;
             $draft->due_date = $request->due_date;
             $draft->address = $request->address;
+            $draft->draft_site  = $draft->draft_site ;
             $draft->watch_first = $request->watch_first;
             $draft->watch_second = $request->watch_second;
             $draft->due_date = $request->due_date;

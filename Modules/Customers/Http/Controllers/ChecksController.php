@@ -98,6 +98,8 @@ class ChecksController extends Controller{
             ['title' => 'نوع الشيك', 'column' => 'type','formatter' => 'typeOfCheck'],
             ['title' => ' تاريخ صرف الشيك', 'column' => 'due_date'],
             ['title' => "تفاصيل أخرى", 'column' => 'additional_details','formatter' => 'additionalDetails'],
+            ['title' => 'مكان الشيك ', 'column' => 'check_site'],
+            ['title' => 'مكان صرف الشيك ', 'column' => 'exchange_site'],
             ['title' => "صورة الشيك", 'column' => 'image','formatter' => 'image'],
             ['title' => 'تاريخ الإنشاء', 'column' => 'created_at'],
             ['title' => 'بواسطة', 'column' => 'created_by_user.name'],
@@ -203,6 +205,8 @@ class ChecksController extends Controller{
                 ['title' => 'اسم المستفيد /الساحب ', 'input' => 'select', 'name' => 'customer_id', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'customers', 'placeholder' => 'اسم العميل...'],'operations' => ['show' => ['text' => 'customer.full_name', 'id' => 'customer_id']]],
                 ['title' => 'نوع الشيك', 'input' => 'select', 'name' => 'type', 'required' => true,'classes' => ['select2'], 'data' => ['options_source' => 'type_of_checks', 'placeholder' => 'نوع الشيك...'],'operations' => ['show' => ['text' => 'type', 'id' => 'type']]],
                 ['title' => '(في حال كان دفعة لعقد) رقم العقد', 'input' => 'input', 'name' => 'contract_id', 'operations' => ['show' => ['text' => 'customer_payment_date.contract_number']]],
+                ['title' => 'مكان الشيك', 'input' => 'input', 'name' => 'check_site', 'operations' => ['show' => ['text' => 'check_site']]],
+                ['title' => 'مكان صرف الشيك(في حال الصرف)', 'input' => 'input', 'name' => 'exchange_site', 'operations' => ['show' => ['text' => 'exchange_site']]],
                 
                 ['title' => ' اسم البنك', 'input' => 'select', 'name' => 'bank_id',  'classes' => ['select2'], 'data' => ['options_source' => 'banks', 'placeholder' => 'اسم البنك لصرف الشيك...'],'operations' => ['show' => ['text' => 'bank.name', 'id' => 'bank.id'],'update' => ['text' => 'bank.name', 'id' => 'bank.id']]],
                 [
@@ -261,6 +265,8 @@ class ChecksController extends Controller{
             $check->employee_id = $request->employee_id;
             $check->amount = $request->amount;
             $check->currency_id = $request->currency_id;
+            $check->check_site  = $check->check_site ;
+            $check->exchange_site  = $check->exchange_site ;
             $check->due_date = $request->due_date;
             $check->bank_id = $request->bank_id;
             $check->due_date = $request->due_date;
@@ -279,6 +285,7 @@ class ChecksController extends Controller{
                         $customer_payment->payment_id  = $check->id ;
                         $customer_payment->payment_type  = 'Modules\Customers\Entities\Check' ;
                         $customer_payment->amount  = $check->amount ;
+                       
                         $customer_payment->currency_id  = $check->currency_id ;
                         $customer_payment->due_date = $check->due_date;
                         $customer_payment->created_by = \Auth::user()->id;

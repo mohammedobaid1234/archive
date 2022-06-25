@@ -125,13 +125,13 @@ class ContractsController extends Controller{
 
         $columns = [
             ['title' => 'رقم العقد', 'column' => 'product_for_user.contract_number'],
-            ['title' => 'الاسم العميل', 'column' => 'customer.full_name'],
+            ['title' => 'اسم العميل', 'column' => 'customer.full_name'],
             ['title' => 'اسم الموظف المكلف', 'column' => 'product_for_user.employee.full_name'],
             ['title' => ' تفاصيل أخرى للعقد', 'column' => 'note.content',  'formatter' => 'contentForContract'],
             ['title' => 'الرقم التسلسلي', 'column' => 'product_for_user.serial_number'],
             ['title' => ' نوع المولد', 'column' => 'product_for_user.product_type'],
-            ['title' => ' موديل المولد', 'column' => 'product_for_user.product_model'],
-            ['title' => ' سعة المولد', 'column' => 'product_for_user.product_capacity'],
+            ['title' => ' الموديل ', 'column' => 'product_for_user.product_model'],
+            ['title' => ' القدرة ', 'column' => 'product_for_user.product_capacity'],
             ['title' => 'نوع العقد', 'column' => 'category_of_contract.name'],
             ['title' => ' قيمة العقد ', 'column' => 'product_for_user.product_price'],
             ['title' => ' نوع العملة', 'column' => 'product_for_user.currency.name'],

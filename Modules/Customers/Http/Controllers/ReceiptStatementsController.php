@@ -362,6 +362,11 @@ class ReceiptStatementsController extends Controller{
                     ['title' => ' اسم البنك', 'input' => 'select', 'name' => 'bank_id',  'classes' => ['select2'], 'data' => ['options_source' => 'banks', 'placeholder' => 'اسم البنك لصرف الشيك...'],'operations' => ['show' => ['text' => 'bank.name', 'id' => 'bank.id'],'update' => ['text' => 'bank.name', 'id' => 'bank.id']]],
                     ['title' => 'تاريخ صرف الشيك ', 'input' => 'input', 'name' => 'check_due_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'check_due_date']]],
                 ],
+                [
+                ['title' => 'مكان الشيك', 'input' => 'input', 'name' => 'check_site', 'operations' => ['show' => ['text' => 'check_site']]],
+                ['title' => 'مكان صرف الشيك(في حال الصرف)', 'input' => 'input', 'name' => 'exchange_site', 'operations' => ['show' => ['text' => 'exchange_site']]],
+
+                ],
                 ['title' => 'صورة الشيك', 'input' => 'input','type' => 'file', 'name' => 'check_image','operations' => ['show' => ['text' => 'check_image'],'update' => ['text' => 'check_image'],]],
                 ['title' => 'تاريخ الاستحقاق للرصيد ', 'input' => 'input', 'name' => 'next_due_date', 'classes' => ['numeric'], 'date' => true,'operations' => ['show' => ['text' => 'next_due_date']]],
                 ['title' => 'وذلك مقابل ...', 'input' => 'textarea', 'name' => 'opposite', 'required' => true, 'placeholder' =>'وذلك مقابل ...','operations' => ['show' => ['text' => 'opposite']]],
@@ -455,6 +460,8 @@ class ReceiptStatementsController extends Controller{
                     $newCheck->customer_id  = $receiptStatement->customer_id ;
                     $newCheck->amount  = $receiptStatement->received_amount ;
                     $newCheck->type   = 'وارد'  ;
+                    $check->check_site  = $check->check_site ;
+                    $check->exchange_site  = $check->exchange_site ;
                     $newCheck->due_date   = $receiptStatement->check_due_date ;
                     $newCheck->bank_id    = $receiptStatement->bank_id  ;
                     $newCheck->additional_details    = $receiptStatement->opposite  ;
@@ -491,6 +498,8 @@ class ReceiptStatementsController extends Controller{
                     $check->customer_id  = $receiptStatement->customer_id ;
                     $check->amount  = $receiptStatement->received_amount ;
                     $check->type   = 'وارد'  ;
+                    $check->check_site  = $request->check_site ;
+                    $check->exchange_site  = $request->exchange_site ;
                     $check->due_date   = $receiptStatement->check_due_date ;
                     $check->bank_id    = $receiptStatement->bank_id  ;
                     $check->additional_details    = $receiptStatement->opposite  ;
