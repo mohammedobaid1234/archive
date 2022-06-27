@@ -64,20 +64,20 @@ class CoreSeeder extends Seeder{
             $record->name = $row['name'];
             $record->save();
         }
-        // $core_banks = [
-        //     ['name' => 'بنك القدس', 'address' => ' غزة الرمال'],
-        //     ['name' => 'البنك الإسلامي الفلسطيني', 'address' => ' غزة الرمال'],
-        //     ['name' => 'بنك الإنتاج', 'address' => ' غزة النصر'],
-        //     ['name' => 'البنك الوطني الإسلامي', 'address' => ' غزة النصر'],
-        //     ['name' => 'بنك فلسطين', 'address' => ' غزة الرمال'],
-        //     ['name' => 'بنك الأردن ', 'address' => ' غزة النصر '],
-        // ];
-        // foreach($core_banks as $row){
-        //     $record = new \Modules\Core\Entities\Bank;
-        //     $record->name = $row['name'];
-        //     $record->address = $row['address'];
-        //     $record->save();
-        // }
+        $core_banks = [
+            ['name' => 'بنك القدس', 'address' => ' غزة الرمال'],
+            ['name' => 'البنك الإسلامي الفلسطيني', 'address' => ' غزة الرمال'],
+            ['name' => 'بنك الإنتاج', 'address' => ' غزة النصر'],
+            ['name' => 'البنك الوطني الإسلامي', 'address' => ' غزة النصر'],
+            ['name' => 'بنك فلسطين', 'address' => ' غزة الرمال'],
+            ['name' => 'بنك الأردن ', 'address' => ' غزة النصر '],
+        ];
+        foreach($core_banks as $row){
+            $record = new \Modules\Core\Entities\Bank;
+            $record->name = $row['name'];
+            $record->address = $row['address'];
+            $record->save();
+        }
         $em_departments = [
             ['label' =>'الورشة', 'name' =>'Workshop'],
             ['label' => 'معرض', 'name' =>'gallery'],
