@@ -128,7 +128,7 @@ class MotorsController extends Controller{
 
         if($motor){
             return response()->json(['message' => "رقم المولد موجود مسبقا."], 403);
-        }
+        }شحح
  
         \DB::beginTransaction();
         try {
