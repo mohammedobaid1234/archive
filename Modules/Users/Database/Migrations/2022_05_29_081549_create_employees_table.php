@@ -19,8 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('first_name');
             $table->string('father_name');
             $table->string('grandfather_name');
-            <!-- $table->string('last_name');
-            $table->string('full_name')->storedAs('CONCAT(first_name, " ", father_name, " ", grandfather_name, " ", last_name)');
+            $table->string('last_name');
             
             $table->enum('gender', ['male', 'female']);
             $table->date('birthdate')->nullable();
@@ -28,10 +27,10 @@ class CreateEmployeesTable extends Migration
             $table->string('mobile_no')->unique()->nullable();
 
             $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('created_by')->references('id')->on('users'); -->
 
         });
     }
