@@ -10,7 +10,7 @@ class ContractsController extends Controller{
     use \Modules\BriskCore\Traits\FormRequestTrait;
 
     private $title = "ملفات العقود";
-    private $model = \Modules\Customers\Entities\contract::class;
+    private $model = \Modules\Customers\Entities\Contract::class;
 
     public function index(Request $request){
         $response = $this->model::with([]);
