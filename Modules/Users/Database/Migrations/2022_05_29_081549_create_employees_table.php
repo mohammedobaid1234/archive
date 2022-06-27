@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('father_name');
             $table->string('grandfather_name');
             $table->string('last_name');
-            $table->string('full_name')->storedAs("CONCAT(first_name, ' ', father_name, ' ', grandfather_name, ' ', last_name)");
+            $table->string('full_name')->nullable();
             
             $table->enum('gender', ['male', 'female']);
             $table->date('birthdate')->nullable();

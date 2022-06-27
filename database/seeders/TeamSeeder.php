@@ -38,6 +38,8 @@ class TeamSeeder extends Seeder{
             $record->father_name = $row['father_name'];
             $record->grandfather_name = $row['grandfather_name'];
             $record->last_name = $row['last_name'];
+            $record->full_name = $row['first_name'] . " " .$row['father_name'] . " " .$row['grandfather_name']. " " . $row['last_name'];
+
             $record->gender = $row['gender'];
             $record->mobile_no = $row['mobile_no'];
             $record->created_by = $row['created_by'];

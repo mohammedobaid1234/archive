@@ -45,6 +45,8 @@ class UserSeeder extends Seeder{
             $employee->father_name = $row['father_name'];
             $employee->grandfather_name = $row['grandfather_name'];
             $employee->last_name = $row['last_name'];
+            $record->full_name = $row['first_name'] . " " .$row['father_name'] . " " .$row['grandfather_name']. " " . $row['last_name'];
+            
             $employee->gender =  "male";
             $employee->mobile_no = $row['mobile_no'];
             $employee->created_by = 1;

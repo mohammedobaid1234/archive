@@ -305,6 +305,7 @@ class EmployeesController extends Controller{
             $employee->father_name = $request->father_name;
             $employee->grandfather_name = $request->grandfather_name;
             $employee->last_name = $request->last_name;
+            $employee->full_name = $request->first_name . " " .$request->father_name . " " .$request->grandfather_name. " " . $request->last_name;
             $employee->gender = $request->gender;
             $employee->salary = $request->salary;
             $employee->birthdate = $request->birthdate;
