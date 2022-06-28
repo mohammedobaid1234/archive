@@ -152,12 +152,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => ['mail'],
+            \NormanHuth\LaravelBackupTelegram\BackupHasFailed::class         => ['telegram'],
+            \NormanHuth\LaravelBackupTelegram\UnhealthyBackupWasFound::class => ['telegram'],
+            \NormanHuth\LaravelBackupTelegram\CleanupHasFailed::class        => ['telegram'],
+            \NormanHuth\LaravelBackupTelegram\BackupWasSuccessful::class     => ['mail'],
+            \NormanHuth\LaravelBackupTelegram\HealthyBackupWasFound::class   => ['mail'],
+            \NormanHuth\LaravelBackupTelegram\CleanupWasSuccessful::class    => ['mail'],
         ],
 
         /*
@@ -165,7 +165,10 @@ return [
          * notifiable will use the variables specified in this config file.
          */
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
-
+        
+        'telegram' => [
+            'to' => -632310758,
+        ],
         'mail' => [
             'to' => 'mhmd.obaid.22@gmail.com',
 
