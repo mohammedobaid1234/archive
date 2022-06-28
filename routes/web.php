@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -27,4 +28,3 @@ Route::get('/', [AuthenticatedSessionController::class, 'create']);
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
-

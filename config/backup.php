@@ -170,7 +170,7 @@ return [
             'to' => 'mhmd.obaid.22@gmail.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS'),
+                'address' => env('MAIL_USERNAME'),
                 'name' => env('MAIL_FROM_NAME'),
             ],
         ],
