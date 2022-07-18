@@ -16,7 +16,7 @@ class EmployeesAdvancesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('employees_module_employees_advances_manage', 'view');
 
-        $data['activePage'] = ['employees_advances' => 'employees_advances'];
+        $data['activePage'] = ['employees' => 'employees_advances'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

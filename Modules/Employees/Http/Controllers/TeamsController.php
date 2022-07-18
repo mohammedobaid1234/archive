@@ -20,7 +20,7 @@ class TeamsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('employees_module_teams_manage', 'view');
 
-        $data['activePage'] = ['teams' => true];
+        $data['activePage'] = ['employees' => 'teams'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

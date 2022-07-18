@@ -37,7 +37,7 @@ class CategoriesOfContractsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_categories_of_contracts_manage');
 
-        $data['activePage'] = ['categories_of_contracts' => true];
+        $data['activePage'] = ['core' => 'categories_of_contracts'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

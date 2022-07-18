@@ -25,7 +25,7 @@ class SalesInvoicesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_sales_invoices_manage');
 
-        $data['activePage'] = ['sales_invoices' => true];
+        $data['activePage'] = ['archive' => 'sales_invoices'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

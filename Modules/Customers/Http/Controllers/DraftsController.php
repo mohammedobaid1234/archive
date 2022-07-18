@@ -17,7 +17,7 @@ class DraftsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_drafts_manage');
 
-        $data['activePage'] = ['drafts' => true];
+        $data['activePage'] = ['archive' => 'drafts'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

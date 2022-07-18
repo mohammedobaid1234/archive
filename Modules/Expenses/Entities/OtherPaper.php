@@ -31,6 +31,9 @@ class OtherPaper extends Model implements HasMedia{
 
         return asset('/public/themes/Falcon/v2.8.0/assets/img/team/avatar.png');
     }
+    public function created_by_user(){
+        return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
+    }
     public function scopeWhereCreatedAt($query, $created_at){
         return $query->where(function($query) use ($created_at){
             if(str_contains(trim($created_at), ' - ')){

@@ -33,7 +33,7 @@ class ContractsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_contracts_manage');
 
-        $data['activePage'] = ['contracts' => true];
+        $data['activePage'] = ['archive' => 'contracts'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

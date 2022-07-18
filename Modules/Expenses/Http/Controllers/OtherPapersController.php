@@ -17,7 +17,7 @@ class OtherPapersController extends Controller{
     public function manage(){
         \Auth::user()->authorize('expenses_module_other_papers_manage');
 
-        $data['activePage'] = ['other_papers' => true];
+        $data['activePage'] = ['archive' => 'other_papers'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];
@@ -27,7 +27,7 @@ class OtherPapersController extends Controller{
     public function datatable(Request $request){
         \Auth::user()->authorize('expenses_module_other_papers_manage');
 
-        $eloquent = $this->model::with([]);
+        $eloquent = $this->model::with(['created_by_user']);
 
         if((int) $request->filters_status){
             if(trim($request->label) !== ""){
@@ -52,7 +52,7 @@ class OtherPapersController extends Controller{
             ['title' => 'التفاصيل', 'type' => 'input', 'name' => 'note'],
             ['title' => 'تاريخ البداية', 'type' => 'input', 'name' => 'started_at', 'date_range' => true],
             ['title' => 'تاريخ النهاية', 'type' => 'input', 'name' => 'ended_at', 'date_range' => true],
-        ];
+        ];git
 
         $columns = [
             ['title' => 'الاسم', 'column' => 'label'],

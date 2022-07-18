@@ -16,7 +16,7 @@ class DepartmentsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('employees_module_departments_manage', 'view');
 
-        $data['activePage'] = ['departments' => 'departments'];
+        $data['activePage'] = ['core' => 'departments'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

@@ -25,7 +25,7 @@ class ReceiptStatementsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_receipt_statements_manage');
 
-        $data['activePage'] = ['receipt_statements' => true];
+        $data['activePage'] = ['archive' => 'receipt_statements'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

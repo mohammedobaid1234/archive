@@ -33,7 +33,7 @@ class SaleInvoice extends Model implements HasMedia{
         return asset('/public/themes/Falcon/v2.8.0/assets/img/team/avatar.png');
     }
     public function product(){
-        return $this->belongsToMany(\Modules\Products\Entities\Product::class);
+        return $this->belongsTo(\Modules\Products\Entities\Product::class,'pm_products');
     }
     public function cart(){
         return $this->hasMany(\Modules\Carts\Entities\Cart::class);

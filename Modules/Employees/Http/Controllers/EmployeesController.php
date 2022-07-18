@@ -18,7 +18,7 @@ class EmployeesController extends Controller{
 
         \Auth::user()->authorize('employees_module_employees_manage', 'view');
 
-        $data['activePage'] = ['employees' => true];
+        $data['activePage'] = ['employees' => 'employees'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

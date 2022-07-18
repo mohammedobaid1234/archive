@@ -16,7 +16,7 @@ class CustomerPaymentsDatesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_customer_payments_dates_manage');
 
-        $data['activePage'] = ['customer_payments_dates' => true];
+        $data['activePage'] = ['archive' => 'customer_payments_dates'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

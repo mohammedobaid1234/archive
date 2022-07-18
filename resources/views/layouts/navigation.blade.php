@@ -185,10 +185,10 @@
                                 <span class="nav-link-text">{{ __('الأرشيف ') }}</span>
                             </div>
                         </a>
-                        <ul class="nav collapse @if(isset($activePage['contracts'])) show @endif" id="archive" data-parent="#navbarVerticalCollapse">
+                        <ul class="nav collapse @if(isset($activePage['archive'])) show @endif" id="archive" data-parent="#navbarVerticalCollapse">
                                 @if(\Auth::user()->can('contracts_module_contracts_manage'))
                                 @if(\Auth::user()->can('contracts_module_contracts_manage'))
-                                    <li class="nav-item @if(isset($activePage['contracts'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])  && $activePage['archive'] == 'contracts') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/contracts/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -201,7 +201,7 @@
             
                             @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
                                 @if(\Auth::user()->can('customers_module_receipt_statements_manage'))
-                                    <li class="nav-item @if(isset($activePage['receipt_statements'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive']) && $activePage['archive'] == 'receipt_statements') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/receipt_statements/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -213,7 +213,7 @@
                             @endif
                             @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
                                 @if(\Auth::user()->can('customers_module_sales_invoices_manage'))
-                                    <li class="nav-item @if(isset($activePage['sales_invoices'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive']) && $activePage['archive'] == 'sales_invoices') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/sales_invoices/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -225,7 +225,7 @@
                             @endif
                             @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
                                 @if(\Auth::user()->can('customers_module_sales_invoices_without_cart_manage'))
-                                    <li class="nav-item @if(isset($activePage['sales_invoices_without_cart'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])&& $activePage['archive'] == 'sales_invoices_without_cart') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/sales_invoices_without_carts/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -237,7 +237,7 @@
                             @endif
                             @if(\Auth::user()->can('customers_module_checks_manage'))
                                 @if(\Auth::user()->can('customers_module_checks_manage'))
-                                    <li class="nav-item @if(isset($activePage['checks'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])&& $activePage['archive'] == 'checks') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/checks/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -249,7 +249,7 @@
                             @endif
                             @if(\Auth::user()->can('customers_module_drafts_manage'))
                                 @if(\Auth::user()->can('customers_module_drafts_manage'))
-                                    <li class="nav-item @if(isset($activePage['drafts'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])&& $activePage['archive'] == 'drafts') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/drafts/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -261,7 +261,7 @@
                             @endif
                             @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
                                 @if(\Auth::user()->can('expenses_module_exchange_bonds_manage'))
-                                    <li class="nav-item @if(isset($activePage['exchange_bonds'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive']) && $activePage['archive'] == 'exchange_bonds') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/exchangeBonds/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -274,7 +274,7 @@
                             @endif
                             @if(\Auth::user()->can('core_module_electricities_manage'))
                                 @if(\Auth::user()->can('core_module_electricities_manage'))
-                                    <li class="nav-item @if(isset($activePage['electricities'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive']) && $activePage['archive'] == 'electricities') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/electricities/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -287,7 +287,7 @@
                             @endif
                             @if(\Auth::user()->can('expenses_module_expenses_manage'))
                                 @if(\Auth::user()->can('expenses_module_expenses_manage'))
-                                    <li class="nav-item @if(isset($activePage['expenses'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])&& $activePage['archive'] == 'expenses') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/expenses/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -299,7 +299,7 @@
                             @endif
                             @if(\Auth::user()->can('customers_module_customer_payments_dates_manage'))
                                 @if(\Auth::user()->can('customers_module_customer_payments_dates_manage'))
-                                    <li class="nav-item @if(isset($activePage['customer_payments_dates'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive'])&& $activePage['archive'] == 'customer_payments_dates') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/customerPaymentsDates/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-file-contract"></span></span>
@@ -311,7 +311,7 @@
                             @endif
                             @if(\Auth::user()->can('expenses_module_other_papers_manage'))
                                 @if(\Auth::user()->can('expenses_module_other_papers_manage'))
-                                    <li class="nav-item @if(isset($activePage['other_papers'])) active @endif">
+                                    <li class="nav-item @if(isset($activePage['archive']) &&$activePage['archive'] == 'other_papers') active @endif">
                                         <a class="nav-link" href="{{ url('/') }}/otherPapers/manage">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-file-contract"></span></span>
@@ -485,14 +485,14 @@
                             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                                 @if(\Auth::user()->can('users_module_users_manage'))
                                     <li class="nav-item">
-                                        <a class="nav-link dropdown-indicator" href="#employee" data-toggle="collapse" role="button" @if(isset($activePage['users'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
+                                        <a class="nav-link dropdown-indicator" href="#employees" data-toggle="collapse" role="button" @if(isset($activePage['employees'])) aria-expanded="true" @else aria-expanded="false" @endif aria-controls="pages">
                                             <div class="d-flex align-items-center">
                                                 <span class="nav-link-icon"><span class="fas fa-users"></span></span>
                                                 <span class="nav-link-text">{{ __('إدارة الموظفين') }}</span>
                                             </div>
                                         </a>
-                                        <ul class="nav collapse @if(isset($activePage['employees'])) show @endif" id="employee" data-parent="#navbarVerticalCollapse">
-                                            <li class="nav-item @if(isset($activePage['employees'])) active @endif">
+                                        <ul class="nav collapse @if(isset($activePage['employees'])) show @endif" id="employees" data-parent="#navbarVerticalCollapse">
+                                            <li class="nav-item @if(isset($activePage['employees']) &&  $activePage['employees'] == 'employees') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/employees/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-users"></span></span>
@@ -500,7 +500,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['teams'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['employees'])  && $activePage['employees'] == 'teams') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/teams/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-users"></span></span>
@@ -508,7 +508,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['jawwal_bill'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['employees'])  && $activePage['employees'] == 'jawwal_bill') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/jawwalBills/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-users"></span></span>
@@ -516,7 +516,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['employees_advances'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['employees']) && $activePage['employees'] == 'employees_advances') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/EmployeesAdvances/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-users"></span></span>
@@ -580,7 +580,7 @@
                         </a>
                         <ul class="nav collapse @if(isset($activePage['core'])) show @endif" id="core" data-parent="#navbarVerticalCollapse">
                             @if(\Auth::user()->can('employees_module_departments_manage'))
-                            <li class="nav-item @if(isset($activePage['departments']) && $activePage['departments'] == 'departments') active @endif">
+                            <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'departments') active @endif">
                                 <a class="nav-link" href="{{ url('/') }}/departments/manage">إدارة الأقسام</a>
                             </li>
                             @endif
@@ -596,7 +596,7 @@
                             @endif
     
                             @if(\Auth::user()->can('customers_module_categories_of_contracts_manage'))
-                            <li class="nav-item @if(isset($activePage['categories_of_contracts']) && $activePage['categories_of_contracts'] == 'categories_of_contracts') active @endif">
+                            <li class="nav-item @if(isset($activePage['core']) && $activePage['core'] == 'categories_of_contracts') active @endif">
                                 <a class="nav-link" href="{{ url('/') }}/categories_of_contracts/manage">إدارة أنواع العقود</a>
                             </li>
                             @endif

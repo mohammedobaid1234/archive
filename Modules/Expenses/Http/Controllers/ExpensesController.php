@@ -17,7 +17,7 @@ class ExpensesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('expenses_module_expenses_manage');
 
-        $data['activePage'] = ['expenses' => true];
+        $data['activePage'] = ['archive' => 'expenses'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

@@ -22,6 +22,9 @@ class Product extends Model {
     public function created_by_user(){
         return $this->belongsTo(\Modules\Users\Entities\User::class, 'created_by');
     }
+    public function sale_invoice(){
+        return $this->belongsToMany(\Modules\Customers\Entities\SaleInvoice::class);
+    }
 
 
     public function scopeWhereNameLike($query, $name){

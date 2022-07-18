@@ -17,7 +17,7 @@ class ChecksController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_checks_manage');
 
-        $data['activePage'] = ['checks' => true];
+        $data['activePage'] = ['archive' => 'checks'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

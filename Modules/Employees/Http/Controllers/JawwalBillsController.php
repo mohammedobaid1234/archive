@@ -16,7 +16,7 @@ class JawwalBillsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('employees_module_jawwal_bill_manage', 'view');
 
-        $data['activePage'] = ['jawwal_bill' => 'jawwal_bill'];
+        $data['activePage'] = ['employees' => 'jawwal_bill'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

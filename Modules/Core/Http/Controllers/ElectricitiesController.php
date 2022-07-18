@@ -17,7 +17,7 @@ class ElectricitiesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('core_module_electricities_manage');
 
-        $data['activePage'] = ['electricities' => true];
+        $data['activePage'] = ['archive' => 'electricities'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

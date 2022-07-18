@@ -25,7 +25,7 @@ class SalesInvoicesWithoutCartsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('customers_module_sales_invoices_without_cart_manage');
 
-        $data['activePage'] = ['sales_invoices_without_cart' => true];
+        $data['activePage'] = ['archive' => 'sales_invoices_without_cart'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

@@ -17,7 +17,7 @@ class ExchangeBondController extends Controller{
     public function manage(){
         \Auth::user()->authorize('expenses_module_exchange_bonds_manage');
 
-        $data['activePage'] = ['exchange_bonds' => true];
+        $data['activePage'] = ['archive' => 'exchange_bonds'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];
