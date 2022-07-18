@@ -16,7 +16,7 @@ class CarsPapersController extends Controller{
         
         \Auth::user()->authorize('cars_module_cars_papers_manage', 'view');
     
-        $data['activePage'] = ['cars_papers' => true];
+        $data['activePage'] = ['cars' => 'cars_papers'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

@@ -17,7 +17,7 @@ class CarsConsumptionController extends Controller{
         
         \Auth::user()->authorize('cars_module_cars_consumption_manage', 'view');
     
-        $data['activePage'] = ['cars_consumption' => true];
+        $data['activePage'] = ['cars' => 'cars_consumption'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

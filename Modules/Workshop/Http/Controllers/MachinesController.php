@@ -23,7 +23,7 @@ class MachinesController extends Controller{
     public function manage(){
         \Auth::user()->authorize('workshops_module_machines_manage');
 
-        $data['activePage'] = ['machines' => true];
+        $data['activePage'] = ['motors' => 'machines'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

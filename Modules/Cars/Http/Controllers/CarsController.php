@@ -17,7 +17,7 @@ class CarsController extends Controller{
         
         \Auth::user()->authorize('cars_module_cars_manage', 'view');
     
-        $data['activePage'] = ['cars' => true];
+        $data['activePage'] = ['cars' => 'cars'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];

@@ -175,7 +175,7 @@
              --}}
              <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                     <li class="nav-item">
-                        <a class="nav-link dropdown-indicator" href="#archive" data-toggle="collapse" role="button" @if(isset($activePage['contracts'])
+                        <a class="nav-link dropdown-indicator" href="#archive" data-toggle="collapse" role="button" @if(isset($activePage['contract'])
                         || isset($activePage['sales_invoices_without_cart']) 
                         || isset($activePage['sales_invoices'])   
                         || isset($activePage['receipt_statements']))
@@ -375,7 +375,7 @@
                                             </div>
                                         </a>
                                         <ul class="nav collapse @if(isset($activePage['cars'])) show @endif" id="cars" data-parent="#navbarVerticalCollapse">
-                                            <li class="nav-item @if(isset($activePage['cars'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['cars']) && $activePage['cars'] == 'cars') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/cars/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-car"></span></span>
@@ -383,7 +383,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['cars_papers'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['cars']) && $activePage['cars'] == 'cars_papers') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/carsPapers/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-shield-alt"></span></span>
@@ -391,7 +391,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['cars_maintenance'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['cars']) && $activePage['cars'] == 'cars_maintenance') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/carsMaintenances/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-wrench"></span></span>
@@ -399,7 +399,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['cars_consumption'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['cars'])&& $activePage['cars'] == 'cars_consumption') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/carConsumptions/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-wrench"></span></span>
@@ -434,7 +434,7 @@
                                             </div>
                                         </a>
                                         <ul class="nav collapse @if(isset($activePage['motors'])) show @endif" id="motors" data-parent="#navbarVerticalCollapse">
-                                            <li class="nav-item @if(isset($activePage['motors'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['motors'])  && $activePage['motors'] == 'motors') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/motors/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-th-list"></span></span>
@@ -442,7 +442,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li class="nav-item @if(isset($activePage['machines'])) active @endif">
+                                            <li class="nav-item @if(isset($activePage['motors']) && $activePage['motors'] == 'machines') active @endif">
                                                 <a class="nav-link" href="{{ url('/') }}/machines/manage">
                                                     <div class="d-flex align-items-center">
                                                         <span class="nav-link-icon"><span class="fas fa-industry"></span></span>

@@ -23,7 +23,7 @@ class MotorsController extends Controller{
     public function manage(){
         \Auth::user()->authorize('workshops_module_motors_manage');
 
-        $data['activePage'] = ['motors' => true];
+        $data['activePage'] = ['motors' => 'motors'];
         $data['breadcrumb'] = [
             ['title' => $this->title],
         ];
