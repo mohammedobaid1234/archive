@@ -52,7 +52,7 @@ class OtherPapersController extends Controller{
             ['title' => 'التفاصيل', 'type' => 'input', 'name' => 'note'],
             ['title' => 'تاريخ البداية', 'type' => 'input', 'name' => 'started_at', 'date_range' => true],
             ['title' => 'تاريخ النهاية', 'type' => 'input', 'name' => 'ended_at', 'date_range' => true],
-        ];git
+        ];
 
         $columns = [
             ['title' => 'الاسم', 'column' => 'label'],

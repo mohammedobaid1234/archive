@@ -1,4 +1,3 @@
-
 $("#login").on('submit', function(event){
     event.preventDefault();
     var $this = $(this);
